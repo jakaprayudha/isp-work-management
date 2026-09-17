@@ -1,0 +1,36 @@
+RewriteEngine On
+
+# =========================================================
+# Remove .php extension
+# =========================================================
+
+# Redirect /file.php → /file
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^(.+)\.php$ /$1 [R=301,L,NE]
+
+# Internally serve /file → /file.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+
+
+# =========================================================
+# Remove .html extension
+# =========================================================
+
+# Redirect /file.html → /file
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L,NE]
+
+# Internally serve /file → /file.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+
+# =========================================================
+# Directory index
+# =========================================================
+
+DirectoryIndex index.php index.html
+
