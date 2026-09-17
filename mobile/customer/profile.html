@@ -1,0 +1,1773 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Profile - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+
+        overflow: hidden;
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font-family: inherit;
+      }
+
+      button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       APP SHELL
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .back-button,
+      .header-action {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: var(--primary);
+
+        position: relative;
+
+        transition: transform 0.15s ease;
+      }
+
+      .back-button:active,
+      .header-action:active {
+        transform: scale(0.94);
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .header-action {
+        color: #4b5563;
+      }
+
+      .header-action svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 5px 20px 15px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* =====================================================
+       PAGE INTRO
+    ===================================================== */
+
+      .page-intro {
+        margin-top: 6px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .page-intro p {
+        margin-top: 4px;
+
+        font-size: 11px;
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       PROFILE HERO
+    ===================================================== */
+
+      .profile-card {
+        margin-top: 13px;
+
+        width: 100%;
+
+        padding: 14px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      .profile-card::after {
+        content: "";
+
+        position: absolute;
+
+        right: -20px;
+        top: -30px;
+
+        width: 100px;
+        height: 100px;
+
+        border-radius: 50%;
+
+        background: radial-gradient(
+          circle,
+          rgba(37, 99, 235, 0.1),
+          transparent 70%
+        );
+
+        pointer-events: none;
+      }
+
+      .avatar {
+        width: 52px;
+        height: 52px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+
+        color: white;
+
+        font-size: 17px;
+        font-weight: 800;
+
+        box-shadow: 0 6px 15px rgba(37, 99, 235, 0.18);
+      }
+
+      .profile-info {
+        flex: 1;
+        min-width: 0;
+
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-name {
+        font-size: 14px;
+        font-weight: 800;
+
+        letter-spacing: -0.15px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .profile-company {
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .profile-meta {
+        margin-top: 6px;
+
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .customer-id {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 4px 6px;
+
+        border-radius: 6px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+
+        font-size: 7px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .verified {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 3px;
+
+        color: var(--success);
+
+        font-size: 8px;
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      /* =====================================================
+       SECTION
+    ===================================================== */
+
+      .section-header {
+        margin-top: 12px;
+        margin-bottom: 7px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-title {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-caption {
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       SETTINGS CARD
+    ===================================================== */
+
+      .settings-card {
+        width: 100%;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+      }
+
+      .setting-item {
+        width: 100%;
+
+        min-height: 51px;
+
+        padding: 8px 12px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        border-bottom: 1px solid #f1f2f4;
+
+        text-align: left;
+
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease;
+      }
+
+      .setting-item:last-child {
+        border-bottom: 0;
+      }
+
+      .setting-item:active {
+        background: #f8fafc;
+      }
+
+      .setting-icon {
+        width: 34px;
+        height: 34px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .setting-icon.blue {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .setting-icon.green {
+        background: var(--success-light);
+        color: var(--success);
+      }
+
+      .setting-icon.warning {
+        background: var(--warning-light);
+        color: var(--warning);
+      }
+
+      .setting-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .setting-title {
+        font-size: 10px;
+        font-weight: 700;
+
+        line-height: 1.3;
+      }
+
+      .setting-value {
+        margin-top: 2px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        line-height: 1.35;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .setting-arrow {
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+
+        color: #cbd5e1;
+      }
+
+      /* =====================================================
+       ACCOUNT STATUS
+    ===================================================== */
+
+      .status-row {
+        margin-top: 10px;
+
+        padding: 10px 12px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        background: var(--success-light);
+
+        border: 1px solid #dcfce7;
+
+        border-radius: 12px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background: var(--success);
+
+        box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.08);
+      }
+
+      .status-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .status-title {
+        font-size: 9px;
+        font-weight: 800;
+
+        color: #166534;
+      }
+
+      .status-text {
+        margin-top: 2px;
+
+        font-size: 7px;
+
+        color: #4d7c5b;
+      }
+
+      /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+      .logout-button {
+        width: 100%;
+
+        height: 40px;
+
+        margin-top: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 6px;
+
+        border: 1px solid #fecaca;
+
+        border-radius: 11px;
+
+        background: white;
+
+        color: var(--danger);
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease;
+      }
+
+      .logout-button:active {
+        transform: scale(0.98);
+        background: var(--danger-light);
+      }
+
+      /* =====================================================
+       VERSION
+    ===================================================== */
+
+      .version {
+        margin-top: auto;
+
+        padding-top: 9px;
+
+        text-align: center;
+
+        color: #9ca3af;
+
+        font-size: 7px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+
+        position: relative;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-notification {
+        position: absolute;
+
+        top: 2px;
+
+        right: calc(50% - 17px);
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       LOGOUT MODAL
+    ===================================================== */
+
+      .modal-overlay {
+        position: absolute;
+
+        inset: 0;
+
+        display: none;
+
+        align-items: flex-end;
+
+        background: rgba(15, 23, 42, 0.45);
+
+        z-index: 200;
+      }
+
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal {
+        width: 100%;
+
+        padding: 17px 16px calc(17px + env(safe-area-inset-bottom));
+
+        background: white;
+
+        border-radius: 22px 22px 0 0;
+
+        animation: slideUp 0.22s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+        }
+
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      .modal-handle {
+        width: 38px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 99px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 5px;
+
+        font-size: 10px;
+
+        line-height: 1.5;
+
+        color: var(--muted);
+      }
+
+      .modal-actions {
+        display: flex;
+
+        gap: 8px;
+
+        margin-top: 15px;
+      }
+
+      .modal-button {
+        flex: 1;
+
+        height: 41px;
+
+        border-radius: 11px;
+
+        font-size: 10px;
+
+        font-weight: 700;
+      }
+
+      .modal-cancel {
+        background: #f3f4f6;
+
+        color: var(--text);
+      }
+
+      .modal-confirm {
+        background: var(--danger);
+
+        color: white;
+      }
+
+      /* =====================================================
+       SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(12px, env(safe-area-inset-top));
+
+          padding-bottom: 8px;
+        }
+
+        .back-button,
+        .header-action {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+        }
+
+        .page-intro p {
+          font-size: 10px;
+        }
+
+        .profile-card {
+          margin-top: 9px;
+
+          padding: 10px 11px;
+        }
+
+        .avatar {
+          width: 45px;
+          height: 45px;
+
+          border-radius: 12px;
+
+          font-size: 15px;
+        }
+
+        .section-header {
+          margin-top: 8px;
+          margin-bottom: 5px;
+        }
+
+        .setting-item {
+          min-height: 44px;
+
+          padding: 6px 10px;
+        }
+
+        .setting-icon {
+          width: 30px;
+          height: 30px;
+
+          border-radius: 9px;
+        }
+
+        .setting-icon svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        .status-row {
+          margin-top: 7px;
+
+          padding: 8px 10px;
+        }
+
+        .logout-button {
+          margin-top: 7px;
+
+          height: 36px;
+        }
+
+        .version {
+          padding-top: 6px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .page-intro p {
+          display: none;
+        }
+
+        .profile-card {
+          margin-top: 7px;
+        }
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+
+          font-size: 14px;
+        }
+
+        .profile-meta {
+          margin-top: 4px;
+        }
+
+        .section-header {
+          margin-top: 6px;
+        }
+
+        .setting-item {
+          min-height: 40px;
+        }
+
+        .setting-icon {
+          width: 27px;
+          height: 27px;
+        }
+
+        .setting-title {
+          font-size: 9px;
+        }
+
+        .setting-value {
+          font-size: 7px;
+        }
+
+        .status-row {
+          display: none;
+        }
+
+        .logout-button {
+          height: 34px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5"></path>
+                  <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Profile </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="header-action"
+              id="editButton"
+              aria-label="Edit profile"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 20h9"></path>
+
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <h1>My Profile</h1>
+
+            <p>Manage your account and customer portal preferences.</p>
+          </div>
+
+          <!-- =================================================
+             PROFILE
+        ================================================= -->
+
+          <section class="profile-card">
+            <div class="avatar">JP</div>
+
+            <div class="profile-info">
+              <div class="profile-name">Jaka Prayudha</div>
+
+              <div class="profile-company">PT Nusa Network Indonesia</div>
+
+              <div class="profile-meta">
+                <span class="customer-id"> CUST-2026-0018 </span>
+
+                <span class="verified">
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 6L9 17l-5-5"></path>
+                  </svg>
+
+                  Verified
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- =================================================
+             ACCOUNT
+        ================================================= -->
+
+          <div class="section-header">
+            <div class="section-title">Account</div>
+
+            <div class="section-caption">Account information</div>
+          </div>
+
+          <section class="settings-card">
+            <!-- PERSONAL INFORMATION -->
+
+            <button
+              type="button"
+              class="setting-item"
+              onclick="showToast('Personal information')"
+            >
+              <div class="setting-icon blue">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 21a8 8 0 0 0-16 0"></path>
+
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+
+              <div class="setting-content">
+                <div class="setting-title">Personal Information</div>
+
+                <div class="setting-value">
+                  Name, company and contact information
+                </div>
+              </div>
+
+              <div class="setting-arrow">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- CONTACT -->
+
+            <button
+              type="button"
+              class="setting-item"
+              onclick="showToast('Contact information')"
+            >
+              <div class="setting-icon">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2
+                  19.79 19.79 0 0 1-8.63-3.07
+                  19.5 19.5 0 0 1-6-6
+                  19.79 19.79 0 0 1-3.07-8.67
+                  A2 2 0 0 1 4.11 2h3
+                  a2 2 0 0 1 2 1.72
+                  12.84 12.84 0 0 0 .7 2.81
+                  2 2 0 0 1-.45 2.11L8.09 9.91
+                  a16 16 0 0 0 6 6l1.27-1.27
+                  a2 2 0 0 1 2.11-.45
+                  12.84 12.84 0 0 0 2.81.7
+                  A2 2 0 0 1 22 16.92z"
+                  ></path>
+                </svg>
+              </div>
+
+              <div class="setting-content">
+                <div class="setting-title">Contact</div>
+
+                <div class="setting-value">+62 821-6652-4717</div>
+              </div>
+
+              <div class="setting-arrow">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- EMAIL -->
+
+            <button
+              type="button"
+              class="setting-item"
+              onclick="showToast('Email information')"
+            >
+              <div class="setting-icon">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+                  <polyline points="3 7 12 13 21 7"></polyline>
+                </svg>
+              </div>
+
+              <div class="setting-content">
+                <div class="setting-title">Email Address</div>
+
+                <div class="setting-value">customer@example.com</div>
+              </div>
+
+              <div class="setting-arrow">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+          </section>
+
+          <!-- =================================================
+             PREFERENCES
+        ================================================= -->
+
+          <div class="section-header">
+            <div class="section-title">Preferences</div>
+
+            <div class="section-caption">Portal settings</div>
+          </div>
+
+          <section class="settings-card">
+            <!-- NOTIFICATIONS -->
+
+            <button
+              type="button"
+              class="setting-item"
+              onclick="showToast('Notification preferences')"
+            >
+              <div class="setting-icon blue">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 8a6 6 0 0 0-12 0
+                  c0 7-3 7-3 9h18
+                  c0-2-3-2-3-9"
+                  ></path>
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+
+              <div class="setting-content">
+                <div class="setting-title">Notifications</div>
+
+                <div class="setting-value">
+                  Push, WhatsApp and Email notifications
+                </div>
+              </div>
+
+              <div class="setting-arrow">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- SECURITY -->
+
+            <button
+              type="button"
+              class="setting-item"
+              onclick="showToast('Security settings')"
+            >
+              <div class="setting-icon green">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+
+              <div class="setting-content">
+                <div class="setting-title">Security</div>
+
+                <div class="setting-value">Password and account security</div>
+              </div>
+
+              <div class="setting-arrow">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+          </section>
+
+          <!-- =================================================
+             ACCOUNT STATUS
+        ================================================= -->
+
+          <div class="status-row">
+            <div class="status-dot"></div>
+
+            <div class="status-content">
+              <div class="status-title">Account Verified</div>
+
+              <div class="status-text">
+                Your customer account is active and verified.
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             LOGOUT
+        ================================================= -->
+
+          <button type="button" class="logout-button" id="logoutButton">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 21H5a2 2 0 0 1-2-2V5
+              a2 2 0 0 1 2-2h4"
+              ></path>
+
+              <polyline points="16 17 21 12 16 7"></polyline>
+
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+
+            Sign Out
+          </button>
+
+          <div class="version">
+            NPN Work Management • Customer Portal • v1.0.0
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- ORDERS -->
+
+          <button type="button" class="nav-item" data-page="orders">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2h9l4 4v16H6z"></path>
+
+              <path d="M14 2v5h5"></path>
+
+              <path d="M9 12h6"></path>
+
+              <path d="M9 16h6"></path>
+            </svg>
+
+            Orders
+          </button>
+
+          <!-- ALERTS -->
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M18 8a6 6 0 0 0-12 0
+              c0 7-3 7-3 9h18
+              c0-2-3-2-3-9"
+              ></path>
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            <span class="nav-notification"></span>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item active" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+
+      <!-- =====================================================
+         LOGOUT MODAL
+    ===================================================== -->
+
+      <div class="modal-overlay" id="logoutModal">
+        <div class="modal">
+          <div class="modal-handle"></div>
+
+          <div class="modal-title">Sign Out?</div>
+
+          <div class="modal-text">
+            Are you sure you want to sign out from your customer account?
+          </div>
+
+          <div class="modal-actions">
+            <button
+              type="button"
+              class="modal-button modal-cancel"
+              id="cancelLogout"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              class="modal-button modal-confirm"
+              id="confirmLogout"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+         TOAST
+    ===================================================== -->
+
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      const logoutModal = document.getElementById("logoutModal");
+
+      let toastTimer;
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       EDIT PROFILE
+    ===================================================== */
+
+      document
+        .getElementById("editButton")
+        .addEventListener("click", function () {
+          showToast("Edit profile will be available soon");
+        });
+
+      /* =====================================================
+       LOGOUT MODAL
+    ===================================================== */
+
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function () {
+          logoutModal.classList.add("show");
+        });
+
+      document
+        .getElementById("cancelLogout")
+        .addEventListener("click", function () {
+          logoutModal.classList.remove("show");
+        });
+
+      logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+          logoutModal.classList.remove("show");
+        }
+      });
+
+      /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+      document
+        .getElementById("confirmLogout")
+        .addEventListener("click", function () {
+          /*
+          Future API:
+
+          POST /api/auth/logout.php
+
+          localStorage.clear();
+          sessionStorage.clear();
+        */
+
+          showToast("Signing out...");
+
+          setTimeout(function () {
+            window.location.href = "../login.html";
+          }, 700);
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "orders") {
+            window.location.href = "orders.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+          }
+        });
+      });
+
+      /* =====================================================
+       ESCAPE
+    ===================================================== */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          logoutModal.classList.remove("show");
+
+          window.location.href = "dashboard.html";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Notifications - Surveyor - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        color: var(--text);
+
+        background: var(--background);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .back-button,
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .back-button svg,
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+
+        min-width: 0;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       MAIN
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+      }
+
+      /* =====================================================
+       PAGE INTRO
+    ===================================================== */
+
+      .page-intro {
+        padding-top: 4px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+
+        line-height: 27px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.6px;
+      }
+
+      .page-intro p {
+        margin-top: 3px;
+
+        font-size: 11px;
+
+        line-height: 15px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+      .summary-card {
+        margin-top: 13px;
+
+        padding: 11px 13px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .summary-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+      }
+
+      .summary-icon {
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .summary-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .summary-text span {
+        display: block;
+
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      .summary-text strong {
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 13px;
+
+        font-weight: 800;
+      }
+
+      .mark-read {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       TOOLBAR
+    ===================================================== */
+
+      .toolbar {
+        margin-top: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .toolbar-title {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .filter-group {
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+      }
+
+      .filter-button {
+        height: 27px;
+
+        padding: 0 8px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        background: white;
+
+        color: #6b7280;
+
+        font-family: inherit;
+
+        font-size: 8px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+      }
+
+      .filter-button.active {
+        background: var(--primary);
+
+        border-color: var(--primary);
+
+        color: white;
+      }
+
+      /* =====================================================
+       NOTIFICATION LIST
+    ===================================================== */
+
+      .notification-list {
+        margin-top: 8px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+        min-height: 0;
+
+        overflow: hidden;
+      }
+
+      .notification-card {
+        width: 100%;
+
+        padding: 10px 11px;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 9px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+
+        cursor: pointer;
+
+        transition:
+          transform 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .notification-card:active {
+        transform: scale(0.985);
+      }
+
+      .notification-card.unread {
+        border-color: #dbeafe;
+
+        background: linear-gradient(90deg, #ffffff, #f8fbff);
+      }
+
+      .notification-icon {
+        width: 34px;
+        height: 34px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .notification-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .notification-card.order .notification-icon {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .notification-card.assignment .notification-icon {
+        background: var(--warning-light);
+
+        color: var(--warning);
+      }
+
+      .notification-card.success .notification-icon {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      .notification-card.alert .notification-icon {
+        background: var(--danger-light);
+
+        color: var(--danger);
+      }
+
+      .notification-content {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .notification-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .notification-title {
+        font-size: 10px;
+
+        line-height: 13px;
+
+        font-weight: 800;
+
+        color: #374151;
+      }
+
+      .notification-time {
+        flex-shrink: 0;
+
+        font-size: 7px;
+
+        color: #9ca3af;
+      }
+
+      .notification-message {
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        line-height: 11px;
+
+        color: var(--muted);
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+      }
+
+      .notification-meta {
+        margin-top: 5px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+      }
+
+      .notification-tag {
+        display: inline-flex;
+
+        align-items: center;
+
+        height: 17px;
+
+        padding: 0 6px;
+
+        border-radius: 6px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+
+        font-size: 7px;
+
+        font-weight: 700;
+      }
+
+      .notification-card.unread .notification-tag {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .unread-dot {
+        width: 6px;
+        height: 6px;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+      }
+
+      /* =====================================================
+       EMPTY
+    ===================================================== */
+
+      .empty-state {
+        display: none;
+
+        padding: 30px 15px;
+
+        text-align: center;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+      }
+
+      .empty-state svg {
+        width: 28px;
+        height: 28px;
+
+        color: #9ca3af;
+      }
+
+      .empty-state strong {
+        display: block;
+
+        margin-top: 7px;
+
+        font-size: 11px;
+      }
+
+      .empty-state p {
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 10px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .back-button,
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+        }
+
+        .summary-card {
+          margin-top: 9px;
+
+          padding: 9px 11px;
+        }
+
+        .toolbar {
+          margin-top: 8px;
+        }
+
+        .notification-list {
+          margin-top: 6px;
+
+          gap: 5px;
+        }
+
+        .notification-card {
+          padding: 8px 9px;
+        }
+
+        .notification-icon {
+          width: 31px;
+          height: 31px;
+        }
+
+        .notification-message {
+          -webkit-line-clamp: 1;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .page-intro h1 {
+          font-size: 18px;
+
+          line-height: 22px;
+        }
+
+        .page-intro p {
+          font-size: 9px;
+        }
+
+        .summary-card {
+          padding: 7px 9px;
+        }
+
+        .summary-icon {
+          width: 28px;
+          height: 28px;
+        }
+
+        .toolbar-title {
+          font-size: 11px;
+        }
+
+        .filter-button {
+          height: 24px;
+
+          padding: 0 6px;
+
+          font-size: 7px;
+        }
+
+        .notification-card {
+          padding: 6px 8px;
+        }
+
+        .notification-icon {
+          width: 28px;
+          height: 28px;
+        }
+
+        .notification-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+
+        .notification-title {
+          font-size: 9px;
+        }
+
+        .notification-message {
+          font-size: 7px;
+
+          line-height: 9px;
+        }
+
+        .notification-meta {
+          margin-top: 3px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Notifications </strong>
+
+                <span> Surveyor Portal </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="header-button"
+              id="notificationButton"
+              aria-label="Notifications"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN CONTENT
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <h1>Notifications</h1>
+
+            <p>
+              Stay updated with assignments, survey schedules and work order
+              changes.
+            </p>
+          </div>
+
+          <!-- SUMMARY -->
+
+          <div class="summary-card">
+            <div class="summary-left">
+              <div class="summary-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+              </div>
+
+              <div class="summary-text">
+                <span> UNREAD NOTIFICATIONS </span>
+
+                <strong id="unreadCount"> 4 </strong>
+              </div>
+            </div>
+
+            <button type="button" class="mark-read" id="markAllRead">
+              Mark all as read
+            </button>
+          </div>
+
+          <!-- TOOLBAR -->
+
+          <div class="toolbar">
+            <div class="toolbar-title">Recent Updates</div>
+
+            <div class="filter-group">
+              <button
+                type="button"
+                class="filter-button active"
+                data-filter="all"
+              >
+                All
+              </button>
+
+              <button type="button" class="filter-button" data-filter="unread">
+                Unread
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="assignment"
+              >
+                Assignment
+              </button>
+            </div>
+          </div>
+
+          <!-- =================================================
+             NOTIFICATIONS
+        ================================================= -->
+
+          <div class="notification-list" id="notificationList">
+            <!-- 1 -->
+
+            <article
+              class="notification-card assignment unread"
+              data-type="assignment"
+              data-unread="true"
+              data-action="survey"
+              data-id="WO-2026-00127"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3 4 7l8 4 8-4-8-4Z" />
+
+                  <path d="m4 12 8 4 8-4" />
+
+                  <path d="m4 17 8 4 8-4" />
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title">
+                    New Survey Assignment
+                  </strong>
+
+                  <span class="notification-time"> 12m </span>
+                </div>
+
+                <p class="notification-message">
+                  You have been assigned to survey WO-2026-00127 for PT Maju
+                  Network.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> ASSIGNMENT </span>
+
+                  <span class="unread-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2 -->
+
+            <article
+              class="notification-card order unread"
+              data-type="order"
+              data-unread="true"
+              data-action="survey"
+              data-id="WO-2026-00124"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="2" />
+
+                  <path d="M8 9h8"></path>
+
+                  <path d="M8 13h5"></path>
+
+                  <path d="M8 17h3"></path>
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title">
+                    Survey Schedule Confirmed
+                  </strong>
+
+                  <span class="notification-time"> 1h </span>
+                </div>
+
+                <p class="notification-message">
+                  WO-2026-00124 is scheduled for 16 Sep 2026 at 13:30.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> SCHEDULE </span>
+
+                  <span class="unread-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3 -->
+
+            <article
+              class="notification-card alert unread"
+              data-type="alert"
+              data-unread="true"
+              data-action="none"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.3 3.5 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.5a2 2 0 0 0-3.4 0Z"
+                  />
+
+                  <path d="M12 9v4"></path>
+
+                  <path d="M12 17h.01"></path>
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title">
+                    Survey Deadline Reminder
+                  </strong>
+
+                  <span class="notification-time"> 2h </span>
+                </div>
+
+                <p class="notification-message">
+                  Complete the feasibility survey for WO-2026-00124 before
+                  today's SLA.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> SLA REMINDER </span>
+
+                  <span class="unread-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4 -->
+
+            <article
+              class="notification-card order unread"
+              data-type="order"
+              data-unread="true"
+              data-action="survey"
+              data-id="WO-2026-00122"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 5h16v14H4z" />
+
+                  <path d="M8 9h8" />
+
+                  <path d="M8 13h5" />
+
+                  <path d="M8 17h3" />
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title">
+                    Work Order Updated
+                  </strong>
+
+                  <span class="notification-time"> 4h </span>
+                </div>
+
+                <p class="notification-message">
+                  Customer information has been updated for WO-2026-00122.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> WORK ORDER </span>
+
+                  <span class="unread-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5 -->
+
+            <article
+              class="notification-card success"
+              data-type="success"
+              data-unread="false"
+              data-action="survey"
+              data-id="WO-2026-00119"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9" />
+
+                  <path d="m8 12 2.5 2.5L16 9" />
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title"> Survey Completed </strong>
+
+                  <span class="notification-time"> Yesterday </span>
+                </div>
+
+                <p class="notification-message">
+                  WO-2026-00119 survey report was successfully submitted.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> COMPLETED </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 6 -->
+
+            <article
+              class="notification-card"
+              data-type="system"
+              data-unread="false"
+              data-action="none"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9" />
+
+                  <path d="M12 8v4"></path>
+
+                  <path d="M12 16h.01"></path>
+                </svg>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <strong class="notification-title">
+                    System Maintenance
+                  </strong>
+
+                  <span class="notification-time"> 2d </span>
+                </div>
+
+                <p class="notification-message">
+                  NPN Work Management maintenance is scheduled tonight at 23:00.
+                </p>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> SYSTEM </span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- EMPTY STATE -->
+
+          <div class="empty-state" id="emptyState">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            <strong> No notifications </strong>
+
+            <p>There are no notifications in this category.</p>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- SURVEYS -->
+
+          <button type="button" class="nav-item" data-page="surveys">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 3h12v18H6z"></path>
+
+              <path d="M9 7h6"></path>
+
+              <path d="M9 11h6"></path>
+
+              <path d="M9 15h4"></path>
+            </svg>
+
+            Surveys
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            data-page="notifications"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const notificationList = document.getElementById("notificationList");
+
+      const emptyState = document.getElementById("emptyState");
+
+      const unreadCount = document.getElementById("unreadCount");
+
+      const toast = document.getElementById("toast");
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      /* =====================================================
+       UPDATE UNREAD COUNT
+    ===================================================== */
+
+      function updateUnreadCount() {
+        const unread = document.querySelectorAll(
+          '.notification-card[data-unread="true"]',
+        );
+
+        unreadCount.textContent = unread.length;
+      }
+
+      /* =====================================================
+       FILTER
+    ===================================================== */
+
+      const filterButtons = document.querySelectorAll(".filter-button");
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          filterButtons.forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          button.classList.add("active");
+
+          const filter = button.dataset.filter;
+
+          const cards = document.querySelectorAll(".notification-card");
+
+          let visible = 0;
+
+          cards.forEach(function (card) {
+            const type = card.dataset.type;
+
+            const isUnread = card.dataset.unread === "true";
+
+            let show = false;
+
+            if (filter === "all") {
+              show = true;
+            } else if (filter === "unread") {
+              show = isUnread;
+            } else {
+              show = type === filter;
+            }
+
+            card.style.display = show ? "flex" : "none";
+
+            if (show) {
+              visible++;
+            }
+          });
+
+          emptyState.style.display = visible === 0 ? "block" : "none";
+        });
+      });
+
+      /* =====================================================
+       CLICK NOTIFICATION
+    ===================================================== */
+
+      document.querySelectorAll(".notification-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          /*
+                Mark as read
+              */
+
+          if (card.dataset.unread === "true") {
+            card.dataset.unread = "false";
+
+            card.classList.remove("unread");
+
+            const dot = card.querySelector(".unread-dot");
+
+            if (dot) {
+              dot.remove();
+            }
+
+            updateUnreadCount();
+          }
+
+          /*
+                Open related survey
+              */
+
+          const action = card.dataset.action;
+
+          const id = card.dataset.id;
+
+          if (action === "survey" && id) {
+            window.location.href =
+              "survey-detail.html?id=" + encodeURIComponent(id);
+
+            return;
+          }
+
+          showToast("Notification marked as read.");
+        });
+      });
+
+      /* =====================================================
+       MARK ALL READ
+    ===================================================== */
+
+      document
+        .getElementById("markAllRead")
+        .addEventListener("click", function () {
+          const unread = document.querySelectorAll(
+            '.notification-card[data-unread="true"]',
+          );
+
+          unread.forEach(function (card) {
+            card.dataset.unread = "false";
+
+            card.classList.remove("unread");
+
+            const dot = card.querySelector(".unread-dot");
+
+            if (dot) {
+              dot.remove();
+            }
+          });
+
+          updateUnreadCount();
+
+          showToast("All notifications marked as read.");
+        });
+
+      /* =====================================================
+       HEADER NOTIFICATION
+    ===================================================== */
+
+      document
+        .getElementById("notificationButton")
+        .addEventListener("click", function () {
+          showToast("You are already viewing notifications.");
+        });
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "surveys") {
+            window.location.href = "surveys.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+
+      /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+      updateUnreadCount();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1877 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Survey Detail - Surveyor - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        -webkit-overflow-scrolling: auto;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 14px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+
+        min-width: 0;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .header-actions {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        flex-shrink: 0;
+      }
+
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       HERO
+    ===================================================== */
+
+      .hero-card {
+        margin-top: 8px;
+
+        padding: 16px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(135deg, #111827, #1f2937);
+
+        color: white;
+
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      }
+
+      .hero-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .hero-number {
+        font-size: 10px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+      }
+
+      .hero-title {
+        margin-top: 4px;
+
+        font-size: 16px;
+
+        line-height: 1.3;
+
+        font-weight: 800;
+
+        letter-spacing: -0.3px;
+      }
+
+      .hero-customer {
+        margin-top: 4px;
+
+        font-size: 10px;
+
+        color: #d1d5db;
+      }
+
+      .hero-status {
+        flex-shrink: 0;
+
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        background: rgba(37, 99, 235, 0.18);
+
+        border: 1px solid rgba(96, 165, 250, 0.22);
+
+        color: #bfdbfe;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .hero-progress {
+        margin-top: 15px;
+      }
+
+      .hero-progress-header {
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        font-size: 9px;
+
+        color: #d1d5db;
+      }
+
+      .hero-progress-value {
+        font-weight: 700;
+
+        color: white;
+      }
+
+      .hero-progress-bar {
+        width: 100%;
+
+        height: 6px;
+
+        margin-top: 7px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .hero-progress-fill {
+        width: 65%;
+
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: #60a5fa;
+      }
+
+      /* =====================================================
+       WORKFLOW
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 16px;
+
+        margin-bottom: 9px;
+      }
+
+      .section-header h2 {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-link {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .workflow-card {
+        padding: 12px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+      }
+
+      .workflow {
+        display: flex;
+
+        align-items: flex-start;
+
+        overflow: hidden;
+      }
+
+      .workflow-item {
+        position: relative;
+
+        flex: 1;
+
+        min-width: 0;
+
+        text-align: center;
+      }
+
+      .workflow-line {
+        position: absolute;
+
+        top: 8px;
+
+        left: -50%;
+
+        width: 100%;
+
+        height: 1px;
+
+        background: #e5e7eb;
+
+        z-index: 0;
+      }
+
+      .workflow-item:first-child .workflow-line {
+        display: none;
+      }
+
+      .workflow-item.completed .workflow-line {
+        background: var(--accent);
+      }
+
+      .workflow-dot {
+        position: relative;
+
+        z-index: 1;
+
+        width: 16px;
+        height: 16px;
+
+        margin: 0 auto;
+
+        border-radius: 50%;
+
+        border: 3px solid white;
+
+        background: #e5e7eb;
+
+        box-shadow: 0 0 0 1px #e5e7eb;
+      }
+
+      .workflow-item.completed .workflow-dot {
+        background: var(--accent);
+
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+
+      .workflow-item.current .workflow-dot {
+        background: white;
+
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+
+      .workflow-label {
+        margin-top: 5px;
+
+        padding: 0 2px;
+
+        font-size: 7px;
+
+        line-height: 9px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+      }
+
+      .workflow-item.completed .workflow-label,
+      .workflow-item.current .workflow-label {
+        color: #374151;
+      }
+
+      /* =====================================================
+       INFO GRID
+    ===================================================== */
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        margin-top: 10px;
+      }
+
+      .info-item {
+        padding: 10px;
+
+        background: #f9fafb;
+
+        border: 1px solid #f0f1f3;
+
+        border-radius: 13px;
+      }
+
+      .info-item span {
+        display: block;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        margin-bottom: 3px;
+      }
+
+      .info-item strong {
+        display: block;
+
+        font-size: 10px;
+
+        line-height: 13px;
+
+        color: #374151;
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       LOCATION CARD
+    ===================================================== */
+
+      .location-card {
+        margin-top: 9px;
+
+        padding: 11px 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .location-info {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        min-width: 0;
+      }
+
+      .location-icon {
+        width: 32px;
+        height: 32px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .location-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .location-text {
+        min-width: 0;
+      }
+
+      .location-text span {
+        display: block;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        margin-bottom: 2px;
+      }
+
+      .location-text strong {
+        display: block;
+
+        font-size: 9px;
+
+        line-height: 12px;
+
+        color: #374151;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+      }
+
+      .map-button {
+        flex-shrink: 0;
+
+        height: 31px;
+
+        padding: 0 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        border-radius: 9px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-family: inherit;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .map-button svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      /* =====================================================
+       FIELD CHECKLIST
+    ===================================================== */
+
+      .checklist-card {
+        padding: 12px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+      }
+
+      .check-item {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        padding: 8px 0;
+
+        border-bottom: 1px solid #f0f1f3;
+      }
+
+      .check-item:first-child {
+        padding-top: 0;
+      }
+
+      .check-item:last-child {
+        padding-bottom: 0;
+
+        border-bottom: 0;
+      }
+
+      .check-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        min-width: 0;
+      }
+
+      .check-icon {
+        width: 26px;
+        height: 26px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 8px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .check-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .check-text strong {
+        display: block;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      .check-text span {
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+      }
+
+      .check-status {
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+
+        font-weight: 700;
+      }
+
+      .check-status.done {
+        color: var(--success);
+      }
+
+      .check-status.pending {
+        color: var(--warning);
+      }
+
+      .check-status svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      /* =====================================================
+       ACTION CARD
+    ===================================================== */
+
+      .action-card {
+        margin-top: 10px;
+
+        padding: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+      }
+
+      .action-copy {
+        min-width: 0;
+      }
+
+      .action-copy span {
+        display: block;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        margin-bottom: 3px;
+      }
+
+      .action-copy strong {
+        display: block;
+
+        font-size: 11px;
+
+        font-weight: 800;
+      }
+
+      .action-copy p {
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        line-height: 11px;
+      }
+
+      .primary-action {
+        flex-shrink: 0;
+
+        min-width: 104px;
+
+        height: 38px;
+
+        padding: 0 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        border: 0;
+
+        border-radius: 11px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .primary-action svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 13px 16px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .back-button,
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .hero-card {
+          margin-top: 4px;
+
+          padding: 13px;
+        }
+
+        .section-header {
+          margin-top: 11px;
+        }
+
+        .workflow-card {
+          padding: 9px;
+        }
+
+        .info-grid {
+          margin-top: 7px;
+        }
+
+        .location-card {
+          margin-top: 7px;
+        }
+
+        .checklist-card {
+          padding: 10px;
+        }
+
+        .action-card {
+          margin-top: 7px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .hero-title {
+          font-size: 14px;
+        }
+
+        .hero-progress {
+          margin-top: 10px;
+        }
+
+        .section-header {
+          margin-top: 8px;
+
+          margin-bottom: 6px;
+        }
+
+        .workflow-label {
+          font-size: 6px;
+        }
+
+        .info-item {
+          padding: 7px;
+        }
+
+        .location-card {
+          padding: 8px 10px;
+        }
+
+        .check-item {
+          padding: 6px 0;
+        }
+
+        .check-icon {
+          width: 23px;
+          height: 23px;
+        }
+
+        .action-card {
+          padding: 9px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          min-height: 0;
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Survey Detail </strong>
+
+                <span> Surveyor Portal </span>
+              </div>
+            </div>
+
+            <div class="header-actions">
+              <button
+                type="button"
+                class="header-button"
+                id="moreButton"
+                aria-label="More"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <circle cx="5" cy="12" r="1"></circle>
+
+                  <circle cx="12" cy="12" r="1"></circle>
+
+                  <circle cx="19" cy="12" r="1"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- =================================================
+             HERO
+        ================================================= -->
+
+          <div class="hero-card">
+            <div class="hero-top">
+              <div>
+                <div class="hero-number">WO-2026-00124</div>
+
+                <div class="hero-title">Metro Ethernet 300 Mbps</div>
+
+                <div class="hero-customer">PT Nusa Data</div>
+              </div>
+
+              <span class="hero-status"> IN PROGRESS </span>
+            </div>
+
+            <div class="hero-progress">
+              <div class="hero-progress-header">
+                <span> Survey Progress </span>
+
+                <span class="hero-progress-value"> 65% </span>
+              </div>
+
+              <div class="hero-progress-bar">
+                <div class="hero-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             WORKFLOW
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Survey Workflow</h2>
+
+            <button type="button" class="section-link" id="workflowInfo">
+              Details
+            </button>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow">
+              <!-- ASSIGNED -->
+
+              <div class="workflow-item completed">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Assigned</div>
+              </div>
+
+              <!-- SCHEDULE -->
+
+              <div class="workflow-item completed">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Schedule</div>
+              </div>
+
+              <!-- SURVEY -->
+
+              <div class="workflow-item current">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Survey</div>
+              </div>
+
+              <!-- FEASIBILITY -->
+
+              <div class="workflow-item">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Feasibility</div>
+              </div>
+
+              <!-- REPORT -->
+
+              <div class="workflow-item">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Report</div>
+              </div>
+
+              <!-- SUBMIT -->
+
+              <div class="workflow-item">
+                <div class="workflow-line"></div>
+
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Submit</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             SURVEY INFORMATION
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Survey Information</h2>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <span> Schedule </span>
+
+              <strong> 16 Sep · 13:30 </strong>
+            </div>
+
+            <div class="info-item">
+              <span> Priority </span>
+
+              <strong> Normal </strong>
+            </div>
+
+            <div class="info-item">
+              <span> Service </span>
+
+              <strong> Metro Ethernet </strong>
+            </div>
+
+            <div class="info-item">
+              <span> Bandwidth </span>
+
+              <strong> 300 Mbps </strong>
+            </div>
+          </div>
+
+          <!-- =================================================
+             LOCATION
+        ================================================= -->
+
+          <div class="location-card">
+            <div class="location-info">
+              <div class="location-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </div>
+
+              <div class="location-text">
+                <span> Survey Location </span>
+
+                <strong> Kawasan Industri Medan, Medan </strong>
+              </div>
+            </div>
+
+            <button type="button" class="map-button" id="mapButton">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3Z" />
+
+                <path d="M9 3v15"></path>
+
+                <path d="M15 6v15"></path>
+              </svg>
+
+              Map
+            </button>
+          </div>
+
+          <!-- =================================================
+             FIELD CHECKLIST
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Field Checklist</h2>
+
+            <span class="section-link"> 2 / 4 Done </span>
+          </div>
+
+          <div class="checklist-card">
+            <!-- GPS -->
+
+            <div class="check-item">
+              <div class="check-left">
+                <div class="check-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="8" />
+
+                    <circle cx="12" cy="12" r="2" />
+
+                    <path d="M12 2v2"></path>
+
+                    <path d="M12 20v2"></path>
+
+                    <path d="M2 12h2"></path>
+
+                    <path d="M20 12h2"></path>
+                  </svg>
+                </div>
+
+                <div class="check-text">
+                  <strong> GPS Location </strong>
+
+                  <span> Coordinates captured </span>
+                </div>
+              </div>
+
+              <div class="check-status done">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+                Done
+              </div>
+            </div>
+
+            <!-- PHOTO -->
+
+            <div class="check-item">
+              <div class="check-left">
+                <div class="check-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+
+                    <circle cx="12" cy="12" r="3" />
+
+                    <path d="M8 5l1.5-2h5L16 5" />
+                  </svg>
+                </div>
+
+                <div class="check-text">
+                  <strong> Site Photos </strong>
+
+                  <span> 6 photos captured </span>
+                </div>
+              </div>
+
+              <div class="check-status done">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+                Done
+              </div>
+            </div>
+
+            <!-- COVERAGE -->
+
+            <div class="check-item">
+              <div class="check-left">
+                <div class="check-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 20h14" />
+
+                    <path d="M7 17h10" />
+
+                    <path d="M9 14h6" />
+
+                    <path d="M11 11h2" />
+                  </svg>
+                </div>
+
+                <div class="check-text">
+                  <strong> Fiber Coverage </strong>
+
+                  <span> Check provider availability </span>
+                </div>
+              </div>
+
+              <div class="check-status pending">Pending</div>
+            </div>
+
+            <!-- FEASIBILITY -->
+
+            <div class="check-item">
+              <div class="check-left">
+                <div class="check-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 19h16" />
+
+                    <path d="M6 16V8" />
+
+                    <path d="M10 16V5" />
+
+                    <path d="M14 16v-7" />
+
+                    <path d="M18 16v-4" />
+                  </svg>
+                </div>
+
+                <div class="check-text">
+                  <strong> Technical Feasibility </strong>
+
+                  <span> Determine installation feasibility </span>
+                </div>
+              </div>
+
+              <div class="check-status pending">Pending</div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             ACTION
+        ================================================= -->
+
+          <div class="action-card">
+            <div class="action-copy">
+              <span> Next Action </span>
+
+              <strong> Continue Field Survey </strong>
+
+              <p>Complete coverage and feasibility checks.</p>
+            </div>
+
+            <button type="button" class="primary-action" id="continueButton">
+              Continue
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- SURVEYS -->
+
+          <button type="button" class="nav-item active" data-page="surveys">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 3h12v18H6z"></path>
+
+              <path d="M9 7h6"></path>
+
+              <path d="M9 11h6"></path>
+
+              <path d="M9 15h4"></path>
+            </svg>
+
+            Surveys
+          </button>
+
+          <!-- ALERTS -->
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "surveys.html";
+        });
+
+      /* =====================================================
+       MORE
+    ===================================================== */
+
+      document
+        .getElementById("moreButton")
+        .addEventListener("click", function () {
+          showToast("Survey options will be available here.");
+        });
+
+      /* =====================================================
+       WORKFLOW INFO
+    ===================================================== */
+
+      document
+        .getElementById("workflowInfo")
+        .addEventListener("click", function () {
+          showToast(
+            "Assigned → Schedule → Survey → Feasibility → Report → Submit",
+          );
+        });
+
+      /* =====================================================
+       MAP
+    ===================================================== */
+
+      document
+        .getElementById("mapButton")
+        .addEventListener("click", function () {
+          window.location.href = "survey-map.html?id=WO-2026-00124";
+        });
+
+      /* =====================================================
+       CONTINUE SURVEY
+    ===================================================== */
+
+      document
+        .getElementById("continueButton")
+        .addEventListener("click", function () {
+          window.location.href = "survey-form.html?id=WO-2026-00124";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "surveys") {
+            window.location.href = "surveys.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+
+      /* =====================================================
+       QUERY PARAMETER
+    ===================================================== */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const workOrder = params.get("id");
+
+      /*
+      Backend integration later:
+
+      GET
+      /api/surveyor/surveys.php?id=
+      ${workOrder}
+
+      Current UI intentionally uses
+      demo data.
+    */
+    </script>
+  </body>
+</html>

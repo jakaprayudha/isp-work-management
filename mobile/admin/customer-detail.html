@@ -1,0 +1,3038 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Customer Detail — Admin | NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #111827;
+        --primary-soft: #1f2937;
+        --accent: #2563eb;
+
+        --bg: #f8fafc;
+        --white: #fff;
+
+        --border: #e5e7eb;
+        --border-soft: #f1f5f9;
+
+        --text: #111827;
+        --muted: #64748b;
+        --muted-2: #94a3b8;
+
+        --success: #16a34a;
+        --success-bg: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-bg: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-bg: #fef2f2;
+
+        --info: #2563eb;
+        --info-bg: #eff6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: #e2e8f0;
+        color: var(--text);
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================
+       APP
+    ========================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-container {
+        position: relative;
+
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        background: var(--bg);
+
+        overflow: hidden;
+      }
+
+      /* =========================
+       HEADER
+    ========================= */
+
+      .app-header {
+        height: 64px;
+
+        padding: calc(env(safe-area-inset-top) + 8px) 20px 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        border-bottom: 1px solid var(--border);
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        position: relative;
+        z-index: 20;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .back-btn,
+      .header-action {
+        width: 38px;
+        height: 38px;
+
+        flex: 0 0 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: var(--white);
+
+        color: var(--text);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: relative;
+      }
+
+      .back-btn:active,
+      .header-action:active {
+        transform: scale(0.96);
+      }
+
+      .header-title-wrap {
+        min-width: 0;
+      }
+
+      .header-title {
+        font-size: 13px;
+        line-height: 16px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header-subtitle {
+        margin-top: 1px;
+
+        font-size: 9px;
+        line-height: 12px;
+
+        color: var(--muted);
+
+        font-weight: 500;
+      }
+
+      .notification-dot {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 1.5px solid var(--white);
+      }
+
+      /* =========================
+       MAIN
+    ========================= */
+
+      .main-content {
+        height: calc(100dvh - 64px);
+
+        padding: 4px 20px 90px;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+      }
+
+      .content-scroll {
+        flex: 1;
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        padding-bottom: 8px;
+
+        scrollbar-width: none;
+      }
+
+      .content-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* =========================
+       INTRO
+    ========================= */
+
+      .page-intro {
+        padding: 7px 0 9px;
+      }
+
+      .eyebrow {
+        font-size: 9px;
+        line-height: 12px;
+
+        font-weight: 700;
+
+        color: var(--accent);
+
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .page-title {
+        margin-top: 2px;
+
+        font-size: 20px;
+        line-height: 24px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.03em;
+      }
+
+      .page-description {
+        margin-top: 3px;
+
+        font-size: 10px;
+        line-height: 15px;
+
+        color: var(--muted);
+      }
+
+      /* =========================
+       CUSTOMER HERO
+    ========================= */
+
+      .customer-hero {
+        padding: 14px;
+
+        margin-bottom: 9px;
+
+        border-radius: 17px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-soft)
+        );
+
+        color: #fff;
+
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+      }
+
+      .hero-top {
+        display: flex;
+
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .customer-identity {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .customer-avatar {
+        width: 43px;
+        height: 43px;
+
+        flex: 0 0 43px;
+
+        border-radius: 13px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        border: 1px solid rgba(255, 255, 255, 0.14);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 12px;
+
+        font-weight: 800;
+      }
+
+      .customer-copy {
+        min-width: 0;
+      }
+
+      .customer-name {
+        font-size: 14px;
+        line-height: 18px;
+
+        font-weight: 800;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .customer-id {
+        margin-top: 2px;
+
+        font-size: 8px;
+        line-height: 11px;
+
+        color: rgba(255, 255, 255, 0.66);
+      }
+
+      .status-badge {
+        flex: 0 0 auto;
+
+        padding: 5px 8px;
+
+        border-radius: 999px;
+
+        background: rgba(34, 197, 94, 0.14);
+
+        color: #86efac;
+
+        border: 1px solid rgba(134, 239, 172, 0.16);
+
+        font-size: 7px;
+        line-height: 9px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.04em;
+      }
+
+      .hero-service {
+        margin-top: 12px;
+
+        padding-top: 10px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+      }
+
+      .hero-stat-label {
+        font-size: 7px;
+        line-height: 10px;
+
+        color: rgba(255, 255, 255, 0.55);
+
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .hero-stat-value {
+        margin-top: 2px;
+
+        font-size: 9px;
+        line-height: 12px;
+
+        font-weight: 700;
+      }
+
+      /* =========================
+       SECTION
+    ========================= */
+
+      .section {
+        margin-bottom: 9px;
+      }
+
+      .section-head {
+        min-height: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 5px;
+      }
+
+      .section-title {
+        font-size: 10px;
+        line-height: 14px;
+
+        font-weight: 800;
+      }
+
+      .section-meta {
+        font-size: 8px;
+
+        color: var(--muted-2);
+
+        font-weight: 600;
+      }
+
+      /* =========================
+       INFO CARD
+    ========================= */
+
+      .info-card {
+        width: 100%;
+
+        padding: 10px 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 9px 12px;
+      }
+
+      .info-item {
+        min-width: 0;
+      }
+
+      .info-label {
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      .info-value {
+        margin-top: 2px;
+
+        font-size: 9px;
+        line-height: 13px;
+
+        color: var(--text);
+
+        font-weight: 700;
+
+        overflow-wrap: anywhere;
+      }
+
+      .info-value.muted {
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      /* =========================
+       CONTACT
+    ========================= */
+
+      .contact-list {
+        padding: 10px 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .contact-row {
+        min-height: 39px;
+
+        display: grid;
+
+        grid-template-columns: 30px 1fr auto;
+
+        align-items: center;
+
+        gap: 8px;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .contact-row:last-child {
+        border-bottom: 0;
+      }
+
+      .contact-icon {
+        width: 30px;
+        height: 30px;
+
+        border-radius: 9px;
+
+        background: #f1f5f9;
+
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .contact-copy {
+        min-width: 0;
+      }
+
+      .contact-label {
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+      }
+
+      .contact-value {
+        margin-top: 1px;
+
+        font-size: 8px;
+        line-height: 12px;
+
+        font-weight: 700;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .contact-action {
+        width: 27px;
+        height: 27px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: var(--white);
+
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* =========================
+       SERVICE CARD
+    ========================= */
+
+      .service-card {
+        padding: 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .service-header {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+
+        padding-bottom: 9px;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .service-name {
+        font-size: 10px;
+        line-height: 13px;
+
+        font-weight: 800;
+      }
+
+      .service-status {
+        padding: 4px 7px;
+
+        border-radius: 999px;
+
+        background: var(--success-bg);
+
+        color: var(--success);
+
+        font-size: 7px;
+        line-height: 9px;
+
+        font-weight: 800;
+      }
+
+      .service-details {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 8px;
+
+        padding-top: 9px;
+      }
+
+      .service-detail-label {
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+      }
+
+      .service-detail-value {
+        margin-top: 2px;
+
+        font-size: 8px;
+        line-height: 11px;
+
+        font-weight: 800;
+      }
+
+      /* =========================
+       WORK ORDERS
+    ========================= */
+
+      .wo-list {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 6px;
+      }
+
+      .wo-card {
+        width: 100%;
+
+        padding: 10px 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        text-align: left;
+
+        transition: 0.18s ease;
+      }
+
+      .wo-card:active {
+        transform: scale(0.99);
+      }
+
+      .wo-top {
+        display: flex;
+
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .wo-id {
+        font-size: 8px;
+        line-height: 11px;
+
+        color: var(--accent);
+
+        font-weight: 800;
+      }
+
+      .wo-status {
+        padding: 4px 6px;
+
+        border-radius: 999px;
+
+        font-size: 6px;
+        line-height: 8px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.03em;
+      }
+
+      .wo-status.progress {
+        color: var(--info);
+
+        background: var(--info-bg);
+      }
+
+      .wo-status.completed {
+        color: var(--success);
+
+        background: var(--success-bg);
+      }
+
+      .wo-status.pending {
+        color: var(--warning);
+
+        background: var(--warning-bg);
+      }
+
+      .wo-title {
+        margin-top: 4px;
+
+        font-size: 9px;
+        line-height: 12px;
+
+        font-weight: 800;
+      }
+
+      .wo-meta {
+        margin-top: 2px;
+
+        font-size: 7px;
+        line-height: 11px;
+
+        color: var(--muted);
+      }
+
+      .wo-footer {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+
+        margin-top: 7px;
+
+        padding-top: 7px;
+
+        border-top: 1px solid var(--border-soft);
+      }
+
+      .wo-stage {
+        font-size: 7px;
+
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      .wo-arrow {
+        color: var(--muted-2);
+      }
+
+      /* =========================
+       SLA CARD
+    ========================= */
+
+      .sla-card {
+        padding: 11px;
+
+        border-radius: 15px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-soft)
+        );
+
+        color: #fff;
+      }
+
+      .sla-top {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .sla-copy {
+        min-width: 0;
+      }
+
+      .sla-label {
+        font-size: 7px;
+        line-height: 10px;
+
+        color: rgba(255, 255, 255, 0.55);
+
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .sla-title {
+        margin-top: 2px;
+
+        font-size: 10px;
+        line-height: 13px;
+
+        font-weight: 800;
+      }
+
+      .sla-value {
+        font-size: 18px;
+        line-height: 21px;
+
+        font-weight: 800;
+      }
+
+      .sla-progress {
+        height: 5px;
+
+        margin-top: 10px;
+
+        overflow: hidden;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .sla-progress span {
+        display: block;
+
+        width: 98%;
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: #60a5fa;
+      }
+
+      .sla-footer {
+        display: flex;
+
+        justify-content: space-between;
+
+        margin-top: 6px;
+
+        font-size: 7px;
+
+        color: rgba(255, 255, 255, 0.58);
+      }
+
+      /* =========================
+       ACTIVITY
+    ========================= */
+
+      .activity-card {
+        padding: 10px 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .activity-row {
+        display: grid;
+
+        grid-template-columns: 20px 1fr;
+
+        gap: 8px;
+
+        padding: 8px 0;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .activity-row:first-child {
+        padding-top: 1px;
+      }
+
+      .activity-row:last-child {
+        padding-bottom: 1px;
+
+        border-bottom: 0;
+      }
+
+      .activity-dot {
+        width: 8px;
+        height: 8px;
+
+        margin-top: 3px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        box-shadow: 0 0 0 3px var(--info-bg);
+      }
+
+      .activity-title {
+        font-size: 8px;
+        line-height: 11px;
+
+        font-weight: 800;
+      }
+
+      .activity-time {
+        margin-top: 2px;
+
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+      }
+
+      /* =========================
+       ADMIN ACTIONS
+    ========================= */
+
+      .actions-card {
+        padding: 10px 11px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+      }
+
+      .action-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px;
+      }
+
+      .admin-action {
+        min-height: 39px;
+
+        padding: 7px 9px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 11px;
+
+        background: var(--white);
+
+        color: var(--text);
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        text-align: left;
+      }
+
+      .admin-action:hover {
+        background: #f8fafc;
+      }
+
+      .admin-action-icon {
+        width: 25px;
+        height: 25px;
+
+        flex: 0 0 25px;
+
+        border-radius: 8px;
+
+        background: #f1f5f9;
+
+        color: var(--primary);
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+      }
+
+      .admin-action-copy {
+        min-width: 0;
+      }
+
+      .admin-action-title {
+        font-size: 8px;
+        line-height: 11px;
+
+        font-weight: 800;
+      }
+
+      .admin-action-description {
+        margin-top: 1px;
+
+        font-size: 6px;
+        line-height: 9px;
+
+        color: var(--muted);
+      }
+
+      .admin-action.danger {
+        color: var(--danger);
+      }
+
+      .admin-action.danger .admin-action-icon {
+        background: var(--danger-bg);
+
+        color: var(--danger);
+      }
+
+      /* =========================
+       MORE MENU
+    ========================= */
+
+      .more-menu {
+        position: absolute;
+
+        left: 16px;
+        right: 16px;
+        bottom: 78px;
+
+        z-index: 40;
+
+        padding: 8px;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        border: 1px solid rgba(226, 232, 240, 0.95);
+
+        border-radius: 18px;
+
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transform: translateY(10px);
+
+        transition: 0.2s ease;
+
+        max-height: calc(100dvh - 110px);
+
+        overflow-y: auto;
+
+        scrollbar-width: none;
+      }
+
+      .more-menu::-webkit-scrollbar {
+        display: none;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+
+        transform: translateY(0);
+      }
+
+      .more-menu-header {
+        min-height: 42px;
+
+        padding: 4px 7px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .more-menu-heading {
+        min-width: 0;
+      }
+
+      .more-menu-title {
+        font-size: 10px;
+        line-height: 13px;
+
+        font-weight: 800;
+      }
+
+      .more-menu-subtitle {
+        margin-top: 1px;
+
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+      }
+
+      .more-close {
+        width: 28px;
+        height: 28px;
+
+        flex: 0 0 28px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: var(--white);
+
+        color: var(--muted);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .more-list {
+        padding-top: 5px;
+      }
+
+      .more-item {
+        width: 100%;
+        min-height: 52px;
+
+        padding: 7px 8px;
+
+        border: 0;
+
+        border-radius: 12px;
+
+        background: transparent;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        text-align: left;
+
+        color: var(--text);
+      }
+
+      .more-item:hover,
+      .more-item:active {
+        background: #f8fafc;
+      }
+
+      .more-item-icon {
+        width: 31px;
+        height: 31px;
+
+        flex: 0 0 31px;
+
+        border-radius: 10px;
+
+        background: #f1f5f9;
+
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .more-item-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .more-item-title {
+        font-size: 9px;
+        line-height: 12px;
+
+        font-weight: 800;
+      }
+
+      .more-item-description {
+        margin-top: 1px;
+
+        font-size: 7px;
+        line-height: 10px;
+
+        color: var(--muted);
+      }
+
+      .more-item-arrow {
+        color: var(--muted-2);
+      }
+
+      /* =========================
+       MODAL
+    ========================= */
+
+      .modal-overlay {
+        position: absolute;
+
+        inset: 0;
+
+        z-index: 60;
+
+        display: flex;
+        align-items: flex-end;
+
+        background: rgba(15, 23, 42, 0.38);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition: 0.2s ease;
+      }
+
+      .modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 10px 18px calc(env(safe-area-inset-bottom) + 18px);
+
+        background: var(--white);
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: 0.25s ease;
+      }
+
+      .modal-overlay.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 34px;
+        height: 4px;
+
+        margin: 0 auto 12px;
+
+        border-radius: 999px;
+
+        background: #cbd5e1;
+      }
+
+      .modal-title {
+        font-size: 14px;
+        line-height: 18px;
+
+        font-weight: 800;
+      }
+
+      .modal-message {
+        margin-top: 4px;
+
+        font-size: 9px;
+        line-height: 14px;
+
+        color: var(--muted);
+      }
+
+      .modal-actions {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px;
+
+        margin-top: 13px;
+      }
+
+      .modal-btn {
+        height: 36px;
+
+        border-radius: 11px;
+
+        border: 1px solid var(--border);
+
+        background: var(--white);
+
+        color: var(--text);
+
+        font-size: 9px;
+
+        font-weight: 800;
+      }
+
+      .modal-btn.primary {
+        background: var(--primary);
+
+        border-color: var(--primary);
+
+        color: #fff;
+      }
+
+      .modal-btn.danger {
+        background: var(--danger);
+
+        border-color: var(--danger);
+
+        color: #fff;
+      }
+
+      /* =========================
+       TOAST
+    ========================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+        bottom: 82px;
+
+        z-index: 80;
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+
+        color: #fff;
+
+        font-size: 8px;
+        line-height: 12px;
+
+        font-weight: 700;
+
+        text-align: center;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition: 0.2s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================
+       BOTTOM NAV
+    ========================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 30;
+
+        height: 68px;
+
+        padding: 7px 12px calc(env(safe-area-inset-bottom) + 7px);
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        gap: 4px;
+
+        background: rgba(255, 255, 255, 0.9);
+
+        border-top: 1px solid rgba(226, 232, 240, 0.9);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+      }
+
+      .nav-item {
+        min-width: 0;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        border-radius: 12px;
+
+        position: relative;
+      }
+
+      .nav-item span {
+        font-size: 7px;
+        line-height: 9px;
+
+        font-weight: 700;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active::before {
+        content: "";
+
+        position: absolute;
+
+        top: 2px;
+
+        width: 4px;
+        height: 4px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+      }
+
+      .nav-more {
+        width: 38px;
+        height: 38px;
+
+        justify-self: center;
+        align-self: center;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: #fff;
+
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
+
+        transition: 0.2s ease;
+      }
+
+      .nav-more span {
+        display: none;
+      }
+
+      .nav-more.open {
+        transform: rotate(45deg);
+      }
+
+      /* =========================
+       DESKTOP
+    ========================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 24px;
+
+          box-shadow:
+            0 24px 70px rgba(15, 23, 42, 0.18),
+            0 0 0 1px rgba(148, 163, 184, 0.16);
+        }
+
+        .main-content {
+          height: calc(100% - 64px);
+        }
+      }
+
+      /* =========================
+       SMALL HEIGHT
+    ========================= */
+
+      @media (max-height: 700px) {
+        .page-intro {
+          padding-top: 4px;
+          padding-bottom: 6px;
+        }
+
+        .page-title {
+          font-size: 18px;
+          line-height: 22px;
+        }
+
+        .customer-hero {
+          padding: 11px;
+        }
+
+        .section {
+          margin-bottom: 7px;
+        }
+
+        .more-item {
+          min-height: 47px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .section {
+          margin-bottom: 6px;
+        }
+
+        .more-item {
+          min-height: 43px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .main-content {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .app-header {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .bottom-nav {
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+
+        .info-grid {
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =========================
+           HEADER
+      ========================= -->
+
+        <header class="app-header">
+          <div class="header-left">
+            <button class="back-btn" onclick="goBack()" aria-label="Back">
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H5"></path>
+                <path d="M12 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+
+            <div class="header-title-wrap">
+              <div class="header-title">NPN / Work Management</div>
+
+              <div class="header-subtitle">Admin Portal</div>
+            </div>
+          </div>
+
+          <button
+            class="header-action"
+            onclick="navigateTo('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            <span class="notification-dot"></span>
+          </button>
+        </header>
+
+        <!-- =========================
+           MAIN
+      ========================= -->
+
+        <main class="main-content">
+          <div class="content-scroll">
+            <!-- PAGE INTRO -->
+
+            <section class="page-intro">
+              <div class="eyebrow">Customer Management</div>
+
+              <div class="page-title">Customer Detail</div>
+
+              <div class="page-description">
+                View customer profile, active services, work orders, SLA
+                performance and operational activity.
+              </div>
+            </section>
+
+            <!-- =========================
+               CUSTOMER HERO
+          ========================= -->
+
+            <section class="customer-hero">
+              <div class="hero-top">
+                <div class="customer-identity">
+                  <div class="customer-avatar">ND</div>
+
+                  <div class="customer-copy">
+                    <div class="customer-name" id="customerName">
+                      PT Nusa Data
+                    </div>
+
+                    <div class="customer-id" id="customerId">
+                      CUST-2026-0018
+                    </div>
+                  </div>
+                </div>
+
+                <div class="status-badge">ACTIVE</div>
+              </div>
+
+              <div class="hero-service">
+                <div>
+                  <div class="hero-stat-label">Customer Type</div>
+
+                  <div class="hero-stat-value">Business Customer</div>
+                </div>
+
+                <div>
+                  <div class="hero-stat-label">Customer Since</div>
+
+                  <div class="hero-stat-value">12 Aug 2026</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               CUSTOMER INFORMATION
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Customer Information</div>
+
+                <div class="section-meta">Account</div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-grid">
+                  <div class="info-item">
+                    <div class="info-label">Customer ID</div>
+
+                    <div class="info-value" id="infoCustomerId">
+                      CUST-2026-0018
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Status</div>
+
+                    <div class="info-value">Active</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Customer Type</div>
+
+                    <div class="info-value">Business</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Tax / Company ID</div>
+
+                    <div class="info-value">01.234.567.8-901.000</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">City</div>
+
+                    <div class="info-value">Medan</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Province</div>
+
+                    <div class="info-value">North Sumatra</div>
+                  </div>
+
+                  <div class="info-item" style="grid-column: 1 / -1">
+                    <div class="info-label">Address</div>
+
+                    <div class="info-value muted">
+                      Kawasan Industri Medan, Medan Deli, Kota Medan, Sumatera
+                      Utara
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               PRIMARY CONTACT
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Primary Contact</div>
+
+                <div class="section-meta">Contact Person</div>
+              </div>
+
+              <div class="contact-list">
+                <div class="contact-row">
+                  <div class="contact-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="8" r="4"></circle>
+                      <path d="M4 21a8 8 0 0 1 16 0"></path>
+                    </svg>
+                  </div>
+
+                  <div class="contact-copy">
+                    <div class="contact-label">Contact Name</div>
+
+                    <div class="contact-value">Budi Santoso</div>
+                  </div>
+
+                  <button
+                    class="contact-action"
+                    onclick="showToast('Contact profile opened')"
+                    aria-label="Contact"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                      ></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="contact-row">
+                  <div class="contact-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3.1 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L9 10.73a16 16 0 0 0 4.27 4.27l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 21 15.9z"
+                      ></path>
+                    </svg>
+                  </div>
+
+                  <div class="contact-copy">
+                    <div class="contact-label">Phone</div>
+
+                    <div class="contact-value">0812-3456-7890</div>
+                  </div>
+
+                  <button
+                    class="contact-action"
+                    onclick="showToast('Calling 0812-3456-7890')"
+                    aria-label="Call"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3.1 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L9 10.73a16 16 0 0 0 4.27 4.27l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 21 15.9z"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="contact-row">
+                  <div class="contact-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+                      <path d="m3 7 9 6 9-6"></path>
+                    </svg>
+                  </div>
+
+                  <div class="contact-copy">
+                    <div class="contact-label">Email</div>
+
+                    <div class="contact-value">admin@nusadata.co.id</div>
+                  </div>
+
+                  <button
+                    class="contact-action"
+                    onclick="showToast('Email action opened')"
+                    aria-label="Email"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+                      <path d="m3 7 9 6 9-6"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               ACTIVE SERVICE
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Active Service</div>
+
+                <div class="section-meta">01 Service</div>
+              </div>
+
+              <div class="service-card">
+                <div class="service-header">
+                  <div class="service-name">Metro Ethernet</div>
+
+                  <div class="service-status">ACTIVE</div>
+                </div>
+
+                <div class="service-details">
+                  <div>
+                    <div class="service-detail-label">Bandwidth</div>
+
+                    <div class="service-detail-value">300 Mbps</div>
+                  </div>
+
+                  <div>
+                    <div class="service-detail-label">Access</div>
+
+                    <div class="service-detail-value">Metro Fiber</div>
+                  </div>
+
+                  <div>
+                    <div class="service-detail-label">Location</div>
+
+                    <div class="service-detail-value">KIM Medan</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               SLA
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">SLA Performance</div>
+
+                <div class="section-meta">Current</div>
+              </div>
+
+              <div class="sla-card">
+                <div class="sla-top">
+                  <div class="sla-copy">
+                    <div class="sla-label">Customer SLA</div>
+
+                    <div class="sla-title">Service Performance</div>
+                  </div>
+
+                  <div class="sla-value">98%</div>
+                </div>
+
+                <div class="sla-progress">
+                  <span></span>
+                </div>
+
+                <div class="sla-footer">
+                  <span> SLA Compliance </span>
+
+                  <span> 08 Work Orders </span>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               WORK ORDERS
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Work Orders</div>
+
+                <div class="section-meta">08 Total</div>
+              </div>
+
+              <div class="wo-list">
+                <button
+                  class="wo-card"
+                  onclick="openWorkOrder('WO-2026-00124')"
+                >
+                  <div class="wo-top">
+                    <div class="wo-id">WO-2026-00124</div>
+
+                    <div class="wo-status progress">IN PROGRESS</div>
+                  </div>
+
+                  <div class="wo-title">
+                    Installation — Metro Ethernet 300 Mbps
+                  </div>
+
+                  <div class="wo-meta">
+                    KIM Medan · 16 Sep 2026 · SLA Today 16:00
+                  </div>
+
+                  <div class="wo-footer">
+                    <div class="wo-stage">Current Stage: Installation</div>
+
+                    <div class="wo-arrow">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  class="wo-card"
+                  onclick="openWorkOrder('WO-2026-00119')"
+                >
+                  <div class="wo-top">
+                    <div class="wo-id">WO-2026-00119</div>
+
+                    <div class="wo-status completed">COMPLETED</div>
+                  </div>
+
+                  <div class="wo-title">Installation & Handover</div>
+
+                  <div class="wo-meta">
+                    KIM Medan · 15 Sep 2026 · Completed 16:20
+                  </div>
+
+                  <div class="wo-footer">
+                    <div class="wo-stage">Current Stage: Complete</div>
+
+                    <div class="wo-arrow">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  class="wo-card"
+                  onclick="openWorkOrder('WO-2026-00115')"
+                >
+                  <div class="wo-top">
+                    <div class="wo-id">WO-2026-00115</div>
+
+                    <div class="wo-status completed">COMPLETED</div>
+                  </div>
+
+                  <div class="wo-title">CPE Installation</div>
+
+                  <div class="wo-meta">
+                    Medan · 14 Sep 2026 · Completed 14:45
+                  </div>
+
+                  <div class="wo-footer">
+                    <div class="wo-stage">Current Stage: Complete</div>
+
+                    <div class="wo-arrow">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </section>
+
+            <!-- =========================
+               ACTIVITY
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Recent Activity</div>
+
+                <div class="section-meta">Latest</div>
+              </div>
+
+              <div class="activity-card">
+                <div class="activity-row">
+                  <div class="activity-dot"></div>
+
+                  <div>
+                    <div class="activity-title">Installation started</div>
+
+                    <div class="activity-time">
+                      WO-2026-00124 · 16 Sep 2026 · 13:05
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-row">
+                  <div class="activity-dot"></div>
+
+                  <div>
+                    <div class="activity-title">Technician assigned</div>
+
+                    <div class="activity-time">
+                      WO-2026-00124 · 16 Sep 2026 · 12:20
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-row">
+                  <div class="activity-dot"></div>
+
+                  <div>
+                    <div class="activity-title">Work order approved</div>
+
+                    <div class="activity-time">
+                      WO-2026-00124 · 16 Sep 2026 · 10:15
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-row">
+                  <div class="activity-dot"></div>
+
+                  <div>
+                    <div class="activity-title">Customer account created</div>
+
+                    <div class="activity-time">12 Aug 2026 · 09:30</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================
+               ADMIN ACTIONS
+          ========================= -->
+
+            <section class="section">
+              <div class="section-head">
+                <div class="section-title">Admin Actions</div>
+
+                <div class="section-meta">Manage</div>
+              </div>
+
+              <div class="actions-card">
+                <div class="action-grid">
+                  <button class="admin-action" onclick="editCustomer()">
+                    <div class="admin-action-icon">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M12 20h9"></path>
+                        <path
+                          d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"
+                        ></path>
+                      </svg>
+                    </div>
+
+                    <div class="admin-action-copy">
+                      <div class="admin-action-title">Edit Customer</div>
+
+                      <div class="admin-action-description">
+                        Update customer data
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="admin-action" onclick="createWO()">
+                    <div class="admin-action-icon">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M12 5v14"></path>
+                        <path d="M5 12h14"></path>
+                      </svg>
+                    </div>
+
+                    <div class="admin-action-copy">
+                      <div class="admin-action-title">Create Work Order</div>
+
+                      <div class="admin-action-description">
+                        Start new service work
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    class="admin-action"
+                    onclick="showToast('Customer status management opened')"
+                  >
+                    <div class="admin-action-icon">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M8 12h8"></path>
+                      </svg>
+                    </div>
+
+                    <div class="admin-action-copy">
+                      <div class="admin-action-title">Change Status</div>
+
+                      <div class="admin-action-description">
+                        Activate or suspend
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    class="admin-action danger"
+                    onclick="openSuspendModal()"
+                  >
+                    <div class="admin-action-icon">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M10.3 3.2 2.6 16.5A2 2 0 0 0 4.3 19.5h15.4a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0Z"
+                        ></path>
+                        <path d="M12 9v4"></path>
+                        <path d="M12 17h.01"></path>
+                      </svg>
+                    </div>
+
+                    <div class="admin-action-copy">
+                      <div class="admin-action-title">Suspend Customer</div>
+
+                      <div class="admin-action-description">
+                        Restrict account access
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <!-- =========================
+           MORE MENU
+      ========================= -->
+
+        <div class="more-menu" id="moreMenu">
+          <div class="more-menu-header">
+            <div class="more-menu-heading">
+              <div class="more-menu-title">Admin Access</div>
+
+              <div class="more-menu-subtitle">
+                System administration and operations control
+              </div>
+            </div>
+
+            <button
+              class="more-close"
+              onclick="toggleMore(false)"
+              aria-label="Close menu"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              >
+                <path d="m6 6 12 12"></path>
+                <path d="m18 6-12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="more-list">
+            <!-- WORK ORDERS -->
+
+            <button class="more-item" onclick="navigateTo('work-orders.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  ></path>
+                  <path d="M14 2v6h6"></path>
+                  <path d="M8 13h8"></path>
+                  <path d="M8 17h5"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Work Orders</div>
+
+                <div class="more-item-description">Manage all work orders</div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- TASKS -->
+
+            <button class="more-item" onclick="navigateTo('tasks.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 11 3 3L22 4"></path>
+                  <path
+                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                  ></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Tasks</div>
+
+                <div class="more-item-description">
+                  Monitor tasks, PIC and workload
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- CUSTOMERS -->
+
+            <button class="more-item" onclick="navigateTo('customers.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Customers</div>
+
+                <div class="more-item-description">
+                  Manage customer accounts
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- USERS -->
+
+            <button class="more-item" onclick="navigateTo('users.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle cx="12" cy="8" r="4"></circle>
+                  <path d="M4 21a8 8 0 0 1 16 0"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Users</div>
+
+                <div class="more-item-description">
+                  Manage system users and roles
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- WORKFLOW -->
+
+            <button class="more-item" onclick="navigateTo('workflow.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <rect x="3" y="4" width="6" height="6" rx="1"></rect>
+                  <rect x="15" y="14" width="6" height="6" rx="1"></rect>
+                  <path d="M9 7h3a3 3 0 0 1 3 3v4"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Workflow</div>
+
+                <div class="more-item-description">
+                  Configure workflow stages
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- SLA -->
+
+            <button class="more-item" onclick="navigateTo('sla.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 7v5l3 2"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">SLA Monitoring</div>
+
+                <div class="more-item-description">
+                  Track SLA and overdue work
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- IP -->
+
+            <button
+              class="more-item"
+              onclick="navigateTo('ip-management.html')"
+            >
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <path d="M7 9h.01"></path>
+                  <path d="M11 9h6"></path>
+                  <path d="M7 13h10"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">IP Management</div>
+
+                <div class="more-item-description">
+                  Manage network IP resources
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- ESCALATIONS -->
+
+            <button class="more-item" onclick="navigateTo('escalations.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M12 3v18"></path>
+                  <path d="m5 10 7-7 7 7"></path>
+                  <path d="M5 21h14"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Escalations</div>
+
+                <div class="more-item-description">
+                  Review escalated work orders
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- REPORTS -->
+
+            <button class="more-item" onclick="navigateTo('reports.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M4 19V5"></path>
+                  <path d="M4 19h17"></path>
+                  <path d="m7 15 4-4 3 2 5-6"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Reports</div>
+
+                <div class="more-item-description">
+                  Operational reports and analytics
+                </div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+
+            <!-- ACTIVITY LOG -->
+
+            <button class="more-item" onclick="navigateTo('activity-log.html')">
+              <div class="more-item-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M4 5h16"></path>
+                  <path d="M4 12h16"></path>
+                  <path d="M4 19h16"></path>
+                  <circle cx="8" cy="5" r="1"></circle>
+                  <circle cx="8" cy="12" r="1"></circle>
+                  <circle cx="8" cy="19" r="1"></circle>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Activity Log</div>
+
+                <div class="more-item-description">Audit system activities</div>
+              </div>
+
+              <div class="more-item-arrow">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- =========================
+           BOTTOM NAV
+      ========================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button class="nav-item" onclick="navigateTo('dashboard.html')">
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 10 9-7 9 7"></path>
+              <path d="M5 9v11h14V9"></path>
+              <path d="M9 20v-6h6v6"></path>
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- WORK ORDERS -->
+
+          <button
+            class="nav-item active"
+            onclick="navigateTo('work-orders.html')"
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <path d="M14 2v6h6"></path>
+              <path d="M8 13h8"></path>
+              <path d="M8 17h5"></path>
+            </svg>
+
+            <span> Work Orders </span>
+          </button>
+
+          <!-- MORE -->
+
+          <button
+            class="nav-item nav-more"
+            id="moreButton"
+            onclick="toggleMore()"
+            aria-label="More"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+
+            <span> More </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button class="nav-item" onclick="navigateTo('notifications.html')">
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button class="nav-item" onclick="navigateTo('profile.html')">
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =========================
+           SUSPEND MODAL
+      ========================= -->
+
+        <div class="modal-overlay" id="suspendModal">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title">Suspend Customer?</div>
+
+            <div class="modal-message">
+              This will change <strong>PT Nusa Data</strong> to suspended
+              status. Active operational access may be restricted.
+            </div>
+
+            <div class="modal-actions">
+              <button class="modal-btn" onclick="closeSuspendModal()">
+                Cancel
+              </button>
+
+              <button class="modal-btn danger" onclick="suspendCustomer()">
+                Suspend
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =========================
+           TOAST
+      ========================= -->
+
+        <div class="toast" id="toast">Action completed</div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================
+       NAVIGATION
+    ========================= */
+
+      function navigateTo(url) {
+        window.location.href = url;
+      }
+
+      function goBack() {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          navigateTo("customers.html");
+        }
+      }
+
+      function openWorkOrder(id) {
+        navigateTo("work-order-detail.html?id=" + encodeURIComponent(id));
+      }
+
+      /* =========================
+       CUSTOMER PARAMETER
+    ========================= */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const customerId = params.get("id") || "CUST-2026-0018";
+
+      document.getElementById("customerId").textContent = customerId;
+
+      document.getElementById("infoCustomerId").textContent = customerId;
+
+      /* =========================
+       MORE MENU
+    ========================= */
+
+      function toggleMore(force) {
+        const menu = document.getElementById("moreMenu");
+
+        const button = document.getElementById("moreButton");
+
+        let show;
+
+        if (typeof force === "boolean") {
+          show = force;
+        } else {
+          show = !menu.classList.contains("show");
+        }
+
+        menu.classList.toggle("show", show);
+
+        button.classList.toggle("open", show);
+      }
+
+      /* =========================
+       ADMIN ACTIONS
+    ========================= */
+
+      function editCustomer() {
+        navigateTo("customer-add.html?id=" + encodeURIComponent(customerId));
+      }
+
+      function createWO() {
+        showToast("Create Work Order for " + customerId);
+      }
+
+      /* =========================
+       SUSPEND
+    ========================= */
+
+      function openSuspendModal() {
+        toggleMore(false);
+
+        document.getElementById("suspendModal").classList.add("show");
+      }
+
+      function closeSuspendModal() {
+        document.getElementById("suspendModal").classList.remove("show");
+      }
+
+      function suspendCustomer() {
+        closeSuspendModal();
+
+        showToast("Customer " + customerId + " has been suspended");
+      }
+
+      /* =========================
+       TOAST
+    ========================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      /* =========================
+       MODAL BACKDROP
+    ========================= */
+
+      document
+        .getElementById("suspendModal")
+        .addEventListener("click", function (event) {
+          if (event.target === this) {
+            closeSuspendModal();
+          }
+        });
+
+      /* =========================
+       ESC
+    ========================= */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          toggleMore(false);
+
+          closeSuspendModal();
+        }
+      });
+    </script>
+  </body>
+</html>

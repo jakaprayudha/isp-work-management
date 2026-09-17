@@ -1,0 +1,3113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#111827" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Work Order Detail — Admin | NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --muted-2: #94a3b8;
+
+        --border: #e5e7eb;
+        --border-soft: #f1f5f9;
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: #e2e8f0;
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+        background: none;
+        cursor: pointer;
+      }
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+        position: relative;
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.06),
+            transparent 38%
+          ),
+          var(--background);
+      }
+
+      /* =========================
+       HEADER
+    ========================= */
+
+      .app-header {
+        height: 64px;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 1px solid var(--border-soft);
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        position: relative;
+        z-index: 20;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .back-button svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .header-copy {
+        min-width: 0;
+      }
+
+      .header-brand {
+        font-size: 13px;
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--primary);
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+        font-size: 9px;
+        line-height: 1;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .header-action {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.85);
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: relative;
+      }
+
+      .header-action svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .notification-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+        background: var(--danger);
+
+        box-shadow: 0 0 0 2px #fff;
+      }
+
+      /* =========================
+       MAIN
+    ========================= */
+
+      .main-content {
+        height: calc(100dvh - 64px);
+
+        padding: 4px 20px 90px;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+      }
+
+      .content-scroll {
+        flex: 1;
+        min-height: 0;
+
+        overflow-y: auto;
+
+        padding-bottom: 8px;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .content-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* =========================
+       PAGE INTRO
+    ========================= */
+
+      .page-intro {
+        padding: 7px 0 8px;
+      }
+
+      .eyebrow {
+        font-size: 8px;
+        line-height: 1;
+
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+
+        font-weight: 800;
+        color: var(--accent);
+
+        margin-bottom: 5px;
+      }
+
+      .page-title {
+        font-size: 18px;
+        line-height: 1.15;
+
+        font-weight: 800;
+        letter-spacing: -0.035em;
+
+        color: var(--primary);
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        font-size: 8px;
+        line-height: 1.45;
+
+        color: var(--muted);
+
+        max-width: 370px;
+      }
+
+      /* =========================
+       HERO
+    ========================= */
+
+      .hero-card {
+        padding: 12px;
+
+        border-radius: 17px;
+
+        color: #fff;
+
+        background:
+          radial-gradient(
+            circle at 100% 0%,
+            rgba(37, 99, 235, 0.28),
+            transparent 42%
+          ),
+          linear-gradient(135deg, #111827, #1f2937);
+
+        box-shadow: 0 10px 24px rgba(17, 24, 39, 0.13);
+      }
+
+      .hero-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .hero-label {
+        font-size: 6px;
+        line-height: 1;
+
+        color: #94a3b8;
+
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+
+        font-weight: 800;
+      }
+
+      .hero-id {
+        margin-top: 4px;
+
+        font-size: 11px;
+        line-height: 1;
+
+        font-weight: 800;
+      }
+
+      .status-badge {
+        flex: 0 0 auto;
+
+        padding: 4px 7px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.1);
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        font-size: 5px;
+        line-height: 1;
+
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .hero-title {
+        margin-top: 9px;
+
+        font-size: 9px;
+        line-height: 1.3;
+
+        font-weight: 800;
+      }
+
+      .hero-customer {
+        margin-top: 3px;
+
+        font-size: 6px;
+        line-height: 1.3;
+
+        color: #cbd5e1;
+      }
+
+      .hero-progress {
+        margin-top: 11px;
+      }
+
+      .progress-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 5px;
+      }
+
+      .progress-label {
+        font-size: 5.5px;
+        color: #94a3b8;
+      }
+
+      .progress-value {
+        font-size: 6px;
+        font-weight: 800;
+        color: #fff;
+      }
+
+      .progress-track {
+        height: 5px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        width: 65%;
+        height: 100%;
+
+        border-radius: 999px;
+
+        background: #60a5fa;
+      }
+
+      .hero-footer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 7px;
+
+        margin-top: 10px;
+        padding-top: 9px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
+      }
+
+      .hero-footer-item {
+        min-width: 0;
+      }
+
+      .hero-footer-label {
+        font-size: 5px;
+        color: #94a3b8;
+      }
+
+      .hero-footer-value {
+        margin-top: 3px;
+
+        font-size: 6px;
+        line-height: 1.2;
+
+        color: #fff;
+        font-weight: 700;
+      }
+
+      /* =========================
+       SECTION
+    ========================= */
+
+      .section {
+        margin-top: 8px;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 6px;
+      }
+
+      .section-title {
+        font-size: 8px;
+        line-height: 1;
+
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+
+        font-weight: 800;
+
+        color: var(--primary);
+      }
+
+      .section-action {
+        font-size: 6px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* =========================
+       WORKFLOW
+    ========================= */
+
+      .workflow-card {
+        padding: 10px;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        background: #fff;
+      }
+
+      .workflow {
+        display: flex;
+        align-items: flex-start;
+
+        width: 100%;
+      }
+
+      .workflow-step {
+        flex: 1;
+        min-width: 0;
+
+        position: relative;
+
+        text-align: center;
+      }
+
+      .workflow-step:not(:last-child)::after {
+        content: "";
+
+        position: absolute;
+
+        top: 5px;
+        left: 50%;
+
+        width: 100%;
+        height: 1px;
+
+        background: var(--border);
+
+        z-index: 0;
+      }
+
+      .workflow-step.done:not(:last-child)::after {
+        background: #93c5fd;
+      }
+
+      .workflow-dot {
+        position: relative;
+        z-index: 2;
+
+        width: 11px;
+        height: 11px;
+
+        margin: 0 auto;
+
+        border-radius: 50%;
+
+        background: #fff;
+
+        border: 2px solid var(--border);
+      }
+
+      .workflow-step.done .workflow-dot {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .workflow-step.active .workflow-dot {
+        border-color: var(--accent);
+        background: #fff;
+
+        box-shadow: 0 0 0 3px var(--accent-light);
+      }
+
+      .workflow-label {
+        margin-top: 5px;
+
+        font-size: 5px;
+        line-height: 1.15;
+
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      .workflow-step.active .workflow-label {
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      /* =========================
+       INFORMATION CARD
+    ========================= */
+
+      .info-card {
+        padding: 9px;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        background: #fff;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 0 10px;
+      }
+
+      .info-item {
+        min-width: 0;
+
+        padding: 7px 0;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .info-item:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .info-label {
+        font-size: 5px;
+        line-height: 1;
+
+        color: var(--muted-2);
+
+        font-weight: 600;
+      }
+
+      .info-value {
+        margin-top: 3px;
+
+        font-size: 6.2px;
+        line-height: 1.25;
+
+        color: var(--text);
+
+        font-weight: 700;
+      }
+
+      /* =========================
+       SLA CARD
+    ========================= */
+
+      .sla-card {
+        padding: 10px;
+
+        border-radius: 15px;
+
+        background: var(--warning-light);
+
+        border: 1px solid #fde68a;
+      }
+
+      .sla-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .sla-title {
+        font-size: 7px;
+        font-weight: 800;
+        color: #92400e;
+      }
+
+      .sla-status {
+        padding: 4px 7px;
+
+        border-radius: 999px;
+
+        background: #fff7ed;
+
+        color: #b45309;
+
+        font-size: 5px;
+        font-weight: 800;
+      }
+
+      .sla-detail {
+        margin-top: 6px;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 7px;
+      }
+
+      .sla-item {
+        min-width: 0;
+      }
+
+      .sla-label {
+        font-size: 4.8px;
+        color: #a16207;
+      }
+
+      .sla-value {
+        margin-top: 3px;
+
+        font-size: 6px;
+        font-weight: 800;
+
+        color: #78350f;
+      }
+
+      /* =========================
+       TASK LIST
+    ========================= */
+
+      .task-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .task-card {
+        width: 100%;
+
+        padding: 9px 10px;
+
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        background: #fff;
+
+        text-align: left;
+      }
+
+      .task-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        gap: 8px;
+      }
+
+      .task-main {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .task-id {
+        font-size: 5px;
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      .task-title {
+        margin-top: 3px;
+
+        font-size: 7px;
+        line-height: 1.25;
+
+        font-weight: 800;
+        color: var(--text);
+      }
+
+      .task-pic {
+        margin-top: 3px;
+
+        font-size: 5.5px;
+        color: var(--muted);
+      }
+
+      .task-status {
+        flex: 0 0 auto;
+
+        padding: 4px 6px;
+
+        border-radius: 999px;
+
+        font-size: 4.6px;
+        font-weight: 800;
+      }
+
+      .task-status.done {
+        color: #166534;
+        background: var(--success-light);
+      }
+
+      .task-status.progress {
+        color: #1d4ed8;
+        background: var(--accent-light);
+      }
+
+      .task-status.pending {
+        color: #92400e;
+        background: var(--warning-light);
+      }
+
+      .task-meta {
+        display: flex;
+        gap: 12px;
+
+        margin-top: 7px;
+        padding-top: 6px;
+
+        border-top: 1px solid var(--border-soft);
+      }
+
+      .task-meta-item {
+        min-width: 0;
+      }
+
+      .task-meta-label {
+        font-size: 4.6px;
+        color: var(--muted-2);
+      }
+
+      .task-meta-value {
+        margin-top: 2px;
+
+        font-size: 5.4px;
+        font-weight: 700;
+
+        color: var(--text);
+      }
+
+      /* =========================
+       CUSTOMER
+    ========================= */
+
+      .customer-card {
+        padding: 10px;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        background: #fff;
+
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .customer-avatar {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+
+        border-radius: 10px;
+
+        background: var(--primary);
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .customer-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .customer-name {
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .customer-company {
+        margin-top: 3px;
+
+        font-size: 5.5px;
+        color: var(--muted);
+      }
+
+      .customer-action {
+        width: 28px;
+        height: 28px;
+
+        border-radius: 9px;
+
+        background: var(--accent-light);
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .customer-action svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      /* =========================
+       NETWORK INFO
+    ========================= */
+
+      .network-card {
+        padding: 9px;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        background: #fff;
+      }
+
+      .network-row {
+        min-height: 32px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .network-row:last-child {
+        border-bottom: 0;
+      }
+
+      .network-label {
+        font-size: 5.5px;
+        color: var(--muted);
+      }
+
+      .network-value {
+        font-size: 6px;
+        font-weight: 800;
+        color: var(--text);
+        text-align: right;
+      }
+
+      .network-value.accent {
+        color: var(--accent);
+      }
+
+      /* =========================
+       ACTIVITY
+    ========================= */
+
+      .activity-card {
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        background: #fff;
+
+        overflow: hidden;
+      }
+
+      .activity-item {
+        min-height: 43px;
+
+        padding: 7px 9px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .activity-item:last-child {
+        border-bottom: 0;
+      }
+
+      .activity-icon {
+        width: 27px;
+        height: 27px;
+        flex: 0 0 27px;
+
+        border-radius: 9px;
+
+        background: var(--accent-light);
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .activity-icon svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      .activity-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .activity-title {
+        font-size: 6.2px;
+        line-height: 1.2;
+
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .activity-desc {
+        margin-top: 2px;
+
+        font-size: 5.2px;
+        line-height: 1.3;
+
+        color: var(--muted);
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .activity-time {
+        flex: 0 0 auto;
+
+        font-size: 5px;
+        color: var(--muted-2);
+      }
+
+      /* =========================
+       ADMIN ACTION
+    ========================= */
+
+      .action-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 6px;
+      }
+
+      .action-button {
+        min-height: 39px;
+
+        padding: 7px 8px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        text-align: left;
+      }
+
+      .action-button-icon {
+        width: 25px;
+        height: 25px;
+        flex: 0 0 25px;
+
+        border-radius: 8px;
+
+        background: #f8fafc;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .action-button-icon svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .action-button-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .action-button-title {
+        font-size: 5.8px;
+        font-weight: 800;
+      }
+
+      .action-button-desc {
+        margin-top: 2px;
+
+        font-size: 4.8px;
+        color: var(--muted);
+      }
+
+      .action-button.danger .action-button-icon {
+        color: var(--danger);
+        background: var(--danger-light);
+      }
+
+      /* =========================
+       MORE MENU
+    ========================= */
+
+      .more-menu {
+        position: absolute;
+
+        left: 16px;
+        right: 16px;
+        bottom: 78px;
+
+        padding: 7px;
+
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.95);
+
+        box-shadow:
+          0 20px 45px rgba(15, 23, 42, 0.14),
+          0 4px 12px rgba(15, 23, 42, 0.06);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transform: translateY(8px);
+
+        transition: 0.2s ease;
+
+        z-index: 50;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .more-menu-header {
+        min-height: 42px;
+
+        padding: 5px 7px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .more-menu-title {
+        font-size: 7px;
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      .more-menu-subtitle {
+        margin-top: 2px;
+
+        font-size: 5.5px;
+        color: var(--muted);
+      }
+
+      .more-close {
+        width: 25px;
+        height: 25px;
+
+        border-radius: 8px;
+
+        background: #f8fafc;
+        color: var(--muted);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .more-close svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .more-item {
+        width: 100%;
+        min-height: 48px;
+
+        padding: 6px 7px;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        border-bottom: 1px solid var(--border-soft);
+
+        text-align: left;
+      }
+
+      .more-item:last-child {
+        border-bottom: 0;
+      }
+
+      .more-item-icon {
+        width: 29px;
+        height: 29px;
+        flex: 0 0 29px;
+
+        border-radius: 9px;
+
+        background: #f8fafc;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .more-item-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .more-item-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .more-item-title {
+        font-size: 6.5px;
+        line-height: 1.1;
+
+        font-weight: 800;
+        color: var(--text);
+      }
+
+      .more-item-description {
+        margin-top: 3px;
+
+        font-size: 5.2px;
+        line-height: 1.2;
+
+        color: var(--muted);
+      }
+
+      .more-arrow {
+        width: 13px;
+        height: 13px;
+
+        color: #94a3b8;
+        flex: 0 0 auto;
+      }
+
+      /* =========================
+       BOTTOM NAV
+    ========================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        min-height: 68px;
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.88);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.92);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        z-index: 30;
+      }
+
+      .nav-item {
+        height: 48px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        color: #94a3b8;
+
+        position: relative;
+      }
+
+      .nav-icon {
+        width: 19px;
+        height: 19px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 17px;
+        height: 17px;
+        stroke-width: 1.8;
+      }
+
+      .nav-label {
+        font-size: 6px;
+        line-height: 1;
+        font-weight: 600;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active .nav-icon {
+        color: var(--accent);
+      }
+
+      .nav-item.active::after {
+        content: "";
+
+        position: absolute;
+
+        bottom: 1px;
+
+        width: 18px;
+        height: 2px;
+
+        border-radius: 999px;
+
+        background: var(--accent);
+      }
+
+      .nav-more {
+        position: relative;
+      }
+
+      .more-button {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow: 0 7px 15px rgba(17, 24, 39, 0.18);
+
+        transition: 0.2s ease;
+      }
+
+      .more-button svg {
+        width: 17px;
+        height: 17px;
+
+        transition: 0.2s ease;
+      }
+
+      .nav-more.open .more-button {
+        background: var(--accent);
+      }
+
+      .nav-more.open .more-button svg {
+        transform: rotate(45deg);
+      }
+
+      /* =========================
+       MODAL
+    ========================= */
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.38);
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition: 0.2s ease;
+
+        z-index: 100;
+      }
+
+      .modal-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .modal {
+        width: min(480px, 100%);
+
+        padding: 14px 20px max(16px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: 0.25s ease;
+      }
+
+      .modal-backdrop.show .modal {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 35px;
+        height: 4px;
+
+        border-radius: 999px;
+
+        background: #e5e7eb;
+
+        margin: 0 auto 12px;
+      }
+
+      .modal-title {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      .modal-message {
+        margin-top: 5px;
+
+        font-size: 7px;
+        line-height: 1.5;
+
+        color: var(--muted);
+      }
+
+      .modal-actions {
+        margin-top: 13px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+      }
+
+      .modal-button {
+        height: 35px;
+
+        border-radius: 10px;
+
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .modal-button.secondary {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text);
+      }
+
+      .modal-button.primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .modal-button.danger {
+        background: var(--danger);
+        color: #fff;
+      }
+
+      /* =========================
+       TOAST
+    ========================= */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+        bottom: 82px;
+
+        transform: translate(-50%, 10px);
+
+        width: max-content;
+        max-width: calc(100% - 40px);
+
+        padding: 9px 12px;
+
+        border-radius: 10px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 6px;
+        font-weight: 700;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition: 0.2s ease;
+
+        z-index: 120;
+
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =========================
+       RESPONSIVE
+    ========================= */
+
+      @media (max-height: 700px) {
+        .page-intro {
+          padding-top: 5px;
+          padding-bottom: 6px;
+        }
+
+        .section {
+          margin-top: 6px;
+        }
+
+        .hero-card {
+          padding: 10px;
+        }
+
+        .hero-progress {
+          margin-top: 8px;
+        }
+
+        .info-item {
+          padding: 6px 0;
+        }
+
+        .task-card {
+          padding: 8px 9px;
+        }
+
+        .activity-item {
+          min-height: 39px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .page-title {
+          font-size: 16px;
+        }
+
+        .page-description {
+          display: none;
+        }
+
+        .hero-card {
+          padding: 9px;
+        }
+
+        .hero-title {
+          margin-top: 7px;
+        }
+
+        .section {
+          margin-top: 5px;
+        }
+
+        .workflow-card {
+          padding: 8px;
+        }
+
+        .info-item {
+          padding: 5px 0;
+        }
+
+        .task-meta {
+          margin-top: 5px;
+          padding-top: 5px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .main-content {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .more-menu {
+          left: 12px;
+          right: 12px;
+        }
+
+        .info-grid {
+          gap: 0 7px;
+        }
+      }
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 24px;
+
+          box-shadow:
+            0 25px 60px rgba(15, 23, 42, 0.18),
+            0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .bottom-nav {
+          border-radius: 0 0 24px 24px;
+        }
+
+        .modal {
+          border-radius: 20px;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =========================
+         HEADER
+    ========================== -->
+
+        <header class="app-header">
+          <div class="header-left">
+            <button
+              class="back-button"
+              type="button"
+              onclick="goBack()"
+              aria-label="Back"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+
+            <div class="header-copy">
+              <div class="header-brand">NPN / Work Management</div>
+
+              <div class="header-subtitle">Admin Portal</div>
+            </div>
+          </div>
+
+          <button
+            class="header-action"
+            type="button"
+            onclick="goTo('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+              <path d="M10 21h4" />
+            </svg>
+
+            <span class="notification-dot"></span>
+          </button>
+        </header>
+
+        <!-- =========================
+         MAIN
+    ========================== -->
+
+        <main class="main-content">
+          <div class="content-scroll">
+            <!-- INTRO -->
+
+            <section class="page-intro">
+              <div class="eyebrow">Operations Management</div>
+
+              <h1 class="page-title">Work Order Detail</h1>
+
+              <p class="page-description">
+                Review work order lifecycle, assignments, SLA, tasks and
+                operational activity.
+              </p>
+            </section>
+
+            <!-- HERO -->
+
+            <section class="hero-card">
+              <div class="hero-top">
+                <div>
+                  <div class="hero-label">Work Order</div>
+
+                  <div class="hero-id" id="woId">WO-2026-00124</div>
+                </div>
+
+                <div class="status-badge">IN PROGRESS</div>
+              </div>
+
+              <div class="hero-title">
+                Installation — Metro Ethernet 300 Mbps
+              </div>
+
+              <div class="hero-customer">PT Nusa Data · KIM Medan</div>
+
+              <div class="hero-progress">
+                <div class="progress-row">
+                  <span class="progress-label"> Overall Progress </span>
+
+                  <span class="progress-value"> 65% </span>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+
+              <div class="hero-footer">
+                <div class="hero-footer-item">
+                  <div class="hero-footer-label">Current Stage</div>
+
+                  <div class="hero-footer-value">Installation</div>
+                </div>
+
+                <div class="hero-footer-item">
+                  <div class="hero-footer-label">Priority</div>
+
+                  <div class="hero-footer-value">Normal</div>
+                </div>
+
+                <div class="hero-footer-item">
+                  <div class="hero-footer-label">Created</div>
+
+                  <div class="hero-footer-value">16 Sep · 09:20</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- WORKFLOW -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Work Order Workflow</div>
+              </div>
+
+              <div class="workflow-card">
+                <div class="workflow">
+                  <div class="workflow-step done">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Registered</div>
+                  </div>
+
+                  <div class="workflow-step done">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Verification</div>
+                  </div>
+
+                  <div class="workflow-step done">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Survey</div>
+                  </div>
+
+                  <div class="workflow-step done">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Provider</div>
+                  </div>
+
+                  <div class="workflow-step active">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Installation</div>
+                  </div>
+
+                  <div class="workflow-step">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">ULO</div>
+                  </div>
+
+                  <div class="workflow-step">
+                    <div class="workflow-dot"></div>
+
+                    <div class="workflow-label">Complete</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- WORK ORDER INFORMATION -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Work Order Information</div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-grid">
+                  <div class="info-item">
+                    <div class="info-label">Work Order</div>
+
+                    <div class="info-value">WO-2026-00124</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Request Type</div>
+
+                    <div class="info-value">New Installation</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Service</div>
+
+                    <div class="info-value">Metro Ethernet</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Bandwidth</div>
+
+                    <div class="info-value">300 Mbps</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Location</div>
+
+                    <div class="info-value">KIM Medan</div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="info-label">Service Type</div>
+
+                    <div class="info-value">Business Internet</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SLA -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">SLA Monitoring</div>
+
+                <button
+                  class="section-action"
+                  type="button"
+                  onclick="goTo('sla.html')"
+                >
+                  Open SLA
+                </button>
+              </div>
+
+              <div class="sla-card">
+                <div class="sla-top">
+                  <div class="sla-title">Installation Deadline</div>
+
+                  <div class="sla-status">AT RISK</div>
+                </div>
+
+                <div class="sla-detail">
+                  <div class="sla-item">
+                    <div class="sla-label">Deadline</div>
+
+                    <div class="sla-value">16 Sep · 16:00</div>
+                  </div>
+
+                  <div class="sla-item">
+                    <div class="sla-label">Remaining</div>
+
+                    <div class="sla-value">02h 15m</div>
+                  </div>
+
+                  <div class="sla-item">
+                    <div class="sla-label">SLA Level</div>
+
+                    <div class="sla-value">Standard</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- TASKS -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Workflow Tasks</div>
+
+                <button
+                  class="section-action"
+                  type="button"
+                  onclick="goTo('tasks.html')"
+                >
+                  View All
+                </button>
+              </div>
+
+              <div class="task-list">
+                <!-- TASK 1 -->
+
+                <button
+                  class="task-card"
+                  type="button"
+                  onclick="openTask('TASK-2026-00381')"
+                >
+                  <div class="task-top">
+                    <div class="task-main">
+                      <div class="task-id">TASK-2026-00381</div>
+
+                      <div class="task-title">
+                        Network Feasibility Verification
+                      </div>
+
+                      <div class="task-pic">PIC · Network Engineer</div>
+                    </div>
+
+                    <span class="task-status done"> COMPLETED </span>
+                  </div>
+
+                  <div class="task-meta">
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Completed</div>
+
+                      <div class="task-meta-value">16 Sep · 10:15</div>
+                    </div>
+
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">SLA</div>
+
+                      <div class="task-meta-value">On Time</div>
+                    </div>
+                  </div>
+                </button>
+
+                <!-- TASK 2 -->
+
+                <button
+                  class="task-card"
+                  type="button"
+                  onclick="openTask('TASK-2026-00382')"
+                >
+                  <div class="task-top">
+                    <div class="task-main">
+                      <div class="task-id">TASK-2026-00382</div>
+
+                      <div class="task-title">Provider & IP Preparation</div>
+
+                      <div class="task-pic">PIC · Network Engineer</div>
+                    </div>
+
+                    <span class="task-status done"> COMPLETED </span>
+                  </div>
+
+                  <div class="task-meta">
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Completed</div>
+
+                      <div class="task-meta-value">16 Sep · 11:05</div>
+                    </div>
+
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">IP</div>
+
+                      <div class="task-meta-value">103.12.24.0/30</div>
+                    </div>
+                  </div>
+                </button>
+
+                <!-- TASK 3 -->
+
+                <button
+                  class="task-card"
+                  type="button"
+                  onclick="openTask('TASK-2026-00383')"
+                >
+                  <div class="task-top">
+                    <div class="task-main">
+                      <div class="task-id">TASK-2026-00383</div>
+
+                      <div class="task-title">Field Installation</div>
+
+                      <div class="task-pic">PIC · Technician</div>
+                    </div>
+
+                    <span class="task-status progress"> IN PROGRESS </span>
+                  </div>
+
+                  <div class="task-meta">
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Schedule</div>
+
+                      <div class="task-meta-value">16 Sep · 13:00</div>
+                    </div>
+
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Progress</div>
+
+                      <div class="task-meta-value">55%</div>
+                    </div>
+                  </div>
+                </button>
+
+                <!-- TASK 4 -->
+
+                <button
+                  class="task-card"
+                  type="button"
+                  onclick="openTask('TASK-2026-00384')"
+                >
+                  <div class="task-top">
+                    <div class="task-main">
+                      <div class="task-id">TASK-2026-00384</div>
+
+                      <div class="task-title">ULO & Quality Validation</div>
+
+                      <div class="task-pic">PIC · Quality Control</div>
+                    </div>
+
+                    <span class="task-status pending"> PENDING </span>
+                  </div>
+
+                  <div class="task-meta">
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Schedule</div>
+
+                      <div class="task-meta-value">After Installation</div>
+                    </div>
+
+                    <div class="task-meta-item">
+                      <div class="task-meta-label">Dependency</div>
+
+                      <div class="task-meta-value">Installation</div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </section>
+
+            <!-- CUSTOMER -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Customer</div>
+
+                <button
+                  class="section-action"
+                  type="button"
+                  onclick="goTo('customer-detail.html?id=CUST-2026-0018')"
+                >
+                  View Customer
+                </button>
+              </div>
+
+              <div class="customer-card">
+                <div class="customer-avatar">ND</div>
+
+                <div class="customer-copy">
+                  <div class="customer-name">PT Nusa Data</div>
+
+                  <div class="customer-company">
+                    CUST-2026-0018 · Business Customer
+                  </div>
+                </div>
+
+                <button
+                  class="customer-action"
+                  type="button"
+                  onclick="openCustomer()"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
+            </section>
+
+            <!-- NETWORK -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Network Information</div>
+
+                <button
+                  class="section-action"
+                  type="button"
+                  onclick="goTo('ip-management.html')"
+                >
+                  IP Management
+                </button>
+              </div>
+
+              <div class="network-card">
+                <div class="network-row">
+                  <div class="network-label">Provider</div>
+
+                  <div class="network-value">NPN Metro Fiber</div>
+                </div>
+
+                <div class="network-row">
+                  <div class="network-label">Access</div>
+
+                  <div class="network-value">Metro Ethernet</div>
+                </div>
+
+                <div class="network-row">
+                  <div class="network-label">IP Allocation</div>
+
+                  <div class="network-value accent">103.12.24.0/30</div>
+                </div>
+
+                <div class="network-row">
+                  <div class="network-label">VLAN</div>
+
+                  <div class="network-value">VLAN 124</div>
+                </div>
+
+                <div class="network-row">
+                  <div class="network-label">CPE</div>
+
+                  <div class="network-value">Router · Pending Config</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ACTIVITY -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Recent Activity</div>
+
+                <button
+                  class="section-action"
+                  type="button"
+                  onclick="goTo('activity-log.html')"
+                >
+                  Activity Log
+                </button>
+              </div>
+
+              <div class="activity-card">
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m5 12 4 4L19 6" />
+                    </svg>
+                  </div>
+
+                  <div class="activity-copy">
+                    <div class="activity-title">Installation Started</div>
+
+                    <div class="activity-desc">
+                      Technician started field installation.
+                    </div>
+                  </div>
+
+                  <div class="activity-time">13:05</div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 6v6l4 2" />
+                      <circle cx="12" cy="12" r="9" />
+                    </svg>
+                  </div>
+
+                  <div class="activity-copy">
+                    <div class="activity-title">SLA Monitoring Updated</div>
+
+                    <div class="activity-desc">
+                      Work order entered at-risk SLA condition.
+                    </div>
+                  </div>
+
+                  <div class="activity-time">12:50</div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M9 11h6" />
+                      <path d="M9 15h6" />
+                      <path
+                        d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="activity-copy">
+                    <div class="activity-title">Provider Task Completed</div>
+
+                    <div class="activity-desc">
+                      Provider and IP preparation completed.
+                    </div>
+                  </div>
+
+                  <div class="activity-time">11:05</div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M4 6h16" />
+                      <path d="M4 12h16" />
+                      <path d="M4 18h16" />
+                    </svg>
+                  </div>
+
+                  <div class="activity-copy">
+                    <div class="activity-title">Work Order Updated</div>
+
+                    <div class="activity-desc">
+                      Work order moved to Installation stage.
+                    </div>
+                  </div>
+
+                  <div class="activity-time">10:20</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ADMIN ACTION -->
+
+            <section class="section">
+              <div class="section-header">
+                <div class="section-title">Admin Actions</div>
+              </div>
+
+              <div class="action-grid">
+                <button
+                  class="action-button"
+                  type="button"
+                  onclick="
+                    openModal(
+                      'Assign Task',
+                      'Assign or change the PIC responsible for this work order.',
+                    )
+                  "
+                >
+                  <div class="action-button-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M3 21v-2a6 6 0 0 1 12 0v2" />
+                      <path d="M19 8v6" />
+                      <path d="M16 11h6" />
+                    </svg>
+                  </div>
+
+                  <div class="action-button-copy">
+                    <div class="action-button-title">Assign / Reassign</div>
+
+                    <div class="action-button-desc">Manage PIC</div>
+                  </div>
+                </button>
+
+                <button
+                  class="action-button"
+                  type="button"
+                  onclick="
+                    openModal(
+                      'Add Task',
+                      'Create an additional operational task for this work order.',
+                    )
+                  "
+                >
+                  <div class="action-button-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                  </div>
+
+                  <div class="action-button-copy">
+                    <div class="action-button-title">Add Task</div>
+
+                    <div class="action-button-desc">Create workflow task</div>
+                  </div>
+                </button>
+
+                <button
+                  class="action-button"
+                  type="button"
+                  onclick="
+                    openModal(
+                      'Escalate Work Order',
+                      'Create an escalation for this work order and notify the supervisor.',
+                    )
+                  "
+                >
+                  <div class="action-button-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3 4 14h6l-1 7 8-11h-6z" />
+                    </svg>
+                  </div>
+
+                  <div class="action-button-copy">
+                    <div class="action-button-title">Escalate</div>
+
+                    <div class="action-button-desc">Notify supervisor</div>
+                  </div>
+                </button>
+
+                <button
+                  class="action-button danger"
+                  type="button"
+                  onclick="
+                    openModal(
+                      'Cancel Work Order',
+                      'This action will cancel the current work order. Please confirm through the backend workflow.',
+                    )
+                  "
+                >
+                  <div class="action-button-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M6 6l12 12" />
+                      <path d="M18 6 6 18" />
+                    </svg>
+                  </div>
+
+                  <div class="action-button-copy">
+                    <div class="action-button-title">Cancel WO</div>
+
+                    <div class="action-button-desc">Cancel work order</div>
+                  </div>
+                </button>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <!-- =========================
+         MORE MENU
+    ========================== -->
+
+        <div class="more-menu" id="moreMenu">
+          <div class="more-menu-header">
+            <div>
+              <div class="more-menu-title">Admin Access</div>
+
+              <div class="more-menu-subtitle">
+                System administration and operations control
+              </div>
+            </div>
+
+            <button class="more-close" type="button" onclick="toggleMore()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m6 6 12 12" />
+                <path d="m18 6-12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- TASKS -->
+
+          <button class="more-item" type="button" onclick="goTo('tasks.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 11h6" />
+                <path d="M9 15h6" />
+                <path
+                  d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"
+                />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Tasks</div>
+
+              <div class="more-item-description">
+                Monitor tasks, PIC and workload
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- CUSTOMERS -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('customers.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Customers</div>
+
+              <div class="more-item-description">
+                Manage customer accounts and service records
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- USERS -->
+
+          <button class="more-item" type="button" onclick="goTo('users.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="7" r="4" />
+                <path d="M3 21v-2a6 6 0 0 1 12 0v2" />
+                <path d="M19 8v6" />
+                <path d="M16 11h6" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Users</div>
+
+              <div class="more-item-description">
+                Manage users, roles and access
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- WORKFLOW -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('workflow.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="6" cy="5" r="2" />
+                <circle cx="18" cy="12" r="2" />
+                <circle cx="6" cy="19" r="2" />
+
+                <path d="M8 5h5a3 3 0 0 1 3 3v2" />
+                <path d="M16 14v2a3 3 0 0 1-3 3H8" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Workflow</div>
+
+              <div class="more-item-description">
+                Configure workflow and task mapping
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- SLA -->
+
+          <button class="more-item" type="button" onclick="goTo('sla.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">SLA Monitoring</div>
+
+              <div class="more-item-description">
+                Track SLA performance and deadlines
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- IP MANAGEMENT -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('ip-management.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-2v-.48a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 8.4 15a1.7 1.7 0 0 0-1.56-1.03H6v-2h.84A1.7 1.7 0 0 0 8.4 10a1.7 1.7 0 0 0-.34-1.88L8 8.06l1.42-1.42.06.06A1.7 1.7 0 0 0 11.36 7a1.7 1.7 0 0 0 1.03-1.56V5h2v.44A1.7 1.7 0 0 0 15.42 7a1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 18.4 10a1.7 1.7 0 0 0 1.56 1.03H21v2h-.84A1.7 1.7 0 0 0 18.4 15z"
+                />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">IP Management</div>
+
+              <div class="more-item-description">
+                Manage IP pools and allocations
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- ESCALATIONS -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('escalations.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 3 4 14h6l-1 7 8-11h-6z" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Escalations</div>
+
+              <div class="more-item-description">
+                Review and handle escalated work
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- REPORTS -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('reports.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 19V5" />
+                <path d="M4 19h16" />
+                <path d="m7 15 3-4 3 2 4-6" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Reports</div>
+
+              <div class="more-item-description">
+                Operational reports and analytics
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- ACTIVITY LOG -->
+
+          <button
+            class="more-item"
+            type="button"
+            onclick="goTo('activity-log.html')"
+          >
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 5h16" />
+                <path d="M4 10h16" />
+                <path d="M4 15h10" />
+                <path d="M4 20h10" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Activity Log</div>
+
+              <div class="more-item-description">Audit system activities</div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- =========================
+         BOTTOM NAV
+    ========================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button
+            class="nav-item"
+            type="button"
+            onclick="goTo('dashboard.html')"
+          >
+            <span class="nav-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m3 10 9-7 9 7" />
+                <path d="M5 9v11h14V9" />
+                <path d="M9 20v-6h6v6" />
+              </svg>
+            </span>
+
+            <span class="nav-label"> Home </span>
+          </button>
+
+          <!-- WORK ORDERS -->
+
+          <button
+            class="nav-item active"
+            type="button"
+            onclick="goTo('work-orders.html')"
+          >
+            <span class="nav-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 6h16" />
+                <path d="M4 12h16" />
+                <path d="M4 18h16" />
+
+                <circle cx="8" cy="6" r="1" />
+                <circle cx="8" cy="12" r="1" />
+                <circle cx="8" cy="18" r="1" />
+              </svg>
+            </span>
+
+            <span class="nav-label"> Work Orders </span>
+          </button>
+
+          <!-- MORE -->
+
+          <button
+            class="nav-item nav-more"
+            id="moreButton"
+            type="button"
+            onclick="toggleMore()"
+          >
+            <span class="more-button">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+              </svg>
+            </span>
+
+            <span class="nav-label"> More </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            class="nav-item"
+            type="button"
+            onclick="goTo('notifications.html')"
+          >
+            <span class="nav-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                <path d="M10 21h4" />
+              </svg>
+            </span>
+
+            <span class="nav-label"> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button class="nav-item" type="button" onclick="goTo('profile.html')">
+            <span class="nav-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21a8 8 0 0 1 16 0" />
+              </svg>
+            </span>
+
+            <span class="nav-label"> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =========================
+         MODAL
+    ========================== -->
+
+        <div
+          class="modal-backdrop"
+          id="modalBackdrop"
+          onclick="closeModal(event)"
+        >
+          <div class="modal">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">Action</div>
+
+            <div class="modal-message" id="modalMessage">
+              Action information.
+            </div>
+
+            <div class="modal-actions">
+              <button
+                class="modal-button secondary"
+                type="button"
+                onclick="hideModal()"
+              >
+                Cancel
+              </button>
+
+              <button
+                class="modal-button primary"
+                type="button"
+                onclick="confirmAction()"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOAST -->
+
+        <div class="toast" id="toast">Action completed</div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================
+     NAVIGATION
+  ========================== */
+
+      function goTo(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          goTo("work-orders.html");
+        }
+      }
+
+      /* =========================
+     URL PARAMETER
+  ========================== */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const workOrderId = params.get("id") || "WO-2026-00124";
+
+      document.getElementById("woId").textContent = workOrderId;
+
+      /* =========================
+     TASK DETAIL
+  ========================== */
+
+      function openTask(taskId) {
+        window.location.href =
+          "task-detail.html?id=" + encodeURIComponent(taskId);
+      }
+
+      /* =========================
+     CUSTOMER
+  ========================== */
+
+      function openCustomer() {
+        window.location.href = "customer-detail.html?id=CUST-2026-0018";
+      }
+
+      /* =========================
+     MORE MENU
+  ========================== */
+
+      const moreMenu = document.getElementById("moreMenu");
+
+      const moreButton = document.getElementById("moreButton");
+
+      function toggleMore() {
+        const isOpen = moreMenu.classList.contains("show");
+
+        if (isOpen) {
+          closeMore();
+        } else {
+          openMore();
+        }
+      }
+
+      function openMore() {
+        moreMenu.classList.add("show");
+        moreButton.classList.add("open");
+      }
+
+      function closeMore() {
+        moreMenu.classList.remove("show");
+        moreButton.classList.remove("open");
+      }
+
+      /* =========================
+     MODAL
+  ========================== */
+
+      const modalBackdrop = document.getElementById("modalBackdrop");
+
+      const modalTitle = document.getElementById("modalTitle");
+
+      const modalMessage = document.getElementById("modalMessage");
+
+      function openModal(title, message) {
+        closeMore();
+
+        modalTitle.textContent = title;
+
+        modalMessage.textContent = message;
+
+        modalBackdrop.classList.add("show");
+      }
+
+      function hideModal() {
+        modalBackdrop.classList.remove("show");
+      }
+
+      function closeModal(event) {
+        if (event.target === modalBackdrop) {
+          hideModal();
+        }
+      }
+
+      function confirmAction() {
+        hideModal();
+
+        showToast("Action submitted successfully");
+      }
+
+      /* =========================
+     TOAST
+  ========================== */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =========================
+     ESC KEY
+  ========================== */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeMore();
+          hideModal();
+        }
+      });
+
+      /* =========================
+     CLICK OUTSIDE MORE
+  ========================== */
+
+      document.addEventListener("click", function (event) {
+        const insideMenu = moreMenu.contains(event.target);
+
+        const insideButton = moreButton.contains(event.target);
+
+        if (
+          moreMenu.classList.contains("show") &&
+          !insideMenu &&
+          !insideButton
+        ) {
+          closeMore();
+        }
+      });
+    </script>
+  </body>
+</html>

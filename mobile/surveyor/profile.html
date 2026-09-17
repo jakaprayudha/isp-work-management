@@ -1,0 +1,1899 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Profile - Surveyor - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        color: var(--text);
+
+        background: var(--background);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .back-button,
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .back-button svg,
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+
+        min-width: 0;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       MAIN
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+      }
+
+      /* =====================================================
+       PAGE INTRO
+    ===================================================== */
+
+      .page-intro {
+        padding-top: 4px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+
+        line-height: 27px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.6px;
+      }
+
+      .page-intro p {
+        margin-top: 3px;
+
+        font-size: 11px;
+
+        line-height: 15px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       PROFILE CARD
+    ===================================================== */
+
+      .profile-card {
+        margin-top: 13px;
+
+        padding: 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        background: linear-gradient(135deg, #111827, #1f2937);
+
+        border-radius: 18px;
+
+        color: white;
+
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      }
+
+      .profile-avatar {
+        width: 54px;
+        height: 54px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        font-size: 17px;
+
+        font-weight: 800;
+
+        letter-spacing: -1px;
+      }
+
+      .profile-info {
+        min-width: 0;
+
+        flex: 1;
+      }
+
+      .profile-info h2 {
+        font-size: 15px;
+
+        line-height: 19px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.3px;
+      }
+
+      .profile-info p {
+        margin-top: 2px;
+
+        font-size: 9px;
+
+        color: #d1d5db;
+      }
+
+      .profile-id {
+        margin-top: 5px;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+      }
+
+      .verified-badge {
+        margin-top: 6px;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        padding: 4px 7px;
+
+        border-radius: 7px;
+
+        background: rgba(22, 163, 74, 0.15);
+
+        color: #86efac;
+
+        font-size: 7px;
+
+        font-weight: 700;
+      }
+
+      .verified-badge svg {
+        width: 10px;
+        height: 10px;
+      }
+
+      /* =====================================================
+       SECTION
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 13px;
+
+        margin-bottom: 7px;
+      }
+
+      .section-header h2 {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-link {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-family: inherit;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       INFO CARD
+    ===================================================== */
+
+      .info-card {
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        overflow: hidden;
+      }
+
+      .info-row {
+        min-height: 42px;
+
+        padding: 8px 11px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        border-bottom: 1px solid #f0f1f3;
+      }
+
+      .info-row:last-child {
+        border-bottom: 0;
+      }
+
+      .info-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        min-width: 0;
+      }
+
+      .info-icon {
+        width: 29px;
+        height: 29px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .info-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .info-label span {
+        display: block;
+
+        font-size: 7px;
+
+        color: #9ca3af;
+
+        margin-bottom: 2px;
+      }
+
+      .info-label strong {
+        display: block;
+
+        font-size: 9px;
+
+        color: #374151;
+
+        font-weight: 700;
+      }
+
+      .info-value {
+        flex-shrink: 0;
+
+        max-width: 45%;
+
+        text-align: right;
+
+        font-size: 8px;
+
+        color: #6b7280;
+
+        line-height: 11px;
+      }
+
+      /* =====================================================
+       PERFORMANCE
+    ===================================================== */
+
+      .performance-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 7px;
+      }
+
+      .performance-card {
+        padding: 10px 7px;
+
+        text-align: center;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+      }
+
+      .performance-value {
+        font-size: 16px;
+
+        line-height: 19px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .performance-label {
+        margin-top: 3px;
+
+        font-size: 7px;
+
+        color: var(--muted);
+
+        line-height: 9px;
+      }
+
+      .performance-card.blue .performance-value {
+        color: var(--accent);
+      }
+
+      .performance-card.green .performance-value {
+        color: var(--success);
+      }
+
+      .performance-card.orange .performance-value {
+        color: var(--warning);
+      }
+
+      /* =====================================================
+       SETTINGS
+    ===================================================== */
+
+      .settings-card {
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        overflow: hidden;
+      }
+
+      .setting-row {
+        min-height: 41px;
+
+        padding: 7px 11px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        border-bottom: 1px solid #f0f1f3;
+
+        cursor: pointer;
+      }
+
+      .setting-row:last-child {
+        border-bottom: 0;
+      }
+
+      .setting-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+      }
+
+      .setting-icon {
+        width: 29px;
+        height: 29px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .setting-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .setting-text strong {
+        display: block;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      .setting-text span {
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 7px;
+
+        color: #9ca3af;
+      }
+
+      .chevron {
+        width: 15px;
+        height: 15px;
+
+        color: #9ca3af;
+      }
+
+      /* =====================================================
+       ACCOUNT STATUS
+    ===================================================== */
+
+      .status-card {
+        margin-top: 8px;
+
+        padding: 10px 11px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        background: var(--success-light);
+
+        border: 1px solid #dcfce7;
+
+        border-radius: 14px;
+      }
+
+      .status-icon {
+        width: 29px;
+        height: 29px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: white;
+
+        color: var(--success);
+      }
+
+      .status-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .status-text {
+        flex: 1;
+      }
+
+      .status-text strong {
+        display: block;
+
+        font-size: 9px;
+
+        font-weight: 800;
+
+        color: #166534;
+      }
+
+      .status-text span {
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 7px;
+
+        color: #4d7c5b;
+      }
+
+      /* =====================================================
+       SIGN OUT
+    ===================================================== */
+
+      .sign-out {
+        width: 100%;
+
+        height: 36px;
+
+        margin-top: 8px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        border: 1px solid #fecaca;
+
+        border-radius: 11px;
+
+        background: white;
+
+        color: var(--danger);
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .sign-out svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 10px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       LOGOUT MODAL
+    ===================================================== */
+
+      .modal-overlay {
+        position: fixed;
+
+        inset: 0;
+
+        display: flex;
+
+        align-items: flex-end;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        background: rgba(17, 24, 39, 0.38);
+
+        backdrop-filter: blur(4px);
+
+        -webkit-backdrop-filter: blur(4px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal-overlay.show {
+        opacity: 1;
+
+        visibility: visible;
+      }
+
+      .modal {
+        width: 100%;
+
+        max-width: 440px;
+
+        padding: 17px;
+
+        background: white;
+
+        border-radius: 20px;
+
+        transform: translateY(20px);
+
+        transition: transform 0.2s ease;
+      }
+
+      .modal-overlay.show .modal {
+        transform: translateY(0);
+      }
+
+      .modal-icon {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: var(--danger-light);
+
+        color: var(--danger);
+      }
+
+      .modal-icon svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .modal h3 {
+        margin-top: 10px;
+
+        font-size: 14px;
+
+        font-weight: 800;
+      }
+
+      .modal p {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        line-height: 13px;
+
+        color: var(--muted);
+      }
+
+      .modal-actions {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px;
+
+        margin-top: 13px;
+      }
+
+      .modal-button {
+        height: 37px;
+
+        border-radius: 10px;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .modal-button.cancel {
+        border: 1px solid var(--border);
+
+        background: white;
+
+        color: #374151;
+      }
+
+      .modal-button.confirm {
+        border: 0;
+
+        background: var(--danger);
+
+        color: white;
+      }
+
+      /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .back-button,
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+
+          line-height: 24px;
+        }
+
+        .profile-card {
+          margin-top: 9px;
+
+          padding: 11px;
+        }
+
+        .profile-avatar {
+          width: 48px;
+          height: 48px;
+        }
+
+        .section-header {
+          margin-top: 9px;
+
+          margin-bottom: 5px;
+        }
+
+        .info-row {
+          min-height: 37px;
+
+          padding: 6px 9px;
+        }
+
+        .performance-card {
+          padding: 7px 5px;
+        }
+
+        .setting-row {
+          min-height: 36px;
+
+          padding: 5px 9px;
+        }
+
+        .status-card {
+          margin-top: 5px;
+        }
+
+        .sign-out {
+          margin-top: 5px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .page-intro h1 {
+          font-size: 18px;
+
+          line-height: 21px;
+        }
+
+        .page-intro p {
+          font-size: 8px;
+
+          line-height: 11px;
+        }
+
+        .profile-card {
+          padding: 9px;
+
+          border-radius: 15px;
+        }
+
+        .profile-avatar {
+          width: 43px;
+          height: 43px;
+
+          border-radius: 12px;
+
+          font-size: 14px;
+        }
+
+        .profile-info h2 {
+          font-size: 12px;
+        }
+
+        .profile-info p {
+          font-size: 7px;
+        }
+
+        .profile-id {
+          font-size: 6px;
+        }
+
+        .verified-badge {
+          margin-top: 3px;
+
+          padding: 3px 5px;
+        }
+
+        .section-header {
+          margin-top: 6px;
+        }
+
+        .info-row {
+          min-height: 33px;
+
+          padding: 4px 8px;
+        }
+
+        .info-icon,
+        .setting-icon {
+          width: 25px;
+          height: 25px;
+        }
+
+        .performance-card {
+          padding: 5px 4px;
+        }
+
+        .performance-value {
+          font-size: 13px;
+        }
+
+        .performance-label {
+          font-size: 6px;
+        }
+
+        .setting-row {
+          min-height: 32px;
+
+          padding: 4px 8px;
+        }
+
+        .status-card {
+          padding: 7px 8px;
+        }
+
+        .sign-out {
+          height: 32px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> My Profile </strong>
+
+                <span> Surveyor Portal </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="header-button"
+              id="editButton"
+              aria-label="Edit profile"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 20h9" />
+
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5Z" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <h1>My Profile</h1>
+
+            <p>Manage your surveyor account and field operation preferences.</p>
+          </div>
+
+          <!-- =================================================
+             PROFILE
+        ================================================= -->
+
+          <div class="profile-card">
+            <div class="profile-avatar">JP</div>
+
+            <div class="profile-info">
+              <h2>Jaka Prayudha</h2>
+
+              <p>Field Surveyor · NPN Work Management</p>
+
+              <div class="profile-id">Employee ID · SUR-2026-0012</div>
+
+              <div class="verified-badge">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+
+                VERIFIED ACCOUNT
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             WORK INFORMATION
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Work Information</h2>
+          </div>
+
+          <div class="info-card">
+            <!-- ROLE -->
+
+            <div class="info-row">
+              <div class="info-left">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="8" r="4" />
+
+                    <path d="M4 21a8 8 0 0 1 16 0" />
+                  </svg>
+                </div>
+
+                <div class="info-label">
+                  <span> ROLE </span>
+
+                  <strong> Field Surveyor </strong>
+                </div>
+              </div>
+
+              <div class="info-value">Network Operations</div>
+            </div>
+
+            <!-- COVERAGE -->
+
+            <div class="info-row">
+              <div class="info-left">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                    <circle cx="12" cy="10" r="2.5" />
+                  </svg>
+                </div>
+
+                <div class="info-label">
+                  <span> COVERAGE AREA </span>
+
+                  <strong> Medan & Karo </strong>
+                </div>
+              </div>
+
+              <div class="info-value">North Sumatra</div>
+            </div>
+
+            <!-- PHONE -->
+
+            <div class="info-row">
+              <div class="info-left">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z"
+                    />
+                  </svg>
+                </div>
+
+                <div class="info-label">
+                  <span> PHONE </span>
+
+                  <strong> +62 821-6652-4717 </strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="info-row">
+              <div class="info-left">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+
+                    <path d="m3 7 9 6 9-6" />
+                  </svg>
+                </div>
+
+                <div class="info-label">
+                  <span> EMAIL </span>
+
+                  <strong> surveyor@npn.id </strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             PERFORMANCE
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Survey Performance</h2>
+
+            <span class="section-link"> This Month </span>
+          </div>
+
+          <div class="performance-grid">
+            <div class="performance-card blue">
+              <div class="performance-value">12</div>
+
+              <div class="performance-label">Surveys</div>
+            </div>
+
+            <div class="performance-card green">
+              <div class="performance-value">92%</div>
+
+              <div class="performance-label">On Time</div>
+            </div>
+
+            <div class="performance-card orange">
+              <div class="performance-value">8</div>
+
+              <div class="performance-label">Feasible</div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             PREFERENCES
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Preferences</h2>
+          </div>
+
+          <div class="settings-card">
+            <!-- NOTIFICATIONS -->
+
+            <div class="setting-row" data-setting="notifications">
+              <div class="setting-left">
+                <div class="setting-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                  </svg>
+                </div>
+
+                <div class="setting-text">
+                  <strong> Notifications </strong>
+
+                  <span> Assignment & SLA alerts </span>
+                </div>
+              </div>
+
+              <svg
+                class="chevron"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </div>
+
+            <!-- SECURITY -->
+
+            <div class="setting-row" data-setting="security">
+              <div class="setting-left">
+                <div class="setting-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="4" y="10" width="16" height="11" rx="2" />
+
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+
+                    <path d="M12 14v3" />
+                  </svg>
+                </div>
+
+                <div class="setting-text">
+                  <strong> Security </strong>
+
+                  <span> Password & account security </span>
+                </div>
+              </div>
+
+              <svg
+                class="chevron"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- =================================================
+             ACCOUNT STATUS
+        ================================================= -->
+
+          <div class="status-card">
+            <div class="status-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="9" />
+
+                <path d="m8 12 2.5 2.5L16 9" />
+              </svg>
+            </div>
+
+            <div class="status-text">
+              <strong> Account Active </strong>
+
+              <span>
+                Your surveyor account is active and authorized for field
+                operations.
+              </span>
+            </div>
+          </div>
+
+          <!-- =================================================
+             SIGN OUT
+        ================================================= -->
+
+          <button type="button" class="sign-out" id="signOutButton">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M10 17l5-5-5-5" />
+
+              <path d="M15 12H3" />
+
+              <path d="M21 19V5a2 2 0 0 0-2-2h-6" />
+            </svg>
+
+            Sign Out
+          </button>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- SURVEYS -->
+
+          <button type="button" class="nav-item" data-page="surveys">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 3h12v18H6z"></path>
+
+              <path d="M9 7h6"></path>
+
+              <path d="M9 11h6"></path>
+
+              <path d="M9 15h4"></path>
+            </svg>
+
+            Surveys
+          </button>
+
+          <!-- ALERTS -->
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item active" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <!-- =====================================================
+       LOGOUT MODAL
+  ===================================================== -->
+
+    <div class="modal-overlay" id="logoutModal">
+      <div class="modal">
+        <div class="modal-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 17l5-5-5-5" />
+
+            <path d="M15 12H3" />
+
+            <path d="M21 19V5a2 2 0 0 0-2-2h-6" />
+          </svg>
+        </div>
+
+        <h3>Sign Out?</h3>
+
+        <p>You will need to sign in again to access your Surveyor Portal.</p>
+
+        <div class="modal-actions">
+          <button type="button" class="modal-button cancel" id="cancelLogout">
+            Cancel
+          </button>
+
+          <button type="button" class="modal-button confirm" id="confirmLogout">
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       EDIT PROFILE
+    ===================================================== */
+
+      document
+        .getElementById("editButton")
+        .addEventListener("click", function () {
+          showToast("Profile editing will be available soon.");
+        });
+
+      /* =====================================================
+       PREFERENCES
+    ===================================================== */
+
+      document.querySelectorAll(".setting-row").forEach(function (row) {
+        row.addEventListener("click", function () {
+          const setting = row.dataset.setting;
+
+          if (setting === "notifications") {
+            showToast("Notification preferences will open here.");
+          }
+
+          if (setting === "security") {
+            showToast("Security settings will open here.");
+          }
+        });
+      });
+
+      /* =====================================================
+       LOGOUT MODAL
+    ===================================================== */
+
+      const logoutModal = document.getElementById("logoutModal");
+
+      document
+        .getElementById("signOutButton")
+        .addEventListener("click", function () {
+          logoutModal.classList.add("show");
+        });
+
+      document
+        .getElementById("cancelLogout")
+        .addEventListener("click", function () {
+          logoutModal.classList.remove("show");
+        });
+
+      document
+        .getElementById("confirmLogout")
+        .addEventListener("click", function () {
+          window.location.href = "../login.html";
+        });
+
+      /* =====================================================
+       CLOSE MODAL
+    ===================================================== */
+
+      logoutModal.addEventListener("click", function (event) {
+        if (event.target === logoutModal) {
+          logoutModal.classList.remove("show");
+        }
+      });
+
+      /* =====================================================
+       ESC
+    ===================================================== */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          logoutModal.classList.remove("show");
+        }
+      });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "surveys") {
+            window.location.href = "surveys.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            return;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

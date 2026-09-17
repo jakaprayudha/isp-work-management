@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPN — Registrasi Pelanggan</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #070c19;
+            --bg2: #10182d;
+            --navy: #073b70;
+            --navy-dark: #052f5a;
+            --blue: #0878d1;
+            --blue-light: #25a7f0;
+            --yellow: #ffbd0b;
+            --text: #17233b;
+            --muted: #8b98ad;
+            --border: #dce3ed;
+            --danger: #ef4444;
+            --success: #059669;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 10%, rgba(8,120,209,.18), transparent 27%),
+                radial-gradient(circle at 88% 90%, rgba(37,167,240,.10), transparent 25%),
+                linear-gradient(135deg, var(--bg), var(--bg2));
+        }
+
+        .background-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .22;
+            background-image:
+                linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            height: 100vh;
+            padding: 28px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .register-shell {
+            width: min(1080px, 100%);
+            height: min(900px, calc(100vh - 56px));
+            min-height: 560px;
+            display: grid;
+            grid-template-columns: 330px minmax(0, 1fr);
+            align-items: stretch;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 35px 90px rgba(0,0,0,.4);
+            background: rgba(255,255,255,.035);
+            animation: pageIn .6s ease;
+        }
+
+        /* LEFT BRAND */
+        .brand-panel {
+            position: relative;
+            height: 100%;
+            min-height: 0;
+            padding: 40px 34px;
+            background: linear-gradient(145deg, #091c37, #050f1f);
+            overflow: hidden;
+        }
+
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border: 1px solid rgba(37,167,240,.12);
+            border-radius: 50%;
+            right: -260px;
+            top: 90px;
+            box-shadow:
+                0 0 0 65px rgba(37,167,240,.025),
+                0 0 0 130px rgba(37,167,240,.018);
+        }
+
+        .brand {
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 54px;
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            flex: 0 0 auto;
+        }
+
+        .logo svg { width: 100%; height: 100%; }
+
+        .brand-name {
+            color: #fff;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .brand-name span {
+            display: block;
+            margin-top: 3px;
+            color: var(--blue-light);
+            font-size: 8px;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        .brand h2 {
+            color: #fff;
+            font-size: 34px;
+            line-height: 1.12;
+            letter-spacing: -1.4px;
+            margin-bottom: 18px;
+        }
+
+        .brand h2 span {
+            background: linear-gradient(90deg, #fff, #54baff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand-description {
+            color: #8fa3bf;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .steps {
+            position: relative;
+            z-index: 2;
+            margin-top: 35px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .step {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            color: #aebed3;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            flex: 0 0 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(8,120,209,.13);
+            color: var(--blue-light);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .step strong {
+            display: block;
+            color: #e5edf7;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .brand-footer {
+            position: absolute;
+            z-index: 2;
+            left: 34px;
+            right: 34px;
+            bottom: 30px;
+            color: #5f718a;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        /* FORM */
+        .form-panel {
+            min-width: 0;
+            min-height: 0;
+            background: #f8fafc;
+            padding: 42px 48px 50px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #b8c4d4 transparent;
+        }
+
+        .form-panel::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .form-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .form-panel::-webkit-scrollbar-thumb {
+            background: #c1cad7;
+            border-radius: 10px;
+        }
+
+        .form-panel::-webkit-scrollbar-thumb:hover {
+            background: #9eacbf;
+        }
+
+        .form-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 27px;
+        }
+
+        .form-title h1 {
+            color: #14213a;
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -.8px;
+        }
+
+        .form-title p {
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .login-link {
+            border: 0;
+            background: transparent;
+            color: var(--navy);
+            font: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .login-link:hover { text-decoration: underline; }
+
+        .section {
+            margin-bottom: 16px;
+            padding: 22px;
+            border: 1px solid #e7ebf1;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(15,23,42,.035);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: rgba(8,120,209,.08);
+            color: var(--blue);
+            font-size: 13px;
+        }
+
+        .section-header h2 {
+            color: #1d2b44;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .1px;
+        }
+
+        .section-header p {
+            margin-top: 2px;
+            color: #9aa6b8;
+            font-size: 9px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 16px;
+        }
+
+        .field.full { grid-column: 1 / -1; }
+
+        .field label {
+            display: block;
+            margin-bottom: 6px;
+            color: #34425a;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .required { color: var(--danger); }
+
+        .input-wrap { position: relative; }
+
+        .input,
+        .select,
+        .textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            background: #fbfcfe;
+            color: #1d2b44;
+            font: inherit;
+            font-size: 11px;
+            transition: .18s ease;
+        }
+
+        .input,
+        .select {
+            height: 39px;
+            padding: 0 12px;
+        }
+
+        .textarea {
+            min-height: 92px;
+            padding: 11px 12px;
+            resize: vertical;
+        }
+
+        .input::placeholder,
+        .textarea::placeholder { color: #b1bac8; }
+
+        .input:focus,
+        .select:focus,
+        .textarea:focus {
+            background: #fff;
+            border-color: #4ba7df;
+            box-shadow: 0 0 0 3px rgba(8,120,209,.08);
+        }
+
+        .input.invalid,
+        .select.invalid,
+        .textarea.invalid {
+            border-color: var(--danger);
+        }
+
+        .select {
+            appearance: none;
+            padding-right: 34px;
+            cursor: pointer;
+            background-image:
+                linear-gradient(45deg, transparent 50%, #718096 50%),
+                linear-gradient(135deg, #718096 50%, transparent 50%);
+            background-position:
+                calc(100% - 15px) 16px,
+                calc(100% - 11px) 16px;
+            background-size: 4px 4px, 4px 4px;
+            background-repeat: no-repeat;
+        }
+
+        .password-wrap .input { padding-right: 58px; }
+
+        .toggle-password {
+            position: absolute;
+            right: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: #7b8799;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hint {
+            display: block;
+            min-height: 13px;
+            margin-top: 4px;
+            color: #9aa6b8;
+            font-size: 8px;
+        }
+
+        .error {
+            display: block;
+            min-height: 13px;
+            margin-top: 4px;
+            color: var(--danger);
+            font-size: 8px;
+        }
+
+        .password-strength {
+            height: 3px;
+            margin-top: 6px;
+            border-radius: 99px;
+            background: #e8edf3;
+            overflow: hidden;
+        }
+
+        .password-strength span {
+            display: block;
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            transition: width .25s ease;
+        }
+
+        .terms {
+            display: flex;
+            gap: 9px;
+            align-items: flex-start;
+            margin: 17px 2px 18px;
+            color: #718096;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .terms input {
+            margin-top: 2px;
+            accent-color: var(--blue);
+        }
+
+        .terms a {
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn {
+            height: 46px;
+            border: 0;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .18s ease;
+        }
+
+        .btn-primary {
+            position: relative;
+            background: linear-gradient(135deg, #07539a, #0878d1);
+            color: #fff;
+            box-shadow: 0 7px 18px rgba(8,120,209,.18);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(8,120,209,.25);
+        }
+
+        .btn-secondary {
+            background: #fff;
+            border: 1px solid #d9e0ea;
+            color: #42516a;
+        }
+
+        .btn-secondary:hover { background: #f1f5f9; }
+
+        .btn.loading {
+            pointer-events: none;
+            opacity: .85;
+        }
+
+        .btn.loading .button-text { visibility: hidden; }
+
+        .spinner {
+            display: none;
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            left: 50%;
+            top: 50%;
+            margin: -8.5px;
+            border: 2px solid rgba(255,255,255,.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        .loading .spinner { display: block; }
+
+        .message {
+            min-height: 17px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .message.success { color: var(--success); }
+        .message.error { color: var(--danger); }
+
+        .security {
+            margin-top: 18px;
+            text-align: center;
+            color: #9aa6b8;
+            font-size: 9px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                height: auto;
+                min-height: 100vh;
+                padding: 20px 12px 30px;
+                overflow: visible;
+                align-items: flex-start;
+            }
+
+            .register-shell {
+                height: auto;
+                min-height: 0;
+                grid-template-columns: 1fr;
+                max-width: 680px;
+                overflow: visible;
+            }
+
+            .brand-panel {
+                display: none;
+            }
+
+            .form-panel {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .page {
+                padding: 14px 10px 25px;
+                overflow: visible;
+            }
+
+            .form-panel {
+                padding: 28px 18px 32px;
+            }
+
+            .form-top {
+                display: block;
+            }
+
+            .login-link {
+                margin-top: 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .section {
+                padding: 17px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<main class="page">
+
+    <section class="register-shell">
+
+        <!-- BRAND PANEL -->
+        <aside class="brand-panel">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+
+                    <div class="logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0" y1="1" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#00a8e8"/>
+                                    <stop offset="100%" stop-color="#54baff"/>
+                                </linearGradient>
+                            </defs>
+
+                            <ellipse
+                                cx="50" cy="50" rx="42" ry="17"
+                                fill="none"
+                                stroke="url(#logoGradient)"
+                                stroke-width="7"
+                                transform="rotate(-42 50 50)"
+                            />
+
+                            <circle
+                                cx="50" cy="50" r="27"
+                                fill="none"
+                                stroke="url(#logoGradient)"
+                                stroke-width="8"
+                            />
+
+                            <path
+                                d="M27 61 L40 42 L48 50 L68 29"
+                                fill="none"
+                                stroke="#fff"
+                                stroke-width="6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <circle cx="48" cy="50" r="4.5" fill="#00a8e8"/>
+                        </svg>
+                    </div>
+
+                    <div class="brand-name">
+                        NPN
+                        <span>Network Productivity</span>
+                    </div>
+
+                </div>
+
+                <h2>
+                    Start your
+                    <br>
+                    <span>NPN journey.</span>
+                </h2>
+
+                <p class="brand-description">
+                    Buat akun pelanggan dan nikmati proses
+                    request, kolaborasi, task, monitoring SLA,
+                    hingga penyelesaian layanan secara terstruktur.
+                </p>
+
+                <div class="steps">
+
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <div>
+                            <strong>Buat Akun</strong>
+                            Lengkapi informasi perusahaan dan PIC.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <div>
+                            <strong>Verifikasi</strong>
+                            Akun akan diproses untuk verifikasi.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <div>
+                            <strong>Mulai Berkolaborasi</strong>
+                            Akses workspace dan mulai membuat request.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="brand-footer">
+                © 2026 NPN · Enterprise Collaboration Platform
+            </div>
+
+        </aside>
+
+
+        <!-- FORM PANEL -->
+        <section class="form-panel">
+
+            <div style="width:100%;">
+
+                <div class="form-top">
+
+                    <div class="form-title">
+                        <h1>Registrasi Pelanggan</h1>
+                        <p>
+                            Daftarkan perusahaan Anda untuk mendapatkan
+                            akses ke platform NPN.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="login-link"
+                        id="loginLink"
+                    >
+                        ← Sudah punya akun? Login
+                    </button>
+
+                </div>
+
+
+                <form id="registerForm" novalidate>
+
+                    <!-- JENIS PELANGGAN -->
+                    <div class="section">
+
+                        <div class="section-header">
+                            <div class="section-icon">◆</div>
+
+                            <div>
+                                <h2>Jenis Pelanggan</h2>
+                                <p>Pilih kategori pelanggan Anda</p>
+                            </div>
+                        </div>
+
+                        <div class="grid">
+
+                            <div class="field full">
+
+                                <label for="customerType">
+                                    Jenis Pelanggan <span class="required">*</span>
+                                </label>
+
+                                <select
+                                    id="customerType"
+                                    name="customer_type"
+                                    class="select"
+                                >
+                                    <option value="">Pilih Jenis Pelanggan</option>
+                                    <option value="perusahaan">Perusahaan</option>
+                                    <option value="instansi">Instansi Pemerintah</option>
+                                    <option value="yayasan">Yayasan</option>
+                                    <option value="organisasi">Organisasi</option>
+                                    <option value="perorangan">Perorangan</option>
+                                </select>
+
+                                <small class="error" id="customerTypeError"></small>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- DATA PERUSAHAAN -->
+                    <div class="section">
+
+                        <div class="section-header">
+                            <div class="section-icon">▦</div>
+
+                            <div>
+                                <h2>Data Perusahaan</h2>
+                                <p>Informasi utama pelanggan</p>
+                            </div>
+                        </div>
+
+                        <div class="grid">
+
+                            <div class="field full">
+                                <label for="businessName">
+                                    Nama Pelaku Usaha <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="businessName"
+                                    name="business_name"
+                                    class="input"
+                                    type="text"
+                                    placeholder="Masukkan nama perusahaan / instansi"
+                                />
+
+                                <small class="error" id="businessNameError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="businessPhone">
+                                    No. Telepon <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="businessPhone"
+                                    name="business_phone"
+                                    class="input"
+                                    type="tel"
+                                    placeholder="08xxxxxxxxxx"
+                                />
+
+                                <small class="error" id="businessPhoneError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="email">
+                                    Email <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="email"
+                                    name="email"
+                                    class="input"
+                                    type="email"
+                                    placeholder="email@perusahaan.com"
+                                />
+
+                                <small class="error" id="emailError"></small>
+                            </div>
+
+
+                            <div class="field full">
+                                <label for="address">
+                                    Alamat Kantor <span class="required">*</span>
+                                </label>
+
+                                <textarea
+                                    id="address"
+                                    name="address"
+                                    class="textarea"
+                                    placeholder="Masukkan alamat lengkap kantor"
+                                ></textarea>
+
+                                <small class="error" id="addressError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="province">
+                                    Provinsi <span class="required">*</span>
+                                </label>
+
+                                <select id="province" name="province" class="select">
+                                    <option value="">Pilih Provinsi</option>
+                                    <option>Sumatera Utara</option>
+                                    <option>DKI Jakarta</option>
+                                    <option>Jawa Barat</option>
+                                    <option>Jawa Tengah</option>
+                                    <option>Jawa Timur</option>
+                                    <option>Bali</option>
+                                    <option>Sumatera Selatan</option>
+                                    <option>Kalimantan Timur</option>
+                                    <option>Sulawesi Selatan</option>
+                                </select>
+
+                                <small class="error" id="provinceError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="regency">
+                                    Kabupaten / Kota <span class="required">*</span>
+                                </label>
+
+                                <select id="regency" name="regency" class="select">
+                                    <option value="">Pilih Kabupaten / Kota</option>
+                                    <option>Medan</option>
+                                    <option>Deli Serdang</option>
+                                    <option>Serdang Bedagai</option>
+                                    <option>Binjai</option>
+                                    <option>Jakarta Selatan</option>
+                                    <option>Bandung</option>
+                                    <option>Surabaya</option>
+                                </select>
+
+                                <small class="error" id="regencyError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="district">
+                                    Kecamatan <span class="required">*</span>
+                                </label>
+
+                                <select id="district" name="district" class="select">
+                                    <option value="">Pilih Kecamatan</option>
+                                    <option>Medan Kota</option>
+                                    <option>Medan Selayang</option>
+                                    <option>Deli Tua</option>
+                                    <option>Lubuk Pakam</option>
+                                </select>
+
+                                <small class="error" id="districtError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="village">
+                                    Kelurahan / Desa <span class="required">*</span>
+                                </label>
+
+                                <select id="village" name="village" class="select">
+                                    <option value="">Pilih Kelurahan / Desa</option>
+                                    <option>Kelurahan A</option>
+                                    <option>Kelurahan B</option>
+                                    <option>Desa A</option>
+                                    <option>Desa B</option>
+                                </select>
+
+                                <small class="error" id="villageError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="postalCode">
+                                    Kode Pos <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="postalCode"
+                                    name="postal_code"
+                                    class="input"
+                                    type="text"
+                                    inputmode="numeric"
+                                    maxlength="5"
+                                    placeholder="Contoh: 20111"
+                                />
+
+                                <small class="error" id="postalCodeError"></small>
+                            </div>
+
+
+                            <div class="field full">
+                                <label for="coordinate">
+                                    Titik Koordinat <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="coordinate"
+                                    name="coordinate"
+                                    class="input"
+                                    type="text"
+                                    placeholder="Contoh: 3.595196, 98.672226"
+                                />
+
+                                <small class="hint">
+                                    Format latitude, longitude.
+                                </small>
+
+                                <small class="error" id="coordinateError"></small>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- PENANGGUNG JAWAB -->
+                    <div class="section">
+
+                        <div class="section-header">
+                            <div class="section-icon">◉</div>
+
+                            <div>
+                                <h2>Penanggung Jawab</h2>
+                                <p>Informasi PIC utama pelanggan</p>
+                            </div>
+                        </div>
+
+                        <div class="grid">
+
+                            <div class="field">
+                                <label for="position">
+                                    Jabatan <span class="required">*</span>
+                                </label>
+
+                                <select id="position" name="position" class="select">
+                                    <option value="">Pilih Jabatan</option>
+                                    <option>Direktur</option>
+                                    <option>Manager</option>
+                                    <option>Owner</option>
+                                    <option>IT Manager</option>
+                                    <option>Administrator</option>
+                                    <option>Lainnya</option>
+                                </select>
+
+                                <small class="error" id="positionError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="fullName">
+                                    Nama Lengkap <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="fullName"
+                                    name="full_name"
+                                    class="input"
+                                    type="text"
+                                    placeholder="Nama lengkap PIC"
+                                />
+
+                                <small class="error" id="fullNameError"></small>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="picPhone">
+                                    No. Telepon <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="picPhone"
+                                    name="pic_phone"
+                                    class="input"
+                                    type="tel"
+                                    placeholder="08xxxxxxxxxx"
+                                />
+
+                                <small class="error" id="picPhoneError"></small>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- AKUN -->
+                    <div class="section">
+
+                        <div class="section-header">
+                            <div class="section-icon">⌘</div>
+
+                            <div>
+                                <h2>Akun Pelanggan</h2>
+                                <p>Gunakan akun ini untuk login ke NPN</p>
+                            </div>
+                        </div>
+
+                        <div class="grid">
+
+                            <div class="field full">
+
+                                <label for="username">
+                                    Username <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="username"
+                                    name="username"
+                                    class="input"
+                                    type="text"
+                                    autocomplete="username"
+                                    placeholder="Buat username"
+                                />
+
+                                <small class="hint">
+                                    Gunakan 4–30 karakter tanpa spasi.
+                                </small>
+
+                                <small class="error" id="usernameError"></small>
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="password">
+                                    Password <span class="required">*</span>
+                                </label>
+
+                                <div class="input-wrap password-wrap">
+
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        class="input"
+                                        type="password"
+                                        autocomplete="new-password"
+                                        placeholder="Buat password"
+                                    />
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="password"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                                <div class="password-strength">
+                                    <span id="strengthBar"></span>
+                                </div>
+
+                                <small class="hint" id="strengthText">
+                                    Gunakan minimal 8 karakter.
+                                </small>
+
+                                <small class="error" id="passwordError"></small>
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="confirmPassword">
+                                    Ulangi Password <span class="required">*</span>
+                                </label>
+
+                                <div class="input-wrap password-wrap">
+
+                                    <input
+                                        id="confirmPassword"
+                                        name="confirm_password"
+                                        class="input"
+                                        type="password"
+                                        autocomplete="new-password"
+                                        placeholder="Ulangi password"
+                                    />
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="confirmPassword"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                                <small class="error" id="confirmPasswordError"></small>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- TERMS -->
+
+                    <label class="terms">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                        />
+
+                        <span>
+                            Saya menyetujui
+                            <a href="#" onclick="return false;">Syarat & Ketentuan</a>
+                            serta
+                            <a href="#" onclick="return false;">Kebijakan Privasi</a>
+                            NPN.
+                        </span>
+
+                    </label>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="cancelButton"
+                        >
+                            Kembali ke Login
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="submitButton"
+                        >
+                            <span class="button-text">
+                                Daftar Sekarang
+                            </span>
+
+                            <span class="spinner"></span>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="formMessage"
+                        class="message"
+                    ></div>
+
+
+                    <div class="security">
+                        ● Data registrasi diproses secara aman dan terenkripsi.
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+<script>
+    const form = document.getElementById("registerForm");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("formMessage");
+
+    const fields = {
+        customerType: "Jenis pelanggan",
+        businessName: "Nama pelaku usaha",
+        businessPhone: "No. telepon",
+        email: "Email",
+        address: "Alamat kantor",
+        province: "Provinsi",
+        regency: "Kabupaten / Kota",
+        district: "Kecamatan",
+        village: "Kelurahan / Desa",
+        postalCode: "Kode pos",
+        coordinate: "Titik koordinat",
+        position: "Jabatan",
+        fullName: "Nama lengkap",
+        picPhone: "No. telepon PIC",
+        username: "Username",
+        password: "Password",
+        confirmPassword: "Ulangi password"
+    };
+
+    function errorElement(id) {
+        return document.getElementById(id + "Error");
+    }
+
+    function clearValidation() {
+        Object.keys(fields).forEach(id => {
+            const element = document.getElementById(id);
+            const error = errorElement(id);
+
+            if (element) element.classList.remove("invalid");
+            if (error) error.textContent = "";
+        });
+
+        message.textContent = "";
+        message.className = "message";
+    }
+
+    function setError(id, text) {
+        const element = document.getElementById(id);
+        const error = errorElement(id);
+
+        if (element) element.classList.add("invalid");
+        if (error) error.textContent = text;
+    }
+
+    function validateForm() {
+        let valid = true;
+
+        Object.keys(fields).forEach(id => {
+            const element = document.getElementById(id);
+
+            if (!element || !element.value.trim()) {
+                setError(id, fields[id] + " wajib diisi.");
+                valid = false;
+            }
+        });
+
+        const email = document.getElementById("email");
+
+        if (email.value.trim()) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email.value.trim())) {
+                setError("email", "Format email tidak valid.");
+                valid = false;
+            }
+        }
+
+        const username = document.getElementById("username");
+
+        if (username.value.trim()) {
+            if (!/^[a-zA-Z0-9._-]{4,30}$/.test(username.value.trim())) {
+                setError(
+                    "username",
+                    "Username 4–30 karakter tanpa spasi."
+                );
+                valid = false;
+            }
+        }
+
+        const password = document.getElementById("password");
+        const confirmPassword =
+            document.getElementById("confirmPassword");
+
+        if (password.value.length > 0 && password.value.length < 8) {
+            setError(
+                "password",
+                "Password minimal 8 karakter."
+            );
+            valid = false;
+        }
+
+        if (
+            password.value &&
+            confirmPassword.value &&
+            password.value !== confirmPassword.value
+        ) {
+            setError(
+                "confirmPassword",
+                "Password tidak sama."
+            );
+            valid = false;
+        }
+
+        const postalCode =
+            document.getElementById("postalCode");
+
+        if (
+            postalCode.value &&
+            !/^\d{5}$/.test(postalCode.value)
+        ) {
+            setError(
+                "postalCode",
+                "Kode pos harus 5 digit."
+            );
+            valid = false;
+        }
+
+        const terms =
+            document.getElementById("terms");
+
+        if (!terms.checked) {
+            message.textContent =
+                "Anda harus menyetujui Syarat & Ketentuan.";
+            message.className = "message error";
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /* PASSWORD SHOW/HIDE */
+    document.querySelectorAll(".toggle-password")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const target =
+                    document.getElementById(
+                        button.dataset.target
+                    );
+
+                const visible =
+                    target.type === "text";
+
+                target.type =
+                    visible ? "password" : "text";
+
+                button.textContent =
+                    visible ? "Show" : "Hide";
+            });
+        });
+
+
+    /* PASSWORD STRENGTH */
+    const password =
+        document.getElementById("password");
+
+    const strengthBar =
+        document.getElementById("strengthBar");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+    password.addEventListener("input", () => {
+
+        const value = password.value;
+
+        let score = 0;
+
+        if (value.length >= 8) score++;
+        if (/[A-Z]/.test(value)) score++;
+        if (/[0-9]/.test(value)) score++;
+        if (/[^A-Za-z0-9]/.test(value)) score++;
+
+        const widths = ["0%", "25%", "50%", "75%", "100%"];
+
+        strengthBar.style.width =
+            widths[score];
+
+        const labels = [
+            "Gunakan minimal 8 karakter.",
+            "Password lemah.",
+            "Password cukup.",
+            "Password kuat.",
+            "Password sangat kuat."
+        ];
+
+        strengthText.textContent =
+            labels[score];
+    });
+
+
+    /* CLEAR FIELD ERRORS */
+    Object.keys(fields).forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+        if (!element) return;
+
+        element.addEventListener("input", () => {
+
+            element.classList.remove("invalid");
+
+            const error =
+                errorElement(id);
+
+            if (error) error.textContent = "";
+
+            message.textContent = "";
+        });
+
+        element.addEventListener("change", () => {
+
+            element.classList.remove("invalid");
+
+            const error =
+                errorElement(id);
+
+            if (error) error.textContent = "";
+        });
+    });
+
+
+    /* SUBMIT */
+    form.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        clearValidation();
+
+        if (!validateForm()) return;
+
+        submitButton.classList.add("loading");
+
+        /*
+            HUBUNGKAN KE BACKEND YII2 DI SINI.
+
+            Contoh:
+
+            const formData = new FormData(form);
+
+            fetch("/site/register", {
+                method: "POST",
+                body: formData
+            })
+            .then(...)
+        */
+
+        setTimeout(() => {
+
+            submitButton.classList.remove("loading");
+
+            message.textContent =
+                "Registrasi berhasil divalidasi. Silakan lanjutkan proses verifikasi.";
+
+            message.className =
+                "message success";
+
+        }, 900);
+    });
+
+
+    /* BACK TO LOGIN */
+    function goToLogin() {
+        window.location.href = "index.html";
+    }
+
+    document.getElementById("loginLink")
+        .addEventListener("click", goToLogin);
+
+    document.getElementById("cancelButton")
+        .addEventListener("click", goToLogin);
+</script>
+
+</body>
+</html>

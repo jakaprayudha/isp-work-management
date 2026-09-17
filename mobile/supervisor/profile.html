@@ -1,0 +1,2393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Profile — Supervisor Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+       ROOT
+    ========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+       RESET
+    ========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================================================
+       APP
+    ========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+       HEADER
+    ========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .back-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      /* =========================================================
+       MAIN
+    ========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 18px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+       PROFILE HERO
+    ========================================================= */
+
+      .profile-hero {
+        margin-top: 9px;
+
+        padding: 11px 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.12);
+      }
+
+      .avatar {
+        width: 43px;
+        height: 43px;
+
+        border-radius: 14px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 12px;
+        font-weight: 800;
+
+        flex-shrink: 0;
+      }
+
+      .profile-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .profile-name {
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .profile-role {
+        margin-top: 3px;
+
+        color: #cbd5e1;
+
+        font-size: 6.5px;
+      }
+
+      .verified {
+        margin-top: 5px;
+
+        display: inline-flex;
+        align-items: center;
+
+        gap: 3px;
+
+        padding: 3px 6px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.1);
+
+        color: #dbeafe;
+
+        font-size: 5px;
+        font-weight: 700;
+      }
+
+      .verified svg {
+        width: 8px;
+        height: 8px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      /* =========================================================
+       SECTION
+    ========================================================= */
+
+      .section-header {
+        margin-top: 8px;
+        margin-bottom: 5px;
+      }
+
+      .section-title {
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+       INFO CARD
+    ========================================================= */
+
+      .info-card {
+        padding: 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px 10px;
+      }
+
+      .info-item {
+        min-width: 0;
+      }
+
+      .info-label {
+        color: #9ca3af;
+
+        font-size: 5.7px;
+        font-weight: 600;
+      }
+
+      .info-value {
+        margin-top: 3px;
+
+        font-size: 6.8px;
+        line-height: 1.3;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* =========================================================
+       PERFORMANCE
+    ========================================================= */
+
+      .performance-card {
+        padding: 7px 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+      }
+
+      .performance-item {
+        min-width: 0;
+
+        padding: 6px;
+
+        border-radius: 10px;
+
+        background: #f8fafc;
+      }
+
+      .performance-label {
+        color: #9ca3af;
+
+        font-size: 5px;
+        font-weight: 600;
+      }
+
+      .performance-value {
+        margin-top: 3px;
+
+        font-size: 11px;
+        line-height: 1;
+
+        font-weight: 800;
+      }
+
+      .performance-value.success {
+        color: var(--success);
+      }
+
+      .performance-value.accent {
+        color: var(--accent);
+      }
+
+      .performance-value.warning {
+        color: var(--warning);
+      }
+
+      /* =========================================================
+       PREFERENCES
+    ========================================================= */
+
+      .preferences-card {
+        padding: 4px 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .preference-row {
+        width: 100%;
+        min-width: 0;
+        min-height: 40px;
+
+        margin: 0;
+        padding: 6px 0;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        border: 0;
+        border-bottom: 1px solid #f1f5f9;
+        border-radius: 0;
+
+        outline: none;
+
+        background: transparent;
+        color: inherit;
+
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: normal;
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        box-shadow: none;
+
+        box-sizing: border-box;
+
+        cursor: pointer;
+      }
+
+      .preference-row:last-child {
+        border-bottom: 0;
+      }
+
+      .preference-row:active {
+        background: #fafafa;
+      }
+
+      .preference-icon {
+        width: 28px;
+        height: 28px;
+
+        border-radius: 9px;
+
+        background: #f3f4f6;
+        color: #6b7280;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .preference-icon.blue {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .preference-icon.green {
+        background: var(--success-light);
+        color: var(--success);
+      }
+
+      .preference-icon.red {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+
+      .preference-icon.orange {
+        background: var(--warning-light);
+        color: var(--warning);
+      }
+
+      .preference-icon svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .preference-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .preference-title {
+        display: block;
+
+        font-size: 6.7px;
+        line-height: 1.2;
+
+        font-weight: 700;
+      }
+
+      .preference-description {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.3px;
+        line-height: 1.2;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .preference-value {
+        flex-shrink: 0;
+
+        color: #6b7280;
+
+        font-size: 5px;
+        font-weight: 700;
+      }
+
+      .preference-value.enabled {
+        color: var(--success);
+      }
+
+      .preference-value.available {
+        color: var(--accent);
+      }
+
+      .preference-arrow {
+        width: 13px;
+        height: 13px;
+
+        color: #9ca3af;
+
+        flex-shrink: 0;
+      }
+
+      .preference-arrow svg {
+        width: 13px;
+        height: 13px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      /* =========================================================
+       ACCOUNT STATUS
+    ========================================================= */
+
+      .account-card {
+        margin-top: 7px;
+
+        padding: 8px 9px;
+
+        border-radius: 13px;
+
+        background: #f0fdf4;
+
+        border: 1px solid #dcfce7;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .status-icon {
+        width: 28px;
+        height: 28px;
+
+        border-radius: 9px;
+
+        background: #fff;
+
+        color: var(--success);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .status-icon svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .status-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .status-title {
+        font-size: 6.7px;
+        font-weight: 800;
+      }
+
+      .status-text {
+        margin-top: 2px;
+
+        color: #64748b;
+
+        font-size: 5.2px;
+      }
+
+      .online-badge {
+        flex-shrink: 0;
+
+        padding: 4px 6px;
+
+        border-radius: 999px;
+
+        background: #dcfce7;
+        color: #15803d;
+
+        font-size: 4.8px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+       BOTTOM NAV
+    ========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+       MORE BUTTON
+    ========================================================= */
+
+      .nav-more {
+        position: relative;
+      }
+
+      .more-circle {
+        width: 38px;
+        height: 38px;
+
+        margin-top: -8px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow: 0 8px 18px rgba(17, 24, 39, 0.18);
+      }
+
+      .more-circle svg {
+        width: 18px;
+        height: 18px;
+
+        stroke: #fff;
+
+        transition: transform 0.2s ease;
+      }
+
+      /* =========================================================
+       MORE MENU
+    ========================================================= */
+
+      .more-menu {
+        position: absolute;
+
+        left: 16px;
+        right: 16px;
+        bottom: 78px;
+
+        padding: 8px;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        border: 1px solid rgba(229, 231, 235, 0.95);
+
+        border-radius: 18px;
+
+        box-shadow:
+          0 20px 45px rgba(15, 23, 42, 0.14),
+          0 4px 12px rgba(15, 23, 42, 0.06);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transform: translateY(8px) scale(0.98);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 120;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+
+        transform: translateY(0) scale(1);
+      }
+
+      .more-menu-header {
+        min-height: 42px;
+
+        padding: 3px 5px 7px 7px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+
+        border-bottom: 1px solid var(--border);
+      }
+
+      .more-menu-copy {
+        min-width: 0;
+      }
+
+      .more-menu-title {
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .more-menu-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+      }
+
+      .more-close {
+        width: 28px;
+        height: 28px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 9px;
+
+        background: #fff;
+        color: var(--muted);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .more-close svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .more-item {
+        width: 100%;
+        min-height: 52px;
+
+        padding: 7px 4px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        border: 0;
+        border-bottom: 1px solid #f1f5f9;
+
+        background: transparent;
+
+        color: inherit;
+
+        text-align: left;
+        text-decoration: none;
+      }
+
+      .more-item:last-child {
+        border-bottom: 0;
+      }
+
+      .more-item:active {
+        background: #fafafa;
+      }
+
+      .more-item-icon {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 10px;
+
+        background: #f3f4f6;
+        color: #6b7280;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .more-item-icon svg {
+        width: 16px;
+        height: 16px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .more-item-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .more-item-title {
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .more-item-description {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 6.5px;
+        line-height: 1.3;
+      }
+
+      .more-item-arrow {
+        width: 16px;
+        height: 16px;
+
+        color: #9ca3af;
+
+        flex-shrink: 0;
+      }
+
+      .more-item-arrow svg {
+        width: 13px;
+        height: 13px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      /* =========================================================
+       MODAL
+    ========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 7px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .modal-btn.primary {
+        border-color: var(--primary);
+
+        background: var(--primary);
+        color: #fff;
+      }
+
+      /* =========================================================
+       TOAST
+    ========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+       RESPONSIVE — HEIGHT
+    ========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .profile-hero {
+          margin-top: 7px;
+          padding: 9px;
+        }
+
+        .section-header {
+          margin-top: 6px;
+          margin-bottom: 4px;
+        }
+
+        .info-card,
+        .performance-card {
+          padding: 7px;
+        }
+
+        .preference-row {
+          min-height: 36px;
+          padding: 5px 0;
+        }
+
+        .account-card {
+          margin-top: 5px;
+          padding: 7px 8px;
+        }
+      }
+
+      /* =========================================================
+       RESPONSIVE — VERY SMALL HEIGHT
+    ========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .profile-hero {
+          padding: 8px;
+        }
+
+        .avatar {
+          width: 38px;
+          height: 38px;
+        }
+
+        .performance-card {
+          padding: 5px;
+        }
+
+        .performance-item {
+          padding: 5px;
+        }
+
+        .preference-row {
+          min-height: 32px;
+        }
+
+        .preference-icon {
+          width: 24px;
+          height: 24px;
+        }
+
+        .account-card {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+       RESPONSIVE — WIDTH
+    ========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+      }
+
+      /* =========================================================
+       DESKTOP PREVIEW
+    ========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+           HEADER
+      ===================================================== -->
+
+        <header class="app-header">
+          <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">Supervisor Portal</div>
+          </div>
+
+          <button
+            type="button"
+            class="header-btn"
+            onclick="go('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+          </button>
+        </header>
+
+        <!-- =====================================================
+           MAIN
+      ===================================================== -->
+
+        <main class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Account</div>
+
+            <div class="page-title">Profile</div>
+
+            <div class="page-description">
+              Supervisor identity, work information, performance and account
+              preferences.
+            </div>
+          </div>
+
+          <!-- ===================================================
+             PROFILE HERO
+        =================================================== -->
+
+          <section class="profile-hero">
+            <div class="avatar">JP</div>
+
+            <div class="profile-copy">
+              <div class="profile-name">Jaka Prayudha</div>
+
+              <div class="profile-role">
+                Operations Supervisor · NPN Work Management
+              </div>
+
+              <div class="verified">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+
+                Verified Account
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+             WORK INFORMATION
+        =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Work Information</div>
+          </div>
+
+          <section class="info-card">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Employee ID</div>
+
+                <div class="info-value">SUP-2026-0001</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Role</div>
+
+                <div class="info-value">Operations Supervisor</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Team</div>
+
+                <div class="info-value">Network Operations</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Coverage</div>
+
+                <div class="info-value">Medan &amp; Surrounding</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+             PERFORMANCE
+        =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Performance</div>
+          </div>
+
+          <section class="performance-card">
+            <div class="performance-item">
+              <div class="performance-label">WO Managed</div>
+
+              <div class="performance-value">128</div>
+            </div>
+
+            <div class="performance-item">
+              <div class="performance-label">SLA Compliance</div>
+
+              <div class="performance-value success">96%</div>
+            </div>
+
+            <div class="performance-item">
+              <div class="performance-label">Escalations</div>
+
+              <div class="performance-value warning">14</div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+             PREFERENCES
+        =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Preferences</div>
+          </div>
+
+          <section class="preferences-card">
+            <!-- NOTIFICATIONS -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="openPreference('notifications')"
+            >
+              <span class="preference-icon blue">
+                <svg viewBox="0 0 24 24">
+                  <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M10 21h4" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Notifications </span>
+
+                <span class="preference-description">
+                  SLA alerts, escalations and team activity
+                </span>
+              </span>
+
+              <span class="preference-value enabled"> Enabled </span>
+
+              <span class="preference-arrow">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </button>
+
+            <!-- SECURITY -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="openPreference('security')"
+            >
+              <span class="preference-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="10" width="14" height="10" rx="2" />
+
+                  <path d="M8 10V7a4 4 0 018 0v3" />
+
+                  <circle cx="12" cy="15" r="1" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Security </span>
+
+                <span class="preference-description">
+                  Password, session and account security
+                </span>
+              </span>
+
+              <span class="preference-value"> Protected </span>
+
+              <span class="preference-arrow">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </button>
+
+            <!-- SUPERVISOR AVAILABILITY -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="openPreference('availability')"
+            >
+              <span class="preference-icon green">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M8 12l2.5 2.5L16 9" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Supervisor Availability </span>
+
+                <span class="preference-description">
+                  Receive SLA and escalation assignments
+                </span>
+              </span>
+
+              <span class="preference-value available"> Available </span>
+
+              <span class="preference-arrow">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </button>
+
+            <!-- SIGN OUT -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="confirmSignOut()"
+            >
+              <span class="preference-icon red">
+                <svg viewBox="0 0 24 24">
+                  <path d="M10 17l5-5-5-5" />
+
+                  <path d="M15 12H3" />
+
+                  <path d="M14 4h5v16h-5" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Sign Out </span>
+
+                <span class="preference-description">
+                  End this supervisor session
+                </span>
+              </span>
+
+              <span class="preference-arrow">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </button>
+          </section>
+
+          <!-- ===================================================
+             ACCOUNT STATUS
+        =================================================== -->
+
+          <section class="account-card">
+            <span class="status-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" />
+
+                <path d="M8 12l2.5 2.5L16 9" />
+              </svg>
+            </span>
+
+            <span class="status-copy">
+              <span class="status-title"> Account Active </span>
+
+              <span class="status-text">
+                You are available for operational supervision.
+              </span>
+            </span>
+
+            <span class="online-badge"> ONLINE </span>
+          </section>
+        </main>
+
+        <!-- =====================================================
+           MORE MENU
+      ===================================================== -->
+
+        <div class="more-menu" id="moreMenu">
+          <div class="more-menu-header">
+            <div class="more-menu-copy">
+              <div class="more-menu-title">Supervisor Access</div>
+
+              <div class="more-menu-subtitle">
+                Operations monitoring and control
+              </div>
+            </div>
+
+            <button
+              class="more-close"
+              type="button"
+              onclick="toggleMoreMenu(false)"
+              aria-label="Close menu"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 6l12 12" />
+                <path d="M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- =====================================================
+       TASKS
+  ====================================================== -->
+
+          <a class="more-item" href="tasks.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M7 8h10" />
+                <path d="M7 12h6" />
+                <path d="M7 16h4" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Tasks</div>
+
+              <div class="more-item-description">
+                Monitor team tasks, PIC and workload
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       CUSTOMERS
+  ====================================================== -->
+
+          <a class="more-item" href="customers.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="8" r="3" />
+                <path d="M3.5 20c.7-3.7 2.5-5.5 5.5-5.5s4.8 1.8 5.5 5.5" />
+                <path d="M16 5.5a3 3 0 0 1 0 5.8" />
+                <path d="M16 14.5c2.4.3 3.8 2 4.5 5.5" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Customers</div>
+
+              <div class="more-item-description">
+                Monitor customers and service status
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       INFRASTRUCTURE
+  ====================================================== -->
+
+          <a class="more-item" href="infrastructure.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="7" height="6" rx="1" />
+                <rect x="14" y="14" width="7" height="6" rx="1" />
+                <path d="M10 7h3a3 3 0 0 1 3 3v4" />
+                <path d="M7 10v4a3 3 0 0 0 3 3h4" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Infrastructure</div>
+
+              <div class="more-item-description">
+                Monitor ODC, ODP, devices and network links
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       SOP MONITORING
+  ====================================================== -->
+
+          <a class="more-item" href="sop-monitoring.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 3h9l4 4v14H6z" />
+                <path d="M15 3v5h4" />
+                <path d="M9 13h6" />
+                <path d="M9 17h4" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">SOP Monitoring</div>
+
+              <div class="more-item-description">
+                Monitor SOP execution and compliance
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       SLA
+  ====================================================== -->
+
+          <a class="more-item" href="sla.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="8" />
+                <path d="M12 8v4l3 2" />
+                <path d="M5 4l-2 2" />
+                <path d="M19 4l2 2" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">SLA Monitoring</div>
+
+              <div class="more-item-description">
+                Track SLA, at-risk and overdue work
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       ESCALATIONS
+  ====================================================== -->
+
+          <a class="more-item" href="escalations.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 3l9 18H3L12 3z" />
+                <path d="M12 9v4" />
+                <path d="M12 17h.01" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Escalations</div>
+
+              <div class="more-item-description">
+                Review and handle escalated work orders
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       PARTNER ORDERS
+  ====================================================== -->
+
+          <a class="more-item" href="partner-orders.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M7 9h10" />
+                <path d="M7 13h6" />
+                <path d="M7 16h4" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Partner Orders</div>
+
+              <div class="more-item-description">
+                Monitor partner orders and provider progress
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       UPGRADE REQUESTS
+  ====================================================== -->
+
+          <a class="more-item" href="upgrade-requests.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+                <path d="M7 5h10" />
+                <path d="M7 19h10" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Upgrade Requests</div>
+
+              <div class="more-item-description">
+                Monitor retail and partner upgrade requests
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- =====================================================
+       REPORTS
+  ====================================================== -->
+
+          <a class="more-item" href="reports.html">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 19V5" />
+                <path d="M4 19h17" />
+                <path d="m7 15 4-4 3 2 5-6" />
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Reports</div>
+
+              <div class="more-item-description">
+                Operational reports and team performance
+              </div>
+            </div>
+
+            <div class="more-item-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+        </div>
+
+        <!-- =====================================================
+           BOTTOM NAV
+      ===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- WORK ORDERS -->
+
+          <button
+            type="button"
+            class="nav-item"
+            onclick="go('work-orders.html')"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+
+              <path d="M8 8h8" />
+              <path d="M8 12h6" />
+              <path d="M8 16h4" />
+            </svg>
+
+            <span> Work Orders </span>
+          </button>
+
+          <!-- MORE -->
+
+          <button
+            type="button"
+            class="nav-item nav-more"
+            onclick="toggleMore()"
+            aria-label="More"
+          >
+            <span class="more-circle">
+              <svg id="moreIcon" viewBox="0 0 24 24">
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+              </svg>
+            </span>
+
+            <span> More </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item"
+            onclick="go('notifications.html')"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="window.scrollTo(0, 0)"
+          >
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+           MODAL
+      ===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">Preference</div>
+
+            <div class="modal-text" id="modalText">Preference information.</div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Close
+              </button>
+
+              <button
+                type="button"
+                class="modal-btn primary"
+                id="modalAction"
+                onclick="handleModalAction()"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           TOAST
+      ===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+       STATE
+    ========================================================= */
+
+      let currentPreference = "";
+
+      /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("dashboard.html");
+        }
+      }
+
+      /* =========================================================
+       MORE MENU
+    ========================================================= */
+
+      function toggleMore(force) {
+        const menu = document.getElementById("moreMenu");
+
+        const icon = document.getElementById("moreIcon");
+
+        const shouldShow =
+          typeof force === "boolean" ? force : !menu.classList.contains("show");
+
+        menu.classList.toggle("show", shouldShow);
+
+        icon.style.transform = shouldShow ? "rotate(45deg)" : "rotate(0deg)";
+      }
+
+      /* =========================================================
+       PREFERENCE
+    ========================================================= */
+
+      function openPreference(type) {
+        currentPreference = type;
+
+        const title = document.getElementById("modalTitle");
+
+        const text = document.getElementById("modalText");
+
+        const action = document.getElementById("modalAction");
+
+        if (type === "notifications") {
+          title.textContent = "Notifications";
+
+          text.textContent =
+            "SLA alerts, escalations, work order updates and team operational activity are enabled for this supervisor account.";
+
+          action.textContent = "Open Alerts";
+        } else if (type === "security") {
+          title.textContent = "Security";
+
+          text.textContent =
+            "Your supervisor account is protected with password, session and account security controls.";
+
+          action.textContent = "Close";
+        } else if (type === "availability") {
+          title.textContent = "Supervisor Availability";
+
+          text.textContent =
+            "Your account is currently available to receive SLA monitoring alerts and escalation assignments.";
+
+          action.textContent = "Set Unavailable";
+        }
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+       SIGN OUT
+    ========================================================= */
+
+      function confirmSignOut() {
+        currentPreference = "signout";
+
+        document.getElementById("modalTitle").textContent = "Sign Out";
+
+        document.getElementById("modalText").textContent =
+          "Are you sure you want to end this supervisor session?";
+
+        document.getElementById("modalAction").textContent = "Sign Out";
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+       MODAL ACTION
+    ========================================================= */
+
+      function handleModalAction() {
+        if (currentPreference === "notifications") {
+          hideModal();
+
+          go("notifications.html");
+
+          return;
+        }
+
+        if (currentPreference === "availability") {
+          hideModal();
+
+          showToast("Supervisor availability updated");
+
+          return;
+        }
+
+        if (currentPreference === "signout") {
+          hideModal();
+
+          showToast("Signing out...");
+
+          setTimeout(function () {
+            /*
+             * Replace this with
+             * real logout endpoint.
+             */
+
+            window.location.href = "dashboard.html";
+          }, 500);
+
+          return;
+        }
+
+        hideModal();
+      }
+
+      /* =========================================================
+       MODAL
+    ========================================================= */
+
+      function closeModal(e) {
+        if (e && e.target.id !== "modal") {
+          return;
+        }
+
+        hideModal();
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+       TOAST
+    ========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+       ESC
+    ========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          hideModal();
+
+          toggleMore(false);
+        }
+      });
+
+      /* =========================================================
+       CLOSE MORE WHEN CLICKING OUTSIDE
+    ========================================================= */
+
+      document.addEventListener("click", function (e) {
+        const menu = document.getElementById("moreMenu");
+
+        const moreButton = document.querySelector(".nav-more");
+
+        if (
+          menu.classList.contains("show") &&
+          !menu.contains(e.target) &&
+          !moreButton.contains(e.target)
+        ) {
+          toggleMore(false);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1803 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Notifications — QC Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+   ROOT
+========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+   RESET
+========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================================================
+   APP
+========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+   HEADER
+========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .back-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        position: relative;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-dot {
+        position: absolute;
+
+        top: 7px;
+        right: 7px;
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 1px solid #fff;
+      }
+
+      /* =========================================================
+   MAIN
+========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 18px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+   SUMMARY
+========================================================= */
+
+      .summary-grid {
+        margin-top: 9px;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+      }
+
+      .summary-card {
+        padding: 7px 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+
+        border-radius: 13px;
+      }
+
+      .summary-label {
+        color: var(--muted);
+
+        font-size: 5.5px;
+        font-weight: 600;
+      }
+
+      .summary-value {
+        margin-top: 3px;
+
+        font-size: 13px;
+        line-height: 1;
+
+        font-weight: 800;
+      }
+
+      .summary-card.unread .summary-value {
+        color: var(--accent);
+      }
+
+      .summary-card.sla .summary-value {
+        color: var(--danger);
+      }
+
+      /* =========================================================
+   FILTER BAR
+========================================================= */
+
+      .filter-bar {
+        margin-top: 8px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+
+        overflow: hidden;
+      }
+
+      .filter-btn {
+        flex-shrink: 0;
+
+        height: 27px;
+
+        padding: 0 9px;
+
+        border: 1px solid var(--border);
+        border-radius: 999px;
+
+        background: #fff;
+        color: var(--muted);
+
+        font-size: 5.8px;
+        font-weight: 700;
+      }
+
+      .filter-btn.active {
+        border-color: var(--primary);
+
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .filter-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* =========================================================
+   NOTIFICATION HEADER
+========================================================= */
+
+      .notification-header {
+        margin-top: 9px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .notification-title {
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .mark-read {
+        border: 0;
+
+        padding: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-size: 5.8px;
+        font-weight: 700;
+      }
+
+      /* =========================================================
+   NOTIFICATION LIST
+========================================================= */
+
+      .notification-list {
+        margin-top: 5px;
+
+        min-height: 0;
+
+        flex: 1;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 5px;
+      }
+
+      .notification-card {
+        width: 100%;
+
+        padding: 7px 8px;
+
+        display: flex;
+        align-items: flex-start;
+
+        gap: 8px;
+
+        border: 1px solid var(--border);
+        border-radius: 13px;
+
+        background: #fff;
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        color: var(--text);
+      }
+
+      .notification-card:active {
+        transform: scale(0.99);
+      }
+
+      .notification-card.unread {
+        border-color: #dbeafe;
+
+        background: linear-gradient(90deg, #f8fbff, #fff);
+      }
+
+      .notification-icon {
+        width: 27px;
+        height: 27px;
+
+        border-radius: 9px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+
+      .notification-card.unread .notification-icon {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .notification-icon.sla {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+
+      .notification-icon.success {
+        background: var(--success-light);
+        color: var(--success);
+      }
+
+      .notification-icon svg {
+        width: 13px;
+        height: 13px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .notification-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .notification-top {
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+      }
+
+      .notification-name {
+        min-width: 0;
+
+        font-size: 6.7px;
+        font-weight: 800;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .notification-time {
+        flex-shrink: 0;
+
+        color: #9ca3af;
+
+        font-size: 5px;
+        font-weight: 500;
+      }
+
+      .notification-message {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 5.5px;
+        line-height: 1.35;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+      }
+
+      .notification-meta {
+        margin-top: 4px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 4px;
+      }
+
+      .type-badge {
+        padding: 2.5px 5px;
+
+        border-radius: 999px;
+
+        background: #f3f4f6;
+        color: #6b7280;
+
+        font-size: 4.5px;
+        font-weight: 800;
+      }
+
+      .type-badge.task {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .type-badge.sla {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+
+      .type-badge.schedule {
+        background: #fffbeb;
+        color: #b45309;
+      }
+
+      .type-badge.work {
+        background: #f5f3ff;
+        color: #7c3aed;
+      }
+
+      .unread-dot {
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        flex-shrink: 0;
+      }
+
+      /* =========================================================
+   EMPTY STATE
+========================================================= */
+
+      .empty-state {
+        display: none;
+
+        padding: 22px 10px;
+
+        text-align: center;
+      }
+
+      .empty-icon {
+        width: 38px;
+        height: 38px;
+
+        margin: 0 auto;
+
+        border-radius: 13px;
+
+        background: #f3f4f6;
+
+        color: #9ca3af;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .empty-icon svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+      }
+
+      .empty-title {
+        margin-top: 8px;
+
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .empty-text {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 6px;
+      }
+
+      /* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-wo {
+        margin-top: 4px;
+
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 8px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .modal-btn.primary {
+        border-color: var(--primary);
+
+        background: var(--primary);
+        color: #fff;
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+   RESPONSIVE — HEIGHT
+========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .summary-grid {
+          margin-top: 7px;
+        }
+
+        .notification-list {
+          gap: 4px;
+        }
+
+        .notification-card {
+          padding: 6px 7px;
+        }
+
+        .notification-message {
+          -webkit-line-clamp: 1;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — VERY SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .summary-grid {
+          margin-top: 6px;
+        }
+
+        .summary-card {
+          padding: 6px 7px;
+        }
+
+        .notification-header {
+          margin-top: 6px;
+        }
+
+        .notification-card {
+          padding: 5px 6px;
+        }
+
+        .notification-icon {
+          width: 24px;
+          height: 24px;
+        }
+
+        .notification-message {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — WIDTH
+========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+      }
+
+      /* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+     HEADER
+===================================================== -->
+
+        <header class="app-header">
+          <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">QC Portal</div>
+          </div>
+
+          <button type="button" class="header-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span class="header-dot"></span>
+          </button>
+        </header>
+
+        <!-- =====================================================
+     MAIN
+===================================================== -->
+
+        <main class="main-content">
+          <!-- INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Quality Control</div>
+
+            <div class="page-title">Notifications</div>
+
+            <div class="page-description">
+              Review ULO assignments, work order updates, reminders and SLA
+              alerts.
+            </div>
+          </div>
+
+          <!-- ===================================================
+       SUMMARY
+  =================================================== -->
+
+          <div class="summary-grid">
+            <div class="summary-card unread">
+              <div class="summary-label">Unread</div>
+
+              <div class="summary-value" id="unreadCount">03</div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-label">Today</div>
+
+              <div class="summary-value">05</div>
+            </div>
+
+            <div class="summary-card sla">
+              <div class="summary-label">QC Alerts</div>
+
+              <div class="summary-value" id="alertCount">01</div>
+            </div>
+          </div>
+
+          <!-- ===================================================
+       FILTERS
+  =================================================== -->
+
+          <div class="filter-bar" id="filters">
+            <button
+              type="button"
+              class="filter-btn active"
+              data-filter="all"
+              onclick="setFilter('all', this)"
+            >
+              All
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="unread"
+              onclick="setFilter('unread', this)"
+            >
+              Unread
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="ulo"
+              onclick="setFilter('ulo', this)"
+            >
+              ULO
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="sla"
+              onclick="setFilter('sla', this)"
+            >
+              SLA
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="work"
+              onclick="setFilter('work', this)"
+            >
+              Work Orders
+            </button>
+          </div>
+
+          <!-- ===================================================
+       LIST HEADER
+  =================================================== -->
+
+          <div class="notification-header">
+            <div class="notification-title">Recent Notifications</div>
+
+            <button type="button" class="mark-read" onclick="markAllRead()">
+              Mark all read
+            </button>
+          </div>
+
+          <!-- ===================================================
+       NOTIFICATION LIST
+  =================================================== -->
+
+          <div class="notification-list" id="notificationList">
+            <!-- =================================================
+         NOTIFICATION 1
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="ulo"
+              data-unread="true"
+              data-type="ulo"
+              data-title="New ULO Assignment"
+              data-wo="WO-2026-00124"
+              data-message="You have been assigned ULO Inspection for WO-2026-00124. Installation has been submitted by the technician and is ready for QC."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M8 12l2.5 2.5L16 9" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> New ULO Assignment </span>
+
+                  <span class="notification-time"> 10m </span>
+                </span>
+
+                <span class="notification-message">
+                  You have been assigned ULO Inspection for WO-2026-00124.
+                  Installation has been submitted by the technician and is ready
+                  for QC.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge task"> ULO </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 2
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="ulo"
+              data-unread="true"
+              data-type="ulo"
+              data-title="ULO Scheduled"
+              data-wo="WO-2026-00127"
+              data-message="WO-2026-00127 is scheduled for QC inspection today at 15:30 in Medan. Review the installation task before site validation."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="5" width="16" height="15" rx="2" />
+
+                  <path d="M8 3v4M16 3v4M4 10h16" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> ULO Scheduled </span>
+
+                  <span class="notification-time"> 1h </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00127 is scheduled for QC inspection today at 15:30 in
+                  Medan. Review the installation task before site validation.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge schedule"> Schedule </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 3
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="sla"
+              data-unread="true"
+              data-type="sla"
+              data-title="QC SLA Reminder"
+              data-wo="WO-2026-00124"
+              data-message="Complete the ULO inspection for WO-2026-00124 before today's QC deadline at 16:00."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon sla">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M12 7v5l3 2" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> QC SLA Reminder </span>
+
+                  <span class="notification-time"> 2h </span>
+                </span>
+
+                <span class="notification-message">
+                  Complete the ULO inspection for WO-2026-00124 before today's
+                  QC deadline at 16:00.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge sla"> SLA </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 4
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="work"
+              data-unread="false"
+              data-type="work"
+              data-title="Work Order Updated"
+              data-wo="WO-2026-00122"
+              data-message="WO-2026-00122 has moved to Installation. Review the upcoming QC assignment for the fiber service."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 4h12v16H6z" />
+
+                  <path d="M9 8h6M9 12h6M9 16h4" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> Work Order Updated </span>
+
+                  <span class="notification-time"> 4h </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00122 has moved to Installation. Review the upcoming
+                  QC assignment for the fiber service.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge work"> Work Order </span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 5
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="ulo"
+              data-unread="false"
+              data-type="success"
+              data-title="ULO Completed"
+              data-wo="WO-2026-00119"
+              data-message="ULO inspection for WO-2026-00119 was completed and the service is ready for customer handover."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon success">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> ULO Completed </span>
+
+                  <span class="notification-time"> Yesterday </span>
+                </span>
+
+                <span class="notification-message">
+                  ULO inspection for WO-2026-00119 was completed and the service
+                  is ready for customer handover.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge"> Completed </span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 6
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="work"
+              data-unread="false"
+              data-type="work"
+              data-title="Work Order Closed"
+              data-wo="WO-2026-00115"
+              data-message="WO-2026-00115 is now active and the installation and QC cycle has been closed."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon success">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M8 12l2.5 2.5L16 9" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> Work Order Closed </span>
+
+                  <span class="notification-time"> Yesterday </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00115 is now active and the installation and QC cycle
+                  has been closed.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge"> Work Order </span>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <!-- EMPTY -->
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                <path d="M10 21h4" />
+              </svg>
+            </div>
+
+            <div class="empty-title">No notifications</div>
+
+            <div class="empty-text">
+              There are no notifications in this category.
+            </div>
+          </div>
+        </main>
+
+        <!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button type="button" class="nav-item" onclick="go('my-tasks.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 4h12v16H6z" />
+
+              <path d="M9 8h6M9 12h6M9 16h4" />
+            </svg>
+
+            <span> My Tasks </span>
+          </button>
+
+          <!-- ULO -->
+
+          <button type="button" class="nav-item" onclick="go('ulo.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" />
+
+              <path d="M8 12l2.5 2.5L16 9" />
+            </svg>
+
+            <span> ULO </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="window.scrollTo(0, 0)"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" onclick="go('profile.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+     MODAL
+===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">Notification</div>
+
+            <div class="modal-wo" id="modalWO">WO-2026-00124</div>
+
+            <div class="modal-text" id="modalText">Notification detail.</div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Close
+              </button>
+
+              <button
+                type="button"
+                class="modal-btn primary"
+                onclick="openTask()"
+              >
+                Open Task
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+     TOAST
+===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   STATE
+========================================================= */
+
+      let currentFilter = "all";
+
+      let selectedWO = "";
+
+      /* =========================================================
+   NAVIGATION
+========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("dashboard.html");
+        }
+      }
+
+      /* =========================================================
+   FILTER
+========================================================= */
+
+      function setFilter(filter, button) {
+        currentFilter = filter;
+
+        document.querySelectorAll(".filter-btn").forEach(function (btn) {
+          btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        applyFilter();
+      }
+
+      /* =========================================================
+   APPLY FILTER
+========================================================= */
+
+      function applyFilter() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+          const category = card.dataset.category;
+
+          const unread = card.dataset.unread === "true";
+
+          let show = false;
+
+          if (currentFilter === "all") {
+            show = true;
+          } else if (currentFilter === "unread") {
+            show = unread;
+          } else if (currentFilter === "ulo") {
+            show = category === "ulo";
+          } else if (currentFilter === "sla") {
+            show = category === "sla";
+          } else if (currentFilter === "work") {
+            show = category === "work";
+          }
+
+          card.style.display = show ? "flex" : "none";
+
+          if (show) {
+            visibleCount++;
+          }
+        });
+
+        document.getElementById("emptyState").style.display =
+          visibleCount === 0 ? "block" : "none";
+      }
+
+      /* =========================================================
+   OPEN NOTIFICATION
+========================================================= */
+
+      function openNotification(card) {
+        const title = card.dataset.title;
+
+        const wo = card.dataset.wo;
+
+        const message = card.dataset.message;
+
+        selectedWO = wo;
+
+        /*
+         * Mark this notification
+         * as read.
+         */
+
+        if (card.dataset.unread === "true") {
+          card.dataset.unread = "false";
+
+          card.classList.remove("unread");
+
+          const dot = card.querySelector(".unread-dot");
+
+          if (dot) {
+            dot.remove();
+          }
+
+          updateUnreadCount();
+        }
+
+        document.getElementById("modalTitle").textContent = title;
+
+        document.getElementById("modalWO").textContent = wo;
+
+        document.getElementById("modalText").textContent = message;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+   OPEN TASK
+========================================================= */
+
+      function openTask() {
+        hideModal();
+
+        if (!selectedWO) {
+          return;
+        }
+
+        showToast("Opening QC task...");
+
+        setTimeout(function () {
+          window.location.href =
+            "task-detail.html?id=" + encodeURIComponent(selectedWO);
+        }, 250);
+      }
+
+      /* =========================================================
+   UPDATE UNREAD
+========================================================= */
+
+      function updateUnreadCount() {
+        const unreadCards = document.querySelectorAll(
+          '.notification-card[data-unread="true"]',
+        );
+
+        const count = unreadCards.length;
+
+        document.getElementById("unreadCount").textContent = String(
+          count,
+        ).padStart(2, "0");
+
+        const dot = document.querySelector(".header-dot");
+
+        if (dot) {
+          dot.style.display = count > 0 ? "block" : "none";
+        }
+      }
+
+      /* =========================================================
+   MARK ALL READ
+========================================================= */
+
+      function markAllRead() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        let changed = false;
+
+        cards.forEach(function (card) {
+          if (card.dataset.unread === "true") {
+            changed = true;
+
+            card.dataset.unread = "false";
+
+            card.classList.remove("unread");
+
+            const dot = card.querySelector(".unread-dot");
+
+            if (dot) {
+              dot.remove();
+            }
+          }
+        });
+
+        updateUnreadCount();
+
+        if (changed) {
+          showToast("All notifications marked as read");
+        } else {
+          showToast("No unread notifications");
+        }
+
+        if (currentFilter === "unread") {
+          applyFilter();
+        }
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      function closeModal(e) {
+        if (e.target.id === "modal") {
+          hideModal();
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+   ESC
+========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          hideModal();
+        }
+      });
+
+      /* =========================================================
+   INIT
+========================================================= */
+
+      updateUnreadCount();
+
+      applyFilter();
+    </script>
+  </body>
+</html>

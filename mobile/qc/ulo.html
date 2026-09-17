@@ -1,0 +1,3841 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>ULO — QC Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+   ROOT
+========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+   RESET
+========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================================================
+   APP
+========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+   HEADER
+========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .back-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      /* =========================================================
+   MAIN
+========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 18px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+   ULO HERO
+========================================================= */
+
+      .ulo-hero {
+        margin-top: 9px;
+
+        padding: 11px 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+
+        color: #fff;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.12);
+      }
+
+      .hero-top {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 8px;
+      }
+
+      .hero-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .wo-number {
+        color: #cbd5e1;
+
+        font-size: 7px;
+        font-weight: 700;
+      }
+
+      .hero-title {
+        margin-top: 4px;
+
+        font-size: 11px;
+        line-height: 1.3;
+
+        font-weight: 800;
+      }
+
+      .hero-customer {
+        margin-top: 4px;
+
+        color: #cbd5e1;
+
+        font-size: 6.5px;
+      }
+
+      .status-badge {
+        flex-shrink: 0;
+
+        padding: 5px 7px;
+
+        border-radius: 999px;
+
+        background: rgba(37, 99, 235, 0.2);
+        color: #bfdbfe;
+
+        font-size: 5.2px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+   SECTION HEADER
+========================================================= */
+
+      .section-header {
+        margin-top: 8px;
+        margin-bottom: 5px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-title {
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .section-subtitle {
+        color: #9ca3af;
+
+        font-size: 5.7px;
+      }
+
+      /* =========================================================
+   SITE INFORMATION
+========================================================= */
+
+      .info-card {
+        padding: 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px 10px;
+      }
+
+      .info-item {
+        min-width: 0;
+      }
+
+      .info-label {
+        color: #9ca3af;
+
+        font-size: 5.7px;
+        font-weight: 600;
+      }
+
+      .info-value {
+        margin-top: 3px;
+
+        font-size: 6.8px;
+        line-height: 1.3;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* =========================================================
+   CHECKLIST
+========================================================= */
+
+      .checklist-card {
+        padding: 4px 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .check-row {
+        width: 100%;
+        min-height: 34px;
+
+        margin: 0;
+        padding: 5px 0;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        border: 0;
+        border-bottom: 1px solid #f1f5f9;
+
+        background: transparent;
+
+        color: var(--text);
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .check-row:last-child {
+        border-bottom: 0;
+      }
+
+      .check-row:active {
+        background: #fafafa;
+      }
+
+      .check-box {
+        width: 20px;
+        height: 20px;
+
+        border-radius: 7px;
+
+        border: 1.5px solid #d1d5db;
+
+        background: #fff;
+
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .check-row.done .check-box {
+        border-color: var(--success);
+
+        background: var(--success);
+      }
+
+      .check-box svg {
+        width: 11px;
+        height: 11px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.3;
+      }
+
+      .check-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .check-title {
+        display: block;
+
+        font-size: 6.8px;
+        font-weight: 700;
+
+        line-height: 1.2;
+      }
+
+      .check-description {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.2px;
+        line-height: 1.2;
+      }
+
+      .check-status {
+        flex-shrink: 0;
+
+        padding: 3px 5px;
+
+        border-radius: 999px;
+
+        background: #f3f4f6;
+        color: #6b7280;
+
+        font-size: 4.8px;
+        font-weight: 800;
+      }
+
+      .check-row.done .check-status {
+        background: var(--success-light);
+        color: #15803d;
+      }
+
+      /* =========================================================
+   TESTING
+========================================================= */
+
+      .testing-card {
+        padding: 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .testing-grid {
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 6px;
+      }
+
+      .testing-item {
+        min-width: 0;
+
+        padding: 7px 5px;
+
+        border: 1px solid #f1f5f9;
+        border-radius: 10px;
+
+        background: #fafafa;
+      }
+
+      .testing-label {
+        color: #9ca3af;
+
+        font-size: 5px;
+        font-weight: 600;
+
+        white-space: nowrap;
+      }
+
+      .testing-input-wrap {
+        display: flex;
+        align-items: center;
+
+        gap: 2px;
+
+        margin-top: 4px;
+      }
+
+      .testing-input {
+        width: 100%;
+
+        min-width: 0;
+
+        height: 21px;
+
+        padding: 0 3px;
+
+        border: 0;
+
+        border-bottom: 1px solid #d1d5db;
+
+        border-radius: 0;
+
+        background: transparent;
+
+        color: var(--text);
+
+        outline: none;
+
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .testing-input:focus {
+        border-bottom-color: var(--accent);
+      }
+
+      .testing-unit {
+        color: #9ca3af;
+
+        font-size: 4.5px;
+        font-weight: 600;
+
+        flex-shrink: 0;
+      }
+
+      /* =========================================================
+   QC RESULT
+========================================================= */
+
+      .result-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .result-title {
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .result-description {
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.5px;
+      }
+
+      .result-actions {
+        margin-top: 7px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 6px;
+      }
+
+      .result-btn {
+        height: 34px;
+
+        border-radius: 11px;
+
+        font-size: 6.5px;
+        font-weight: 800;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .result-pass {
+        border: 1px solid #bbf7d0;
+
+        background: var(--success-light);
+        color: #15803d;
+      }
+
+      .result-reject {
+        border: 1px solid #fecaca;
+
+        background: var(--danger-light);
+        color: #b91c1c;
+      }
+
+      .result-btn:active {
+        transform: scale(0.98);
+      }
+
+      /* =========================================================
+   REJECTION FORM
+========================================================= */
+
+      .reject-form {
+        display: none;
+
+        margin-top: 7px;
+
+        padding: 8px;
+
+        border-radius: 11px;
+
+        background: #fef2f2;
+
+        border: 1px solid #fee2e2;
+      }
+
+      .reject-form.show {
+        display: block;
+      }
+
+      .reject-label {
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: #991b1b;
+
+        font-size: 5.8px;
+        font-weight: 800;
+      }
+
+      .reject-input {
+        width: 100%;
+
+        min-height: 45px;
+
+        padding: 6px 7px;
+
+        resize: none;
+
+        border: 1px solid #fecaca;
+        border-radius: 9px;
+
+        background: #fff;
+
+        color: var(--text);
+
+        outline: none;
+
+        font-size: 6px;
+      }
+
+      .reject-input:focus {
+        border-color: var(--danger);
+      }
+
+      .reject-submit {
+        width: 100%;
+
+        height: 30px;
+
+        margin-top: 6px;
+
+        border: 0;
+        border-radius: 9px;
+
+        background: var(--danger);
+        color: #fff;
+
+        font-size: 6px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+   NEXT ACTION
+========================================================= */
+
+      .next-card {
+        margin-top: 7px;
+
+        padding: 8px 9px;
+
+        border: 1px solid #dbeafe;
+
+        background: #eff6ff;
+
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .next-icon {
+        width: 28px;
+        height: 28px;
+
+        border-radius: 9px;
+
+        background: #fff;
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .next-icon svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .next-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .next-label {
+        color: #60a5fa;
+
+        font-size: 5px;
+        font-weight: 800;
+
+        text-transform: uppercase;
+      }
+
+      .next-title {
+        margin-top: 2px;
+
+        font-size: 6.7px;
+        font-weight: 800;
+      }
+
+      .next-text {
+        margin-top: 2px;
+
+        color: #64748b;
+
+        font-size: 5.2px;
+      }
+
+      .next-button {
+        flex-shrink: 0;
+
+        height: 29px;
+
+        padding: 0 8px;
+
+        border: 0;
+        border-radius: 9px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 5.7px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 7px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+   RESPONSIVE — HEIGHT
+========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .ulo-hero {
+          margin-top: 7px;
+          padding: 9px;
+        }
+
+        .section-header {
+          margin-top: 6px;
+          margin-bottom: 4px;
+        }
+
+        .info-card,
+        .testing-card,
+        .result-card {
+          padding: 7px;
+        }
+
+        .check-row {
+          min-height: 31px;
+          padding: 4px 0;
+        }
+
+        .next-card {
+          margin-top: 5px;
+          padding: 7px 8px;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — VERY SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .ulo-hero {
+          padding: 8px;
+        }
+
+        .hero-title {
+          font-size: 10px;
+        }
+
+        .info-grid {
+          gap: 5px 8px;
+        }
+
+        .check-row {
+          min-height: 28px;
+        }
+
+        .check-box {
+          width: 18px;
+          height: 18px;
+        }
+
+        .testing-card {
+          padding: 6px;
+        }
+
+        .result-card {
+          padding: 6px;
+        }
+
+        .next-card {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — WIDTH
+========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .hero-title {
+          font-size: 9.5px;
+        }
+
+        .testing-grid {
+          gap: 4px;
+        }
+      }
+
+      /* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+     HEADER
+===================================================== -->
+
+        <header class="app-header">
+          <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">QC Portal</div>
+          </div>
+
+          <button
+            type="button"
+            class="header-btn"
+            onclick="go('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+          </button>
+        </header>
+
+        <!-- =====================================================
+     MAIN
+===================================================== -->
+
+        <main class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Quality Control</div>
+
+            <div class="page-title">ULO Inspection</div>
+
+            <div class="page-description">
+              Verify installation quality, validate service testing and submit
+              the QC decision.
+            </div>
+          </div>
+
+          <!-- ===================================================
+       HERO
+  =================================================== -->
+
+          <section class="ulo-hero">
+            <div class="hero-top">
+              <div class="hero-copy">
+                <div class="wo-number">WO-2026-00124</div>
+
+                <div class="hero-title">Metro Ethernet 300 Mbps</div>
+
+                <div class="hero-customer">PT Nusa Data · KIM Medan</div>
+              </div>
+
+              <span class="status-badge" id="heroStatus"> READY FOR QC </span>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       SITE INFORMATION
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Site Information</div>
+          </div>
+
+          <section class="info-card">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Customer</div>
+
+                <div class="info-value">PT Nusa Data</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Service</div>
+
+                <div class="info-value">Metro Ethernet</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Bandwidth</div>
+
+                <div class="info-value">300 Mbps</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Technician</div>
+
+                <div class="info-value">Jaka Prayudha</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Schedule</div>
+
+                <div class="info-value">16 Sep · 13:00</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Location</div>
+
+                <div class="info-value">KIM Medan</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       INSTALLATION CHECKLIST
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Installation Verification</div>
+
+            <div class="section-subtitle" id="checkProgress">
+              5 / 6 verified
+            </div>
+          </div>
+
+          <section class="checklist-card" id="checklist">
+            <!-- FIBER ROUTE -->
+
+            <button
+              type="button"
+              class="check-row done"
+              data-done="true"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> Fiber route verified </span>
+
+                <span class="check-description">
+                  Fiber path and physical routing checked
+                </span>
+              </span>
+
+              <span class="check-status"> PASS </span>
+            </button>
+
+            <!-- ODP -->
+
+            <button
+              type="button"
+              class="check-row done"
+              data-done="true"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> ODP / Access Point checked </span>
+
+                <span class="check-description">
+                  Access point and port assignment verified
+                </span>
+              </span>
+
+              <span class="check-status"> PASS </span>
+            </button>
+
+            <!-- CABLE -->
+
+            <button
+              type="button"
+              class="check-row done"
+              data-done="true"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> Fiber cable installed </span>
+
+                <span class="check-description">
+                  Cable termination and installation checked
+                </span>
+              </span>
+
+              <span class="check-status"> PASS </span>
+            </button>
+
+            <!-- CPE -->
+
+            <button
+              type="button"
+              class="check-row done"
+              data-done="true"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> CPE installation verified </span>
+
+                <span class="check-description">
+                  CPE mounting and configuration checked
+                </span>
+              </span>
+
+              <span class="check-status"> PASS </span>
+            </button>
+
+            <!-- POWER -->
+
+            <button
+              type="button"
+              class="check-row done"
+              data-done="true"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> Power &amp; link check </span>
+
+                <span class="check-description">
+                  Power status and link indicator verified
+                </span>
+              </span>
+
+              <span class="check-status"> PASS </span>
+            </button>
+
+            <!-- CUSTOMER HANDOVER -->
+
+            <button
+              type="button"
+              class="check-row"
+              data-done="false"
+              onclick="toggleCheck(this)"
+            >
+              <span class="check-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="check-copy">
+                <span class="check-title"> Customer handover verified </span>
+
+                <span class="check-description">
+                  Service handover and acceptance checked
+                </span>
+              </span>
+
+              <span class="check-status"> PENDING </span>
+            </button>
+          </section>
+
+          <!-- ===================================================
+       SERVICE TESTING
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Service Testing</div>
+
+            <div class="section-subtitle">Record actual result</div>
+          </div>
+
+          <section class="testing-card">
+            <div class="testing-grid">
+              <!-- DOWNLOAD -->
+
+              <div class="testing-item">
+                <div class="testing-label">Download</div>
+
+                <div class="testing-input-wrap">
+                  <input
+                    type="number"
+                    class="testing-input"
+                    id="download"
+                    value="300"
+                    min="0"
+                    step="0.1"
+                  />
+
+                  <span class="testing-unit"> Mbps </span>
+                </div>
+              </div>
+
+              <!-- UPLOAD -->
+
+              <div class="testing-item">
+                <div class="testing-label">Upload</div>
+
+                <div class="testing-input-wrap">
+                  <input
+                    type="number"
+                    class="testing-input"
+                    id="upload"
+                    value="300"
+                    min="0"
+                    step="0.1"
+                  />
+
+                  <span class="testing-unit"> Mbps </span>
+                </div>
+              </div>
+
+              <!-- LATENCY -->
+
+              <div class="testing-item">
+                <div class="testing-label">Latency</div>
+
+                <div class="testing-input-wrap">
+                  <input
+                    type="number"
+                    class="testing-input"
+                    id="latency"
+                    value="4"
+                    min="0"
+                    step="0.1"
+                  />
+
+                  <span class="testing-unit"> ms </span>
+                </div>
+              </div>
+
+              <!-- PACKET LOSS -->
+
+              <div class="testing-item">
+                <div class="testing-label">Packet Loss</div>
+
+                <div class="testing-input-wrap">
+                  <input
+                    type="number"
+                    class="testing-input"
+                    id="packetLoss"
+                    value="0"
+                    min="0"
+                    step="0.1"
+                  />
+
+                  <span class="testing-unit"> % </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       QC RESULT
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">QC Decision</div>
+          </div>
+
+          <section class="result-card">
+            <div class="result-title">Submit ULO Result</div>
+
+            <div class="result-description">
+              Confirm that all verification items and service test results have
+              been reviewed.
+            </div>
+
+            <div class="result-actions">
+              <button
+                type="button"
+                class="result-btn result-pass"
+                onclick="submitPass()"
+              >
+                ✓ PASS ULO
+              </button>
+
+              <button
+                type="button"
+                class="result-btn result-reject"
+                onclick="showReject()"
+              >
+                ✕ REJECT
+              </button>
+            </div>
+
+            <!-- REJECTION FORM -->
+
+            <div class="reject-form" id="rejectForm">
+              <label class="reject-label" for="rejectReason">
+                Rejection Reason
+              </label>
+
+              <textarea
+                class="reject-input"
+                id="rejectReason"
+                placeholder="Describe the issue that needs correction..."
+              ></textarea>
+
+              <button
+                type="button"
+                class="reject-submit"
+                onclick="submitReject()"
+              >
+                Submit Rejection
+              </button>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       NEXT ACTION
+  =================================================== -->
+
+          <section class="next-card">
+            <span class="next-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12l4 4L19 6" />
+              </svg>
+            </span>
+
+            <span class="next-copy">
+              <span class="next-label"> After QC Pass </span>
+
+              <span class="next-title"> Service Handover </span>
+
+              <span class="next-text">
+                Work order will proceed to customer handover.
+              </span>
+            </span>
+
+            <button
+              type="button"
+              class="next-button"
+              onclick="showToast('ULO result must be submitted first')"
+            >
+              Next
+            </button>
+          </section>
+        </main>
+
+        <!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button type="button" class="nav-item" onclick="go('my-tasks.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 4h12v16H6z" />
+
+              <path d="M9 8h6M9 12h6M9 16h4" />
+            </svg>
+
+            <span> My Tasks </span>
+          </button>
+
+          <!-- ULO -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="window.scrollTo(0, 0)"
+          >
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" />
+
+              <path d="M8 12l2.5 2.5L16 9" />
+            </svg>
+
+            <span> ULO </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item"
+            onclick="go('notifications.html')"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" onclick="go('profile.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+     MODAL
+===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">ULO Result</div>
+
+            <div class="modal-text" id="modalText">ULO information.</div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+     TOAST
+===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   WORK ORDER
+========================================================= */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const workOrderId = params.get("id") || "WO-2026-00124";
+
+      /* =========================================================
+   NAVIGATION
+========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("task-detail.html?id=" + workOrderId);
+        }
+      }
+
+      /* =========================================================
+   CHECKLIST
+========================================================= */
+
+      function toggleCheck(row) {
+        const isDone = row.dataset.done === "true";
+
+        row.dataset.done = isDone ? "false" : "true";
+
+        row.classList.toggle("done", !isDone);
+
+        const status = row.querySelector(".check-status");
+
+        if (!isDone) {
+          status.textContent = "PASS";
+        } else {
+          status.textContent = "PENDING";
+        }
+
+        updateCheckProgress();
+      }
+
+      /* =========================================================
+   CHECK PROGRESS
+========================================================= */
+
+      function updateCheckProgress() {
+        const rows = document.querySelectorAll(".check-row");
+
+        let completed = 0;
+
+        rows.forEach(function (row) {
+          if (row.dataset.done === "true") {
+            completed++;
+          }
+        });
+
+        document.getElementById("checkProgress").textContent =
+          completed + " / " + rows.length + " verified";
+      }
+
+      /* =========================================================
+   VALIDATE CHECKLIST
+========================================================= */
+
+      function allChecksComplete() {
+        const rows = document.querySelectorAll(".check-row");
+
+        return Array.from(rows).every(function (row) {
+          return row.dataset.done === "true";
+        });
+      }
+
+      /* =========================================================
+   SERVICE TEST VALIDATION
+========================================================= */
+
+      function validateTesting() {
+        const download = parseFloat(document.getElementById("download").value);
+
+        const upload = parseFloat(document.getElementById("upload").value);
+
+        const latency = parseFloat(document.getElementById("latency").value);
+
+        const packetLoss = parseFloat(
+          document.getElementById("packetLoss").value,
+        );
+
+        if (
+          Number.isNaN(download) ||
+          Number.isNaN(upload) ||
+          Number.isNaN(latency) ||
+          Number.isNaN(packetLoss)
+        ) {
+          showToast("Complete all service testing results");
+
+          return false;
+        }
+
+        if (download <= 0 || upload <= 0) {
+          showToast("Download and upload must be greater than 0");
+
+          return false;
+        }
+
+        if (latency < 0 || packetLoss < 0) {
+          showToast("Testing values cannot be negative");
+
+          return false;
+        }
+
+        return true;
+      }
+
+      /* =========================================================
+   PASS ULO
+========================================================= */
+
+      function submitPass() {
+        if (!allChecksComplete()) {
+          showToast("Complete all ULO verification items first");
+
+          return;
+        }
+
+        if (!validateTesting()) {
+          return;
+        }
+
+        openModal(
+          "ULO Passed",
+          "All installation checks and service testing results have been verified. The work order can proceed to service handover.",
+        );
+
+        document.getElementById("heroStatus").textContent = "ULO PASSED";
+
+        showToast("ULO passed — ready for handover");
+      }
+
+      /* =========================================================
+   SHOW REJECT FORM
+========================================================= */
+
+      function showReject() {
+        document.getElementById("rejectForm").classList.add("show");
+
+        document.getElementById("rejectReason").focus();
+      }
+
+      /* =========================================================
+   SUBMIT REJECT
+========================================================= */
+
+      function submitReject() {
+        const reason = document.getElementById("rejectReason").value.trim();
+
+        if (!reason) {
+          showToast("Enter the rejection reason");
+
+          return;
+        }
+
+        document.getElementById("heroStatus").textContent = "REJECTED";
+
+        document.getElementById("rejectForm").classList.remove("show");
+
+        openModal(
+          "ULO Rejected",
+          "The QC result has been marked as rejected. The work order will return to the responsible field team for correction.",
+        );
+
+        showToast("ULO rejected — correction required");
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      function openModal(title, text) {
+        document.getElementById("modalTitle").textContent = title;
+
+        document.getElementById("modalText").textContent = text;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      function closeModal(e) {
+        if (e.target.id === "modal") {
+          hideModal();
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+   ESC
+========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          hideModal();
+        }
+      });
+    </script>
+  </body>
+</html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Notifications — QC Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+   ROOT
+========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+   RESET
+========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================================================
+   APP
+========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+   HEADER
+========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .back-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        position: relative;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-dot {
+        position: absolute;
+
+        top: 7px;
+        right: 7px;
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 1px solid #fff;
+      }
+
+      /* =========================================================
+   MAIN
+========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 18px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+   SUMMARY
+========================================================= */
+
+      .summary-grid {
+        margin-top: 9px;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+      }
+
+      .summary-card {
+        padding: 7px 8px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+
+        border-radius: 13px;
+      }
+
+      .summary-label {
+        color: var(--muted);
+
+        font-size: 5.5px;
+        font-weight: 600;
+      }
+
+      .summary-value {
+        margin-top: 3px;
+
+        font-size: 13px;
+        line-height: 1;
+
+        font-weight: 800;
+      }
+
+      .summary-card.unread .summary-value {
+        color: var(--accent);
+      }
+
+      .summary-card.sla .summary-value {
+        color: var(--danger);
+      }
+
+      /* =========================================================
+   FILTER BAR
+========================================================= */
+
+      .filter-bar {
+        margin-top: 8px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+
+        overflow: hidden;
+      }
+
+      .filter-btn {
+        flex-shrink: 0;
+
+        height: 27px;
+
+        padding: 0 9px;
+
+        border: 1px solid var(--border);
+        border-radius: 999px;
+
+        background: #fff;
+        color: var(--muted);
+
+        font-size: 5.8px;
+        font-weight: 700;
+      }
+
+      .filter-btn.active {
+        border-color: var(--primary);
+
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .filter-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* =========================================================
+   NOTIFICATION HEADER
+========================================================= */
+
+      .notification-header {
+        margin-top: 9px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .notification-title {
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .mark-read {
+        border: 0;
+
+        padding: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-size: 5.8px;
+        font-weight: 700;
+      }
+
+      /* =========================================================
+   NOTIFICATION LIST
+========================================================= */
+
+      .notification-list {
+        margin-top: 5px;
+
+        min-height: 0;
+
+        flex: 1;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 5px;
+      }
+
+      .notification-card {
+        width: 100%;
+
+        padding: 7px 8px;
+
+        display: flex;
+        align-items: flex-start;
+
+        gap: 8px;
+
+        border: 1px solid var(--border);
+        border-radius: 13px;
+
+        background: #fff;
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        color: var(--text);
+      }
+
+      .notification-card:active {
+        transform: scale(0.99);
+      }
+
+      .notification-card.unread {
+        border-color: #dbeafe;
+
+        background: linear-gradient(90deg, #f8fbff, #fff);
+      }
+
+      .notification-icon {
+        width: 27px;
+        height: 27px;
+
+        border-radius: 9px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+
+      .notification-card.unread .notification-icon {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .notification-icon.sla {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+
+      .notification-icon.success {
+        background: var(--success-light);
+        color: var(--success);
+      }
+
+      .notification-icon svg {
+        width: 13px;
+        height: 13px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .notification-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .notification-top {
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+      }
+
+      .notification-name {
+        min-width: 0;
+
+        font-size: 6.7px;
+        font-weight: 800;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .notification-time {
+        flex-shrink: 0;
+
+        color: #9ca3af;
+
+        font-size: 5px;
+        font-weight: 500;
+      }
+
+      .notification-message {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 5.5px;
+        line-height: 1.35;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+      }
+
+      .notification-meta {
+        margin-top: 4px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 4px;
+      }
+
+      .type-badge {
+        padding: 2.5px 5px;
+
+        border-radius: 999px;
+
+        background: #f3f4f6;
+        color: #6b7280;
+
+        font-size: 4.5px;
+        font-weight: 800;
+      }
+
+      .type-badge.task {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .type-badge.sla {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+
+      .type-badge.schedule {
+        background: #fffbeb;
+        color: #b45309;
+      }
+
+      .type-badge.work {
+        background: #f5f3ff;
+        color: #7c3aed;
+      }
+
+      .unread-dot {
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        flex-shrink: 0;
+      }
+
+      /* =========================================================
+   EMPTY STATE
+========================================================= */
+
+      .empty-state {
+        display: none;
+
+        padding: 22px 10px;
+
+        text-align: center;
+      }
+
+      .empty-icon {
+        width: 38px;
+        height: 38px;
+
+        margin: 0 auto;
+
+        border-radius: 13px;
+
+        background: #f3f4f6;
+
+        color: #9ca3af;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .empty-icon svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+      }
+
+      .empty-title {
+        margin-top: 8px;
+
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .empty-text {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 6px;
+      }
+
+      /* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-wo {
+        margin-top: 4px;
+
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 8px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .modal-btn.primary {
+        border-color: var(--primary);
+
+        background: var(--primary);
+        color: #fff;
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+   RESPONSIVE — HEIGHT
+========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .summary-grid {
+          margin-top: 7px;
+        }
+
+        .notification-list {
+          gap: 4px;
+        }
+
+        .notification-card {
+          padding: 6px 7px;
+        }
+
+        .notification-message {
+          -webkit-line-clamp: 1;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — VERY SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .summary-grid {
+          margin-top: 6px;
+        }
+
+        .summary-card {
+          padding: 6px 7px;
+        }
+
+        .notification-header {
+          margin-top: 6px;
+        }
+
+        .notification-card {
+          padding: 5px 6px;
+        }
+
+        .notification-icon {
+          width: 24px;
+          height: 24px;
+        }
+
+        .notification-message {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — WIDTH
+========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+      }
+
+      /* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+     HEADER
+===================================================== -->
+
+        <header class="app-header">
+          <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">QC Portal</div>
+          </div>
+
+          <button type="button" class="header-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span class="header-dot"></span>
+          </button>
+        </header>
+
+        <!-- =====================================================
+     MAIN
+===================================================== -->
+
+        <main class="main-content">
+          <!-- INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Quality Control</div>
+
+            <div class="page-title">Notifications</div>
+
+            <div class="page-description">
+              Review ULO assignments, work order updates, reminders and SLA
+              alerts.
+            </div>
+          </div>
+
+          <!-- ===================================================
+       SUMMARY
+  =================================================== -->
+
+          <div class="summary-grid">
+            <div class="summary-card unread">
+              <div class="summary-label">Unread</div>
+
+              <div class="summary-value" id="unreadCount">03</div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-label">Today</div>
+
+              <div class="summary-value">05</div>
+            </div>
+
+            <div class="summary-card sla">
+              <div class="summary-label">QC Alerts</div>
+
+              <div class="summary-value" id="alertCount">01</div>
+            </div>
+          </div>
+
+          <!-- ===================================================
+       FILTERS
+  =================================================== -->
+
+          <div class="filter-bar" id="filters">
+            <button
+              type="button"
+              class="filter-btn active"
+              data-filter="all"
+              onclick="setFilter('all', this)"
+            >
+              All
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="unread"
+              onclick="setFilter('unread', this)"
+            >
+              Unread
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="ulo"
+              onclick="setFilter('ulo', this)"
+            >
+              ULO
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="sla"
+              onclick="setFilter('sla', this)"
+            >
+              SLA
+            </button>
+
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter="work"
+              onclick="setFilter('work', this)"
+            >
+              Work Orders
+            </button>
+          </div>
+
+          <!-- ===================================================
+       LIST HEADER
+  =================================================== -->
+
+          <div class="notification-header">
+            <div class="notification-title">Recent Notifications</div>
+
+            <button type="button" class="mark-read" onclick="markAllRead()">
+              Mark all read
+            </button>
+          </div>
+
+          <!-- ===================================================
+       NOTIFICATION LIST
+  =================================================== -->
+
+          <div class="notification-list" id="notificationList">
+            <!-- =================================================
+         NOTIFICATION 1
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="ulo"
+              data-unread="true"
+              data-type="ulo"
+              data-title="New ULO Assignment"
+              data-wo="WO-2026-00124"
+              data-message="You have been assigned ULO Inspection for WO-2026-00124. Installation has been submitted by the technician and is ready for QC."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M8 12l2.5 2.5L16 9" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> New ULO Assignment </span>
+
+                  <span class="notification-time"> 10m </span>
+                </span>
+
+                <span class="notification-message">
+                  You have been assigned ULO Inspection for WO-2026-00124.
+                  Installation has been submitted by the technician and is ready
+                  for QC.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge task"> ULO </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 2
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="ulo"
+              data-unread="true"
+              data-type="ulo"
+              data-title="ULO Scheduled"
+              data-wo="WO-2026-00127"
+              data-message="WO-2026-00127 is scheduled for QC inspection today at 15:30 in Medan. Review the installation task before site validation."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="5" width="16" height="15" rx="2" />
+
+                  <path d="M8 3v4M16 3v4M4 10h16" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> ULO Scheduled </span>
+
+                  <span class="notification-time"> 1h </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00127 is scheduled for QC inspection today at 15:30 in
+                  Medan. Review the installation task before site validation.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge schedule"> Schedule </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 3
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card unread"
+              data-category="sla"
+              data-unread="true"
+              data-type="sla"
+              data-title="QC SLA Reminder"
+              data-wo="WO-2026-00124"
+              data-message="Complete the ULO inspection for WO-2026-00124 before today's QC deadline at 16:00."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon sla">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M12 7v5l3 2" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> QC SLA Reminder </span>
+
+                  <span class="notification-time"> 2h </span>
+                </span>
+
+                <span class="notification-message">
+                  Complete the ULO inspection for WO-2026-00124 before today's
+                  QC deadline at 16:00.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge sla"> SLA </span>
+
+                  <span class="unread-dot"></span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 4
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="work"
+              data-unread="false"
+              data-type="work"
+              data-title="Work Order Updated"
+              data-wo="WO-2026-00122"
+              data-message="WO-2026-00122 has moved to Installation. Review the upcoming QC assignment for the fiber service."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 4h12v16H6z" />
+
+                  <path d="M9 8h6M9 12h6M9 16h4" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> Work Order Updated </span>
+
+                  <span class="notification-time"> 4h </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00122 has moved to Installation. Review the upcoming
+                  QC assignment for the fiber service.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge work"> Work Order </span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 5
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="ulo"
+              data-unread="false"
+              data-type="success"
+              data-title="ULO Completed"
+              data-wo="WO-2026-00119"
+              data-message="ULO inspection for WO-2026-00119 was completed and the service is ready for customer handover."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon success">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> ULO Completed </span>
+
+                  <span class="notification-time"> Yesterday </span>
+                </span>
+
+                <span class="notification-message">
+                  ULO inspection for WO-2026-00119 was completed and the service
+                  is ready for customer handover.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge"> Completed </span>
+                </span>
+              </span>
+            </button>
+
+            <!-- =================================================
+         NOTIFICATION 6
+    ================================================= -->
+
+            <button
+              type="button"
+              class="notification-card"
+              data-category="work"
+              data-unread="false"
+              data-type="work"
+              data-title="Work Order Closed"
+              data-wo="WO-2026-00115"
+              data-message="WO-2026-00115 is now active and the installation and QC cycle has been closed."
+              onclick="openNotification(this)"
+            >
+              <span class="notification-icon success">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M8 12l2.5 2.5L16 9" />
+                </svg>
+              </span>
+
+              <span class="notification-copy">
+                <span class="notification-top">
+                  <span class="notification-name"> Work Order Closed </span>
+
+                  <span class="notification-time"> Yesterday </span>
+                </span>
+
+                <span class="notification-message">
+                  WO-2026-00115 is now active and the installation and QC cycle
+                  has been closed.
+                </span>
+
+                <span class="notification-meta">
+                  <span class="type-badge"> Work Order </span>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <!-- EMPTY -->
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                <path d="M10 21h4" />
+              </svg>
+            </div>
+
+            <div class="empty-title">No notifications</div>
+
+            <div class="empty-text">
+              There are no notifications in this category.
+            </div>
+          </div>
+        </main>
+
+        <!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button type="button" class="nav-item" onclick="go('my-tasks.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 4h12v16H6z" />
+
+              <path d="M9 8h6M9 12h6M9 16h4" />
+            </svg>
+
+            <span> My Tasks </span>
+          </button>
+
+          <!-- ULO -->
+
+          <button type="button" class="nav-item" onclick="go('ulo.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" />
+
+              <path d="M8 12l2.5 2.5L16 9" />
+            </svg>
+
+            <span> ULO </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="window.scrollTo(0, 0)"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" onclick="go('profile.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+     MODAL
+===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">Notification</div>
+
+            <div class="modal-wo" id="modalWO">WO-2026-00124</div>
+
+            <div class="modal-text" id="modalText">Notification detail.</div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Close
+              </button>
+
+              <button
+                type="button"
+                class="modal-btn primary"
+                onclick="openTask()"
+              >
+                Open Task
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+     TOAST
+===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   STATE
+========================================================= */
+
+      let currentFilter = "all";
+
+      let selectedWO = "";
+
+      /* =========================================================
+   NAVIGATION
+========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("dashboard.html");
+        }
+      }
+
+      /* =========================================================
+   FILTER
+========================================================= */
+
+      function setFilter(filter, button) {
+        currentFilter = filter;
+
+        document.querySelectorAll(".filter-btn").forEach(function (btn) {
+          btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        applyFilter();
+      }
+
+      /* =========================================================
+   APPLY FILTER
+========================================================= */
+
+      function applyFilter() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+          const category = card.dataset.category;
+
+          const unread = card.dataset.unread === "true";
+
+          let show = false;
+
+          if (currentFilter === "all") {
+            show = true;
+          } else if (currentFilter === "unread") {
+            show = unread;
+          } else if (currentFilter === "ulo") {
+            show = category === "ulo";
+          } else if (currentFilter === "sla") {
+            show = category === "sla";
+          } else if (currentFilter === "work") {
+            show = category === "work";
+          }
+
+          card.style.display = show ? "flex" : "none";
+
+          if (show) {
+            visibleCount++;
+          }
+        });
+
+        document.getElementById("emptyState").style.display =
+          visibleCount === 0 ? "block" : "none";
+      }
+
+      /* =========================================================
+   OPEN NOTIFICATION
+========================================================= */
+
+      function openNotification(card) {
+        const title = card.dataset.title;
+
+        const wo = card.dataset.wo;
+
+        const message = card.dataset.message;
+
+        selectedWO = wo;
+
+        /*
+         * Mark this notification
+         * as read.
+         */
+
+        if (card.dataset.unread === "true") {
+          card.dataset.unread = "false";
+
+          card.classList.remove("unread");
+
+          const dot = card.querySelector(".unread-dot");
+
+          if (dot) {
+            dot.remove();
+          }
+
+          updateUnreadCount();
+        }
+
+        document.getElementById("modalTitle").textContent = title;
+
+        document.getElementById("modalWO").textContent = wo;
+
+        document.getElementById("modalText").textContent = message;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+   OPEN TASK
+========================================================= */
+
+      function openTask() {
+        hideModal();
+
+        if (!selectedWO) {
+          return;
+        }
+
+        showToast("Opening QC task...");
+
+        setTimeout(function () {
+          window.location.href =
+            "task-detail.html?id=" + encodeURIComponent(selectedWO);
+        }, 250);
+      }
+
+      /* =========================================================
+   UPDATE UNREAD
+========================================================= */
+
+      function updateUnreadCount() {
+        const unreadCards = document.querySelectorAll(
+          '.notification-card[data-unread="true"]',
+        );
+
+        const count = unreadCards.length;
+
+        document.getElementById("unreadCount").textContent = String(
+          count,
+        ).padStart(2, "0");
+
+        const dot = document.querySelector(".header-dot");
+
+        if (dot) {
+          dot.style.display = count > 0 ? "block" : "none";
+        }
+      }
+
+      /* =========================================================
+   MARK ALL READ
+========================================================= */
+
+      function markAllRead() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        let changed = false;
+
+        cards.forEach(function (card) {
+          if (card.dataset.unread === "true") {
+            changed = true;
+
+            card.dataset.unread = "false";
+
+            card.classList.remove("unread");
+
+            const dot = card.querySelector(".unread-dot");
+
+            if (dot) {
+              dot.remove();
+            }
+          }
+        });
+
+        updateUnreadCount();
+
+        if (changed) {
+          showToast("All notifications marked as read");
+        } else {
+          showToast("No unread notifications");
+        }
+
+        if (currentFilter === "unread") {
+          applyFilter();
+        }
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      function closeModal(e) {
+        if (e.target.id === "modal") {
+          hideModal();
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+   ESC
+========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          hideModal();
+        }
+      });
+
+      /* =========================================================
+   INIT
+========================================================= */
+
+      updateUnreadCount();
+
+      applyFilter();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1728 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>My Tasks — Technician Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --background: #f8fafc;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        height: 100dvh;
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* =========================
+       HEADER
+    ========================= */
+
+      .app-header {
+        flex-shrink: 0;
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+        background: rgba(248, 250, 252, 0.94);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        z-index: 10;
+      }
+
+      .header-left {
+        min-width: 0;
+      }
+
+      .header-title {
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fff;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--danger);
+        border: 1.5px solid #fff;
+      }
+
+      /* =========================
+       MAIN
+    ========================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+        padding: 4px 20px 90px;
+        overflow: hidden;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      /* =========================
+       SUMMARY
+    ========================= */
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        margin-top: 10px;
+      }
+
+      .summary-card {
+        min-width: 0;
+        padding: 8px 7px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+      }
+
+      .summary-label {
+        color: var(--muted);
+        font-size: 6.5px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .summary-value {
+        margin-top: 4px;
+        font-size: 15px;
+        line-height: 1;
+        font-weight: 800;
+      }
+
+      .summary-meta {
+        margin-top: 4px;
+        color: #9ca3af;
+        font-size: 5.8px;
+        white-space: nowrap;
+      }
+
+      /* =========================
+       SEARCH
+    ========================= */
+
+      .search-box {
+        position: relative;
+        margin-top: 9px;
+      }
+
+      .search-box svg {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        width: 15px;
+        height: 15px;
+        color: #9ca3af;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .search-input {
+        width: 100%;
+        height: 37px;
+        padding: 0 11px 0 34px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        outline: none;
+        background: #fff;
+        color: var(--text);
+        font-size: 8px;
+      }
+
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .search-input:focus {
+        border-color: #bfdbfe;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+      }
+
+      /* =========================
+       FILTERS
+    ========================= */
+
+      .filters {
+        display: flex;
+        gap: 5px;
+        margin-top: 7px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .filters::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-btn {
+        flex-shrink: 0;
+        height: 27px;
+        padding: 0 10px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: #fff;
+        color: var(--muted);
+        font-size: 6.5px;
+        font-weight: 700;
+      }
+
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      .filter-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* =========================
+       SECTION
+    ========================= */
+
+      .section-header {
+        margin-top: 10px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .task-count {
+        color: var(--muted);
+        font-size: 7px;
+        font-weight: 600;
+      }
+
+      /* =========================
+       TASK CARDS
+    ========================= */
+
+      .task-list {
+        min-height: 0;
+      }
+
+      .task-card {
+        padding: 10px;
+        margin-bottom: 6px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .task-card:active {
+        transform: scale(0.985);
+      }
+
+      .task-card-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+      }
+
+      .task-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--accent-light);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .task-icon svg {
+        width: 16px;
+        height: 16px;
+        stroke-width: 1.8;
+      }
+
+      .task-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .task-id-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .task-id {
+        color: var(--muted);
+        font-size: 6.5px;
+        font-weight: 700;
+      }
+
+      .priority-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #d1d5db;
+      }
+
+      .priority-dot.high {
+        background: var(--danger);
+      }
+
+      .priority-dot.normal {
+        background: var(--accent);
+      }
+
+      .task-title {
+        margin-top: 3px;
+        font-size: 8.5px;
+        line-height: 1.25;
+        font-weight: 800;
+      }
+
+      .task-customer {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 6.5px;
+        line-height: 1.3;
+      }
+
+      .task-status {
+        flex-shrink: 0;
+        padding: 5px 7px;
+        border-radius: 7px;
+        background: #f3f4f6;
+        color: #6b7280;
+        font-size: 5.5px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .task-status.active {
+        background: #eff6ff;
+        color: var(--accent);
+      }
+
+      .task-status.scheduled {
+        background: #fff7ed;
+        color: var(--warning);
+      }
+
+      .task-status.completed {
+        background: #f0fdf4;
+        color: var(--success);
+      }
+
+      .task-meta-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 5px;
+        margin-top: 9px;
+        padding-top: 8px;
+        border-top: 1px solid #f1f5f9;
+      }
+
+      .meta-item {
+        min-width: 0;
+      }
+
+      .meta-label {
+        color: #9ca3af;
+        font-size: 5.5px;
+        font-weight: 600;
+      }
+
+      .meta-value {
+        margin-top: 3px;
+        color: var(--text);
+        font-size: 6.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .task-progress {
+        margin-top: 8px;
+      }
+
+      .task-progress-head {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 5.5px;
+        font-weight: 600;
+      }
+
+      .task-progress-head strong {
+        color: var(--text);
+        font-size: 6px;
+      }
+
+      .progress-track {
+        height: 4px;
+        margin-top: 4px;
+        border-radius: 99px;
+        background: #f1f5f9;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: var(--accent);
+      }
+
+      .progress-fill.completed {
+        background: var(--success);
+      }
+
+      /* =========================
+       EMPTY
+    ========================= */
+
+      .empty-state {
+        display: none;
+        padding: 25px 15px;
+        text-align: center;
+        border: 1px dashed var(--border);
+        border-radius: 15px;
+        background: #fff;
+      }
+
+      .empty-state.show {
+        display: block;
+      }
+
+      .empty-icon {
+        width: 35px;
+        height: 35px;
+        margin: 0 auto;
+        border-radius: 11px;
+        background: #f3f4f6;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .empty-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .empty-title {
+        margin-top: 8px;
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .empty-text {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 7px;
+      }
+
+      /* =========================
+       BOTTOM NAV
+    ========================= */
+
+      .bottom-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(68px + env(safe-area-inset-bottom));
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+        z-index: 20;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+        padding: 4px 2px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+        stroke-width: 1.8;
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================
+       MORE
+    ========================= */
+
+      .nav-more {
+        position: relative;
+        overflow: visible;
+      }
+
+      .more-button-icon {
+        width: 38px;
+        height: 38px;
+        margin-top: -13px;
+        border-radius: 13px;
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 16px rgba(17, 24, 39, 0.18);
+        transition: transform 0.2s ease;
+      }
+
+      .more-button-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 2;
+      }
+
+      .nav-more.open .more-button-icon {
+        transform: rotate(45deg);
+      }
+
+      .more-menu {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 78px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 16px 40px rgba(17, 24, 39, 0.14);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(10px) scale(0.97);
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease,
+          visibility 0.2s ease;
+        z-index: 35;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+      }
+
+      .more-menu-header {
+        min-height: 42px;
+        padding: 6px 7px 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 2px;
+      }
+
+      .more-menu-title {
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .more-menu-subtitle {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 7px;
+      }
+
+      .more-close {
+        width: 27px;
+        height: 27px;
+        border: 0;
+        border-radius: 9px;
+        background: #f3f4f6;
+        color: #6b7280;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .more-item {
+        width: 100%;
+        min-height: 52px;
+        padding: 7px 6px;
+        border: 0;
+        border-bottom: 1px solid var(--border);
+        background: transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text);
+        text-align: left;
+      }
+
+      .more-item:last-child {
+        border-bottom: 0;
+      }
+
+      .more-item:active {
+        background: #f8fafc;
+        transform: scale(0.985);
+      }
+
+      .more-item-icon {
+        width: 33px;
+        height: 33px;
+        border-radius: 10px;
+        background: var(--accent-light);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .more-item-icon svg {
+        width: 16px;
+        height: 16px;
+        stroke-width: 1.8;
+      }
+
+      .more-item-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .more-item-title {
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .more-item-text {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 6.8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .more-arrow {
+        width: 15px;
+        height: 15px;
+        color: #9ca3af;
+        flex-shrink: 0;
+      }
+
+      /* =========================
+       TOAST
+    ========================= */
+
+      .toast {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 82px;
+        padding: 11px 13px;
+        border-radius: 13px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 600;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(8px);
+        pointer-events: none;
+        transition: 0.2s ease;
+        z-index: 50;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* =========================
+       RESPONSIVE
+    ========================= */
+
+      @media (max-height: 700px) {
+        .page-description {
+          display: none;
+        }
+
+        .summary-grid {
+          margin-top: 8px;
+        }
+
+        .search-box {
+          margin-top: 7px;
+        }
+
+        .section-header {
+          margin-top: 8px;
+        }
+
+        .task-card {
+          padding: 8px 9px;
+          margin-bottom: 5px;
+        }
+
+        .task-meta-row {
+          margin-top: 7px;
+          padding-top: 6px;
+        }
+
+        .task-progress {
+          margin-top: 6px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .page-title {
+          font-size: 18px;
+        }
+
+        .summary-card {
+          padding: 7px 6px;
+        }
+
+        .summary-value {
+          font-size: 14px;
+        }
+
+        .task-customer {
+          display: none;
+        }
+
+        .task-meta-row {
+          margin-top: 5px;
+          padding-top: 5px;
+        }
+
+        .task-progress {
+          display: none;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .more-menu {
+          left: 10px;
+          right: 10px;
+        }
+
+        .summary-grid {
+          gap: 4px;
+        }
+
+        .summary-label {
+          font-size: 6px;
+        }
+
+        .summary-meta {
+          font-size: 5.3px;
+        }
+      }
+
+      /* =========================
+       DESKTOP PREVIEW
+    ========================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+          border-radius: 30px;
+          box-shadow: 0 25px 70px rgba(17, 24, 39, 0.12);
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- HEADER -->
+
+        <header class="app-header">
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+            <div class="header-subtitle">Technician Portal</div>
+          </div>
+
+          <button
+            class="header-btn"
+            onclick="go('notifications.html')"
+            aria-label="Notifications"
+          >
+            <span class="header-badge"></span>
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M10 21h4"></path>
+            </svg>
+          </button>
+        </header>
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+          <section class="page-intro">
+            <div class="eyebrow">Field Operations</div>
+            <div class="page-title">My Tasks</div>
+            <div class="page-description">
+              View assigned installation tasks, schedules and field execution
+              progress.
+            </div>
+          </section>
+
+          <!-- SUMMARY -->
+
+          <section class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-label">All</div>
+              <div class="summary-value" id="countAll">05</div>
+              <div class="summary-meta">assigned tasks</div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-label">Scheduled</div>
+              <div class="summary-value" id="countScheduled">02</div>
+              <div class="summary-meta">upcoming</div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-label">On Site</div>
+              <div class="summary-value" id="countActive">01</div>
+              <div class="summary-meta">need action</div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-label">Done</div>
+              <div class="summary-value" id="countCompleted">02</div>
+              <div class="summary-meta">completed</div>
+            </div>
+          </section>
+
+          <!-- SEARCH -->
+
+          <div class="search-box">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+
+            <input
+              id="searchInput"
+              class="search-input"
+              type="search"
+              placeholder="Search task, work order or customer..."
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- FILTER -->
+
+          <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="scheduled">
+              Scheduled
+            </button>
+            <button class="filter-btn" data-filter="active">On Site</button>
+            <button class="filter-btn" data-filter="completed">
+              Completed
+            </button>
+          </div>
+
+          <!-- TASK LIST -->
+
+          <div class="section-header">
+            <h2>Assigned Tasks</h2>
+            <span class="task-count" id="taskCount">5 tasks</span>
+          </div>
+
+          <section class="task-list" id="taskList">
+            <!-- TASK 1 -->
+
+            <article
+              class="task-card"
+              data-status="active"
+              data-search="WO-2026-00124 PT Nusa Data Install Fiber CPE Metro Ethernet 300 Mbps KIM Medan"
+              onclick="openTask('WO-2026-00124')"
+            >
+              <div class="task-card-top">
+                <div class="task-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M14.5 5.5a4 4 0 0 0 4 5l-7 7-3-3 7-7a4 4 0 0 0-1-7"
+                    ></path>
+                    <path d="m5 19 2-2"></path>
+                  </svg>
+                </div>
+
+                <div class="task-copy">
+                  <div class="task-id-row">
+                    <div class="task-id">WO-2026-00124</div>
+                    <span class="priority-dot normal"></span>
+                  </div>
+
+                  <div class="task-title">Install Fiber &amp; CPE</div>
+
+                  <div class="task-customer">
+                    PT Nusa Data · Metro Ethernet 300 Mbps · KIM Medan
+                  </div>
+                </div>
+
+                <span class="task-status active">ON SITE</span>
+              </div>
+
+              <div class="task-meta-row">
+                <div class="meta-item">
+                  <div class="meta-label">Schedule</div>
+                  <div class="meta-value">16 Sep · 13:00</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">KIM Medan</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Next Action</div>
+                  <div class="meta-value">Install CPE</div>
+                </div>
+              </div>
+
+              <div class="task-progress">
+                <div class="task-progress-head">
+                  <span>Task Progress</span>
+                  <strong>55%</strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-fill" style="width: 55%"></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TASK 2 -->
+
+            <article
+              class="task-card"
+              data-status="scheduled"
+              data-search="WO-2026-00127 PT Maju Network Installation Preparation Internet Dedicated 200 Mbps Medan"
+              onclick="openTask('WO-2026-00127')"
+            >
+              <div class="task-card-top">
+                <div class="task-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 19h16"></path>
+                    <path d="M6 16V7l6-3 6 3v9"></path>
+                    <path d="M9 16v-4h6v4"></path>
+                  </svg>
+                </div>
+
+                <div class="task-copy">
+                  <div class="task-id-row">
+                    <div class="task-id">WO-2026-00127</div>
+                    <span class="priority-dot high"></span>
+                  </div>
+
+                  <div class="task-title">Installation Preparation</div>
+
+                  <div class="task-customer">
+                    PT Maju Network · Internet Dedicated 200 Mbps · Medan
+                  </div>
+                </div>
+
+                <span class="task-status scheduled">SCHEDULED</span>
+              </div>
+
+              <div class="task-meta-row">
+                <div class="meta-item">
+                  <div class="meta-label">Schedule</div>
+                  <div class="meta-value">17 Sep · 09:00</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">Medan</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Next Action</div>
+                  <div class="meta-value">Prepare Tools</div>
+                </div>
+              </div>
+
+              <div class="task-progress">
+                <div class="task-progress-head">
+                  <span>Task Progress</span>
+                  <strong>25%</strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-fill" style="width: 25%"></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TASK 3 -->
+
+            <article
+              class="task-card"
+              data-status="scheduled"
+              data-search="WO-2026-00122 PT Sumatra Digital Fiber Internet 500 Mbps Installation Berastagi"
+              onclick="openTask('WO-2026-00122')"
+            >
+              <div class="task-card-top">
+                <div class="task-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="8"></circle>
+                    <path d="M12 8v4l3 2"></path>
+                  </svg>
+                </div>
+
+                <div class="task-copy">
+                  <div class="task-id-row">
+                    <div class="task-id">WO-2026-00122</div>
+                    <span class="priority-dot normal"></span>
+                  </div>
+
+                  <div class="task-title">Fiber Installation</div>
+
+                  <div class="task-customer">
+                    PT Sumatra Digital · Fiber Internet 500 Mbps · Berastagi
+                  </div>
+                </div>
+
+                <span class="task-status scheduled">SCHEDULED</span>
+              </div>
+
+              <div class="task-meta-row">
+                <div class="meta-item">
+                  <div class="meta-label">Schedule</div>
+                  <div class="meta-value">17 Sep · 13:30</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">Berastagi</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Next Action</div>
+                  <div class="meta-value">Site Visit</div>
+                </div>
+              </div>
+
+              <div class="task-progress">
+                <div class="task-progress-head">
+                  <span>Task Progress</span>
+                  <strong>40%</strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-fill" style="width: 40%"></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TASK 4 -->
+
+            <article
+              class="task-card"
+              data-status="completed"
+              data-search="WO-2026-00119 PT Digital Karya Fiber Internet 100 Mbps Installation Completed Medan"
+              onclick="openTask('WO-2026-00119')"
+            >
+              <div class="task-card-top">
+                <div class="task-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m5 12 4 4L19 6"></path>
+                  </svg>
+                </div>
+
+                <div class="task-copy">
+                  <div class="task-id-row">
+                    <div class="task-id">WO-2026-00119</div>
+                    <span class="priority-dot"></span>
+                  </div>
+
+                  <div class="task-title">Installation &amp; Handover</div>
+
+                  <div class="task-customer">
+                    PT Digital Karya · Fiber Internet 100 Mbps · Medan
+                  </div>
+                </div>
+
+                <span class="task-status completed">COMPLETED</span>
+              </div>
+
+              <div class="task-meta-row">
+                <div class="meta-item">
+                  <div class="meta-label">Completed</div>
+                  <div class="meta-value">15 Sep · 16:20</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">Medan</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Result</div>
+                  <div class="meta-value">ULO Ready</div>
+                </div>
+              </div>
+
+              <div class="task-progress">
+                <div class="task-progress-head">
+                  <span>Task Progress</span>
+                  <strong>100%</strong>
+                </div>
+
+                <div class="progress-track">
+                  <div
+                    class="progress-fill completed"
+                    style="width: 100%"
+                  ></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- TASK 5 -->
+
+            <article
+              class="task-card"
+              data-status="completed"
+              data-search="WO-2026-00115 PT Medan Digital CPE Installation Fiber Internet 200 Mbps Completed Medan"
+              onclick="openTask('WO-2026-00115')"
+            >
+              <div class="task-card-top">
+                <div class="task-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M4 12h16"></path>
+                    <path d="M12 4v16"></path>
+                    <circle cx="12" cy="12" r="8"></circle>
+                  </svg>
+                </div>
+
+                <div class="task-copy">
+                  <div class="task-id-row">
+                    <div class="task-id">WO-2026-00115</div>
+                    <span class="priority-dot"></span>
+                  </div>
+
+                  <div class="task-title">CPE Installation</div>
+
+                  <div class="task-customer">
+                    PT Medan Digital · Fiber Internet 200 Mbps · Medan
+                  </div>
+                </div>
+
+                <span class="task-status completed">COMPLETED</span>
+              </div>
+
+              <div class="task-meta-row">
+                <div class="meta-item">
+                  <div class="meta-label">Completed</div>
+                  <div class="meta-value">14 Sep · 14:45</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Location</div>
+                  <div class="meta-value">Medan</div>
+                </div>
+
+                <div class="meta-item">
+                  <div class="meta-label">Result</div>
+                  <div class="meta-value">Active</div>
+                </div>
+              </div>
+
+              <div class="task-progress">
+                <div class="task-progress-head">
+                  <span>Task Progress</span>
+                  <strong>100%</strong>
+                </div>
+
+                <div class="progress-track">
+                  <div
+                    class="progress-fill completed"
+                    style="width: 100%"
+                  ></div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+              </svg>
+            </div>
+
+            <div class="empty-title">No tasks found</div>
+
+            <div class="empty-text">Try another keyword or task status.</div>
+          </div>
+        </main>
+
+        <!-- BOTTOM NAV -->
+
+        <nav class="bottom-nav">
+          <button class="nav-item" onclick="go('dashboard.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 10 9-7 9 7"></path>
+              <path d="M5 9v11h14V9"></path>
+              <path d="M9 20v-6h6v6"></path>
+            </svg>
+            <span>Home</span>
+          </button>
+
+          <button class="nav-item active" onclick="go('my-tasks.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+              <path d="M8 9h8"></path>
+              <path d="M8 13h5"></path>
+              <path d="m8 17 2 2 4-4"></path>
+            </svg>
+            <span>My Tasks</span>
+          </button>
+
+          <button
+            class="nav-item nav-more"
+            id="moreButton"
+            onclick="toggleMoreMenu()"
+          >
+            <div class="more-button-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </div>
+            <span>More</span>
+          </button>
+
+          <button class="nav-item" onclick="go('notifications.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M10 21h4"></path>
+            </svg>
+            <span>Alerts</span>
+          </button>
+
+          <button class="nav-item" onclick="go('profile.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="3"></circle>
+              <path d="M5 20c.8-3.2 3.2-5 7-5s6.2 1.8 7 5"></path>
+            </svg>
+            <span>Profile</span>
+          </button>
+
+          <!-- MORE MENU -->
+
+          <div class="more-menu" id="moreMenu">
+            <div class="more-menu-header">
+              <div>
+                <div class="more-menu-title">Field Operations</div>
+                <div class="more-menu-subtitle">Technician tools</div>
+              </div>
+
+              <button
+                class="more-close"
+                onclick="toggleMoreMenu()"
+                aria-label="Close menu"
+              >
+                ×
+              </button>
+            </div>
+
+            <button class="more-item" onclick="go('installation.html')">
+              <div class="more-item-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M14.5 5.5a4 4 0 0 0 4 5l-7 7-3-3 7-7a4 4 0 0 0-1-7"
+                  ></path>
+                  <path d="m5 19 2-2"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Installation</div>
+                <div class="more-item-text">
+                  Field installation and service testing
+                </div>
+              </div>
+
+              <svg
+                class="more-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+
+            <button
+              class="more-item"
+              onclick="go('task-detail.html?id=WO-2026-00124')"
+            >
+              <div class="more-item-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                  <path d="M8 9h8"></path>
+                  <path d="M8 13h5"></path>
+                  <path d="m8 17 2 2 4-4"></path>
+                </svg>
+              </div>
+
+              <div class="more-item-copy">
+                <div class="more-item-title">Task Detail</div>
+                <div class="more-item-text">Open current technician task</div>
+              </div>
+
+              <svg
+                class="more-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================
+       NAVIGATION
+    ========================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function openTask(id) {
+        window.location.href = "task-detail.html?id=" + encodeURIComponent(id);
+      }
+
+      /* =========================
+       MORE MENU
+    ========================= */
+
+      function toggleMoreMenu() {
+        const menu = document.getElementById("moreMenu");
+        const button = document.getElementById("moreButton");
+
+        const isOpen = menu.classList.contains("show");
+
+        if (isOpen) {
+          menu.classList.remove("show");
+          button.classList.remove("open");
+        } else {
+          menu.classList.add("show");
+          button.classList.add("open");
+        }
+      }
+
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("moreMenu");
+        const button = document.getElementById("moreButton");
+
+        if (!menu || !button) return;
+
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.remove("show");
+          button.classList.remove("open");
+        }
+      });
+
+      /* =========================
+       FILTER + SEARCH
+    ========================= */
+
+      let activeFilter = "all";
+
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const taskCards = document.querySelectorAll(".task-card");
+      const searchInput = document.getElementById("searchInput");
+      const taskCount = document.getElementById("taskCount");
+      const emptyState = document.getElementById("emptyState");
+
+      function applyFilters() {
+        const keyword = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        taskCards.forEach(function (card) {
+          const status = card.dataset.status;
+          const searchText = card.dataset.search.toLowerCase();
+
+          const matchesFilter =
+            activeFilter === "all" || status === activeFilter;
+
+          const matchesSearch = !keyword || searchText.includes(keyword);
+
+          const visible = matchesFilter && matchesSearch;
+
+          card.style.display = visible ? "" : "none";
+
+          if (visible) {
+            visibleCount++;
+          }
+        });
+
+        taskCount.textContent =
+          visibleCount + (visibleCount === 1 ? " task" : " tasks");
+
+        emptyState.classList.toggle("show", visibleCount === 0);
+      }
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          filterButtons.forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          button.classList.add("active");
+          activeFilter = button.dataset.filter;
+
+          applyFilters();
+        });
+      });
+
+      searchInput.addEventListener("input", applyFilters);
+
+      /* =========================
+       TOAST
+    ========================= */
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =========================
+       ESC
+    ========================= */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          document.getElementById("moreMenu").classList.remove("show");
+          document.getElementById("moreButton").classList.remove("open");
+        }
+      });
+
+      /* =========================
+       INITIALIZE
+    ========================= */
+
+      applyFilters();
+    </script>
+  </body>
+</html>

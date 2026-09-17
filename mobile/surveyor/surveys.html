@@ -1,0 +1,1833 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>My Surveys - Surveyor - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        -webkit-overflow-scrolling: auto;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 14px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+      }
+
+      .mini-logo {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 800;
+
+        letter-spacing: -0.5px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .notification-badge {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       PAGE HEADER
+    ===================================================== */
+
+      .page-header {
+        margin-top: 8px;
+      }
+
+      .page-header-label {
+        font-size: 11px;
+
+        color: var(--muted);
+
+        margin-bottom: 4px;
+      }
+
+      .page-header h1 {
+        font-size: 23px;
+
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .page-header p {
+        margin-top: 5px;
+
+        font-size: 12px;
+
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+      .summary-grid {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 7px;
+      }
+
+      .summary-card {
+        padding: 10px 5px;
+
+        text-align: center;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+      }
+
+      .summary-number {
+        font-size: 19px;
+
+        line-height: 22px;
+
+        font-weight: 800;
+      }
+
+      .summary-label {
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        line-height: 10px;
+
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      .summary-card.all .summary-number {
+        color: var(--accent);
+      }
+
+      .summary-card.pending .summary-number {
+        color: var(--warning);
+      }
+
+      .summary-card.progress .summary-number {
+        color: var(--accent);
+      }
+
+      .summary-card.completed .summary-number {
+        color: var(--success);
+      }
+
+      /* =====================================================
+       SEARCH
+    ===================================================== */
+
+      .search-box {
+        margin-top: 14px;
+
+        height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding: 0 12px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 13px;
+      }
+
+      .search-box svg {
+        width: 17px;
+        height: 17px;
+
+        flex-shrink: 0;
+
+        color: #9ca3af;
+      }
+
+      .search-box input {
+        width: 100%;
+
+        border: 0;
+
+        outline: none;
+
+        background: transparent;
+
+        font-family: inherit;
+
+        font-size: 11px;
+
+        color: var(--text);
+      }
+
+      .search-box input::placeholder {
+        color: #9ca3af;
+      }
+
+      /* =====================================================
+       FILTER
+    ===================================================== */
+
+      .filter-row {
+        margin-top: 9px;
+
+        display: flex;
+
+        gap: 6px;
+
+        overflow: hidden;
+      }
+
+      .filter-button {
+        flex-shrink: 0;
+
+        padding: 7px 11px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: white;
+
+        color: #6b7280;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+      }
+
+      .filter-button.active {
+        background: var(--primary);
+
+        color: white;
+
+        border-color: var(--primary);
+      }
+
+      /* =====================================================
+       SECTION HEADER
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 15px;
+
+        margin-bottom: 9px;
+      }
+
+      .section-header h2 {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .result-count {
+        font-size: 9px;
+
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      /* =====================================================
+       SURVEY LIST
+    ===================================================== */
+
+      .survey-list {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+      }
+
+      /* =====================================================
+       SURVEY CARD
+    ===================================================== */
+
+      .survey-card {
+        padding: 13px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+
+        cursor: pointer;
+      }
+
+      .survey-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 9px;
+      }
+
+      .survey-info {
+        min-width: 0;
+      }
+
+      .survey-number {
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+
+        margin-bottom: 4px;
+      }
+
+      .survey-title {
+        font-size: 13px;
+
+        font-weight: 700;
+
+        line-height: 1.3;
+
+        letter-spacing: -0.15px;
+      }
+
+      .survey-customer {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .status {
+        flex-shrink: 0;
+
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .status-progress {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .status-pending {
+        background: var(--warning-light);
+
+        color: var(--warning);
+      }
+
+      .status-completed {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      .status-overdue {
+        background: var(--danger-light);
+
+        color: var(--danger);
+      }
+
+      /* =====================================================
+       SURVEY META
+    ===================================================== */
+
+      .survey-meta {
+        margin-top: 10px;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 7px;
+      }
+
+      .meta-item {
+        padding: 8px;
+
+        background: #f9fafb;
+
+        border: 1px solid #f0f1f3;
+
+        border-radius: 10px;
+      }
+
+      .meta-item span {
+        display: block;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        margin-bottom: 3px;
+      }
+
+      .meta-item strong {
+        display: block;
+
+        font-size: 9px;
+
+        line-height: 12px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      /* =====================================================
+       LOCATION
+    ===================================================== */
+
+      .survey-location {
+        margin-top: 9px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+      }
+
+      .survey-location svg {
+        width: 13px;
+        height: 13px;
+
+        flex-shrink: 0;
+      }
+
+      /* =====================================================
+       CARD FOOTER
+    ===================================================== */
+
+      .survey-footer {
+        margin-top: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .priority {
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        font-weight: 600;
+      }
+
+      .priority-dot {
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+      }
+
+      .priority.high .priority-dot {
+        background: var(--danger);
+      }
+
+      .priority.medium .priority-dot {
+        background: var(--warning);
+      }
+
+      .survey-action {
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        padding: 7px 10px;
+
+        border-radius: 9px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 8px;
+
+        font-weight: 700;
+      }
+
+      .survey-action svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      /* =====================================================
+       EMPTY STATE
+    ===================================================== */
+
+      .empty-state {
+        display: none;
+
+        padding: 28px 20px;
+
+        text-align: center;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+      }
+
+      .empty-icon {
+        width: 42px;
+        height: 42px;
+
+        margin: 0 auto 9px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background: #f3f4f6;
+
+        color: #9ca3af;
+      }
+
+      .empty-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .empty-state strong {
+        display: block;
+
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .empty-state p {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+
+        line-height: 1.4;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 13px 16px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .mini-logo {
+          width: 36px;
+          height: 36px;
+
+          border-radius: 11px;
+        }
+
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-header h1 {
+          font-size: 21px;
+        }
+
+        .summary-grid {
+          margin-top: 11px;
+        }
+
+        .search-box {
+          margin-top: 10px;
+        }
+
+        .section-header {
+          margin-top: 11px;
+        }
+
+        .survey-card {
+          padding: 11px;
+        }
+
+        .survey-meta {
+          margin-top: 7px;
+        }
+
+        .survey-footer {
+          margin-top: 7px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .page-header {
+          margin-top: 2px;
+        }
+
+        .page-header p {
+          display: none;
+        }
+
+        .summary-grid {
+          margin-top: 8px;
+        }
+
+        .search-box {
+          height: 37px;
+
+          margin-top: 7px;
+        }
+
+        .filter-row {
+          margin-top: 6px;
+        }
+
+        .section-header {
+          margin-top: 8px;
+
+          margin-bottom: 6px;
+        }
+
+        .survey-card {
+          padding: 9px;
+        }
+
+        .survey-meta {
+          margin-top: 6px;
+        }
+
+        .meta-item {
+          padding: 6px;
+        }
+
+        .survey-location {
+          margin-top: 6px;
+        }
+
+        .survey-footer {
+          margin-top: 6px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          min-height: 0;
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-brand">
+              <div class="mini-logo">NPN</div>
+
+              <div class="header-title">
+                <strong> Work Management </strong>
+
+                <span> Surveyor Portal </span>
+              </div>
+            </div>
+
+            <div class="header-actions">
+              <button
+                type="button"
+                class="header-button"
+                id="notificationButton"
+                aria-label="Notifications"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+
+                <span class="notification-badge"></span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN CONTENT
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- PAGE HEADER -->
+
+          <div class="page-header">
+            <div class="page-header-label">Field Operations</div>
+
+            <h1>My Surveys</h1>
+
+            <p>Manage your assigned survey activities and field visits.</p>
+          </div>
+
+          <!-- SUMMARY -->
+
+          <div class="summary-grid">
+            <div class="summary-card all">
+              <div class="summary-number">04</div>
+
+              <div class="summary-label">Assigned</div>
+            </div>
+
+            <div class="summary-card pending">
+              <div class="summary-number">01</div>
+
+              <div class="summary-label">Pending</div>
+            </div>
+
+            <div class="summary-card progress">
+              <div class="summary-number">02</div>
+
+              <div class="summary-label">In Progress</div>
+            </div>
+
+            <div class="summary-card completed">
+              <div class="summary-number">08</div>
+
+              <div class="summary-label">Completed</div>
+            </div>
+          </div>
+
+          <!-- SEARCH -->
+
+          <div class="search-box">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+
+              <path d="m20 20-4-4"></path>
+            </svg>
+
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search work order, customer..."
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- FILTER -->
+
+          <div class="filter-row">
+            <button class="filter-button active" data-filter="all">All</button>
+
+            <button class="filter-button" data-filter="pending">Pending</button>
+
+            <button class="filter-button" data-filter="progress">
+              In Progress
+            </button>
+
+            <button class="filter-button" data-filter="completed">
+              Completed
+            </button>
+          </div>
+
+          <!-- SECTION -->
+
+          <div class="section-header">
+            <h2>Survey Assignments</h2>
+
+            <span class="result-count" id="resultCount"> 4 surveys </span>
+          </div>
+
+          <!-- SURVEY LIST -->
+
+          <div class="survey-list" id="surveyList">
+            <!-- SURVEY 1 -->
+
+            <article
+              class="survey-card"
+              data-status="pending"
+              data-search="WO-2026-00127 Internet Dedicated 200 Mbps PT Maju Network Medan Gatot Subroto"
+              data-id="WO-2026-00127"
+            >
+              <div class="survey-top">
+                <div class="survey-info">
+                  <div class="survey-number">WO-2026-00127</div>
+
+                  <div class="survey-title">Internet Dedicated 200 Mbps</div>
+
+                  <div class="survey-customer">PT Maju Network</div>
+                </div>
+
+                <span class="status status-pending"> PENDING </span>
+              </div>
+
+              <div class="survey-location">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+
+                Jl. Gatot Subroto, Medan
+              </div>
+
+              <div class="survey-meta">
+                <div class="meta-item">
+                  <span> Schedule </span>
+
+                  <strong> Today · 10:00 </strong>
+                </div>
+
+                <div class="meta-item">
+                  <span> Priority </span>
+
+                  <strong> High </strong>
+                </div>
+              </div>
+
+              <div class="survey-footer">
+                <div class="priority high">
+                  <span class="priority-dot"></span>
+
+                  New assignment
+                </div>
+
+                <button
+                  class="survey-action"
+                  onclick="openSurvey('WO-2026-00127')"
+                >
+                  Start Survey
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- SURVEY 2 -->
+
+            <article
+              class="survey-card"
+              data-status="progress"
+              data-search="WO-2026-00124 Metro Ethernet 300 Mbps PT Nusa Data Kawasan Industri Medan"
+              data-id="WO-2026-00124"
+            >
+              <div class="survey-top">
+                <div class="survey-info">
+                  <div class="survey-number">WO-2026-00124</div>
+
+                  <div class="survey-title">Metro Ethernet 300 Mbps</div>
+
+                  <div class="survey-customer">PT Nusa Data</div>
+                </div>
+
+                <span class="status status-progress"> IN PROGRESS </span>
+              </div>
+
+              <div class="survey-location">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+
+                Kawasan Industri Medan
+              </div>
+
+              <div class="survey-meta">
+                <div class="meta-item">
+                  <span> Schedule </span>
+
+                  <strong> Today · 13:30 </strong>
+                </div>
+
+                <div class="meta-item">
+                  <span> Progress </span>
+
+                  <strong> 65% </strong>
+                </div>
+              </div>
+
+              <div class="survey-footer">
+                <div class="priority">
+                  <span class="priority-dot"></span>
+
+                  Normal
+                </div>
+
+                <button
+                  class="survey-action"
+                  onclick="openSurvey('WO-2026-00124')"
+                >
+                  Continue
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- SURVEY 3 -->
+
+            <article
+              class="survey-card"
+              data-status="progress"
+              data-search="WO-2026-00122 Fiber Internet 500 Mbps PT Sumatra Digital Berastagi"
+              data-id="WO-2026-00122"
+            >
+              <div class="survey-top">
+                <div class="survey-info">
+                  <div class="survey-number">WO-2026-00122</div>
+
+                  <div class="survey-title">Fiber Internet 500 Mbps</div>
+
+                  <div class="survey-customer">PT Sumatra Digital</div>
+                </div>
+
+                <span class="status status-progress"> IN PROGRESS </span>
+              </div>
+
+              <div class="survey-location">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+
+                Berastagi, Karo
+              </div>
+
+              <div class="survey-meta">
+                <div class="meta-item">
+                  <span> Schedule </span>
+
+                  <strong> 17 Sep · 09:00 </strong>
+                </div>
+
+                <div class="meta-item">
+                  <span> Progress </span>
+
+                  <strong> 35% </strong>
+                </div>
+              </div>
+
+              <div class="survey-footer">
+                <div class="priority medium">
+                  <span class="priority-dot"></span>
+
+                  Medium
+                </div>
+
+                <button
+                  class="survey-action"
+                  onclick="openSurvey('WO-2026-00122')"
+                >
+                  Continue
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- SURVEY 4 -->
+
+            <article
+              class="survey-card"
+              data-status="completed"
+              data-search="WO-2026-00119 Fiber Internet 100 Mbps PT Digital Karya Medan"
+              data-id="WO-2026-00119"
+            >
+              <div class="survey-top">
+                <div class="survey-info">
+                  <div class="survey-number">WO-2026-00119</div>
+
+                  <div class="survey-title">Fiber Internet 100 Mbps</div>
+
+                  <div class="survey-customer">PT Digital Karya</div>
+                </div>
+
+                <span class="status status-completed"> COMPLETED </span>
+              </div>
+
+              <div class="survey-location">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+
+                Jl. Sisingamangaraja, Medan
+              </div>
+
+              <div class="survey-meta">
+                <div class="meta-item">
+                  <span> Completed </span>
+
+                  <strong> 15 Sep · 16:20 </strong>
+                </div>
+
+                <div class="meta-item">
+                  <span> Result </span>
+
+                  <strong> Feasible </strong>
+                </div>
+              </div>
+
+              <div class="survey-footer">
+                <div class="priority">
+                  <span
+                    class="priority-dot"
+                    style="background: var(--success)"
+                  ></span>
+
+                  Survey completed
+                </div>
+
+                <button
+                  class="survey-action"
+                  onclick="openSurvey('WO-2026-00119')"
+                >
+                  View Result
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- EMPTY -->
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+
+                <path d="m20 20-4-4"></path>
+              </svg>
+            </div>
+
+            <strong> No surveys found </strong>
+
+            <p>Try another search keyword or filter.</p>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- SURVEYS -->
+
+          <button type="button" class="nav-item active" data-page="surveys">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 3h12v18H6z"></path>
+
+              <path d="M9 7h6"></path>
+
+              <path d="M9 11h6"></path>
+
+              <path d="M9 15h4"></path>
+            </svg>
+
+            Surveys
+          </button>
+
+          <!-- ALERTS -->
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const searchInput = document.getElementById("searchInput");
+
+      const surveyList = document.getElementById("surveyList");
+
+      const emptyState = document.getElementById("emptyState");
+
+      const resultCount = document.getElementById("resultCount");
+
+      const toast = document.getElementById("toast");
+
+      let activeFilter = "all";
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2500);
+      }
+
+      /* =====================================================
+       OPEN SURVEY
+    ===================================================== */
+
+      function openSurvey(id) {
+        window.location.href =
+          "survey-detail.html?id=" + encodeURIComponent(id);
+      }
+
+      /* =====================================================
+       FILTER
+    ===================================================== */
+
+      document.querySelectorAll(".filter-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          document.querySelectorAll(".filter-button").forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          button.classList.add("active");
+
+          activeFilter = button.dataset.filter;
+
+          applyFilters();
+        });
+      });
+
+      /* =====================================================
+       SEARCH
+    ===================================================== */
+
+      searchInput.addEventListener("input", function () {
+        applyFilters();
+      });
+
+      /* =====================================================
+       APPLY FILTER
+    ===================================================== */
+
+      function applyFilters() {
+        const keyword = searchInput.value.trim().toLowerCase();
+
+        const cards = Array.from(surveyList.querySelectorAll(".survey-card"));
+
+        let visible = 0;
+
+        cards.forEach(function (card) {
+          const status = card.dataset.status;
+
+          const search = card.dataset.search.toLowerCase();
+
+          const statusMatch = activeFilter === "all" || status === activeFilter;
+
+          const searchMatch = !keyword || search.includes(keyword);
+
+          if (statusMatch && searchMatch) {
+            card.style.display = "";
+
+            visible++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        resultCount.textContent =
+          visible + " " + (visible === 1 ? "survey" : "surveys");
+
+        if (visible === 0) {
+          emptyState.style.display = "block";
+        } else {
+          emptyState.style.display = "none";
+        }
+      }
+
+      /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+      document
+        .getElementById("notificationButton")
+        .addEventListener("click", function () {
+          window.location.href = "notifications.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "surveys") {
+            window.location.href = "surveys.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

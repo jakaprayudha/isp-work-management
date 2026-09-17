@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Surveyor Dashboard - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        -webkit-overflow-scrolling: auto;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 14px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+      }
+
+      .mini-logo {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 800;
+
+        letter-spacing: -0.5px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .notification-badge {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       GREETING
+    ===================================================== */
+
+      .greeting {
+        margin-top: 8px;
+      }
+
+      .greeting-label {
+        font-size: 11px;
+
+        color: var(--muted);
+
+        margin-bottom: 4px;
+      }
+
+      .greeting h1 {
+        font-size: 23px;
+
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .greeting p {
+        margin-top: 5px;
+
+        font-size: 12px;
+
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       NEW ASSIGNMENT CARD
+    ===================================================== */
+
+      .request-card {
+        margin-top: 18px;
+
+        padding: 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(135deg, #111827, #1f2937);
+
+        color: white;
+
+        box-shadow: 0 12px 25px rgba(17, 24, 39, 0.14);
+      }
+
+      .request-content {
+        min-width: 0;
+      }
+
+      .request-content small {
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: #9ca3af;
+
+        font-size: 10px;
+
+        font-weight: 500;
+      }
+
+      .request-content strong {
+        display: block;
+
+        font-size: 15px;
+
+        font-weight: 700;
+
+        letter-spacing: -0.2px;
+      }
+
+      .request-content p {
+        margin-top: 4px;
+
+        color: #d1d5db;
+
+        font-size: 10px;
+
+        line-height: 1.4;
+      }
+
+      .request-button {
+        width: 40px;
+        height: 40px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 0;
+
+        border-radius: 13px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+      }
+
+      .request-button svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      /* =====================================================
+       SECTION HEADER
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-top: 20px;
+
+        margin-bottom: 10px;
+      }
+
+      .section-header h2 {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-link {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-family: inherit;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       SURVEY CARD
+    ===================================================== */
+
+      .order-card {
+        padding: 15px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+
+        cursor: pointer;
+      }
+
+      .order-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .order-info {
+        min-width: 0;
+      }
+
+      .order-number {
+        font-size: 10px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+
+        margin-bottom: 5px;
+      }
+
+      .order-title {
+        font-size: 14px;
+
+        font-weight: 700;
+
+        letter-spacing: -0.2px;
+      }
+
+      .order-provider {
+        margin-top: 4px;
+
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       STATUS
+    ===================================================== */
+
+      .status {
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .status-progress {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .status-pending {
+        background: var(--warning-light);
+
+        color: var(--warning);
+      }
+
+      .status-completed {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+      .progress-wrapper {
+        margin-top: 16px;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 7px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .progress-header strong {
+        color: var(--text);
+
+        font-weight: 700;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: #eef0f3;
+      }
+
+      .progress-value {
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: var(--accent);
+      }
+
+      /* =====================================================
+       WORKFLOW
+    ===================================================== */
+
+      .workflow {
+        margin-top: 17px;
+
+        display: flex;
+        align-items: flex-start;
+
+        overflow: hidden;
+      }
+
+      .workflow-item {
+        flex: 1;
+
+        position: relative;
+
+        text-align: center;
+      }
+
+      .workflow-item:not(:last-child)::after {
+        content: "";
+
+        position: absolute;
+
+        top: 7px;
+
+        left: calc(50% + 8px);
+
+        width: calc(100% - 16px);
+
+        height: 1px;
+
+        background: #d1d5db;
+      }
+
+      .workflow-item.completed:not(:last-child)::after {
+        background: var(--accent);
+      }
+
+      .workflow-dot {
+        width: 15px;
+        height: 15px;
+
+        margin: 0 auto;
+
+        position: relative;
+
+        z-index: 2;
+
+        border-radius: 50%;
+
+        background: #e5e7eb;
+
+        border: 3px solid white;
+
+        box-shadow: 0 0 0 1px #d1d5db;
+      }
+
+      .workflow-item.completed .workflow-dot {
+        background: var(--accent);
+
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+
+      .workflow-item.current .workflow-dot {
+        background: white;
+
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+
+      .workflow-label {
+        margin-top: 7px;
+
+        font-size: 8px;
+
+        line-height: 1.3;
+
+        color: #9ca3af;
+      }
+
+      .workflow-item.completed .workflow-label,
+      .workflow-item.current .workflow-label {
+        color: #374151;
+
+        font-weight: 600;
+      }
+
+      /* =====================================================
+       INFO GRID
+    ===================================================== */
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-top: 12px;
+      }
+
+      .info-item {
+        padding: 12px;
+
+        border-radius: 14px;
+
+        background: #f9fafb;
+
+        border: 1px solid #f0f1f3;
+      }
+
+      .info-item span {
+        display: block;
+
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        margin-bottom: 4px;
+      }
+
+      .info-item strong {
+        display: block;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      /* =====================================================
+       SECOND SURVEY
+    ===================================================== */
+
+      .simple-order {
+        margin-top: 10px;
+
+        padding: 13px 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        background: white;
+
+        cursor: pointer;
+      }
+
+      .simple-order-left {
+        min-width: 0;
+      }
+
+      .simple-order-number {
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        margin-bottom: 3px;
+      }
+
+      .simple-order-title {
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .simple-order-date {
+        margin-top: 3px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .simple-order-arrow {
+        width: 30px;
+        height: 30px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 10px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .simple-order-arrow svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 13px 16px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .mini-logo {
+          width: 36px;
+          height: 36px;
+
+          border-radius: 11px;
+        }
+
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .greeting h1 {
+          font-size: 21px;
+        }
+
+        .request-card {
+          margin-top: 13px;
+
+          padding: 14px;
+        }
+
+        .section-header {
+          margin-top: 15px;
+        }
+
+        .order-card {
+          padding: 13px;
+        }
+
+        .progress-wrapper {
+          margin-top: 12px;
+        }
+
+        .workflow {
+          margin-top: 13px;
+        }
+
+        .info-grid {
+          margin-top: 9px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .greeting {
+          margin-top: 2px;
+        }
+
+        .greeting p {
+          display: none;
+        }
+
+        .request-card {
+          margin-top: 10px;
+
+          padding: 11px 13px;
+        }
+
+        .request-content strong {
+          font-size: 13px;
+        }
+
+        .request-button {
+          width: 36px;
+          height: 36px;
+        }
+
+        .section-header {
+          margin-top: 11px;
+
+          margin-bottom: 7px;
+        }
+
+        .workflow-label {
+          font-size: 7px;
+        }
+
+        .info-item {
+          padding: 9px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          min-height: 0;
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-brand">
+              <div class="mini-logo">NPN</div>
+
+              <div class="header-title">
+                <strong> Work Management </strong>
+
+                <span> Surveyor Portal </span>
+              </div>
+            </div>
+
+            <div class="header-actions">
+              <button
+                type="button"
+                class="header-button"
+                id="notificationButton"
+                aria-label="Notifications"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+
+                <span class="notification-badge"></span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN CONTENT
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- GREETING -->
+
+          <div class="greeting">
+            <div class="greeting-label">Good morning</div>
+
+            <h1>Hello, Jaka 👋</h1>
+
+            <p>
+              Manage your field surveys and work assignments from one place.
+            </p>
+          </div>
+
+          <!-- NEW ASSIGNMENT -->
+
+          <div class="request-card">
+            <div class="request-content">
+              <small> NEW ASSIGNMENT </small>
+
+              <strong> You have new survey assignments </strong>
+
+              <p>Review your assigned field surveys and schedule.</p>
+            </div>
+
+            <button
+              type="button"
+              class="request-button"
+              id="assignmentButton"
+              aria-label="View survey assignments"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+
+                <path d="M13 6l6 6-6 6"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- ACTIVE SURVEY -->
+
+          <div class="section-header">
+            <h2>Active Survey</h2>
+
+            <button type="button" class="section-link" id="viewSurveysButton">
+              View all
+            </button>
+          </div>
+
+          <div class="order-card" id="activeSurvey">
+            <div class="order-top">
+              <div class="order-info">
+                <div class="order-number">WO-2026-00124</div>
+
+                <div class="order-title">Metro Ethernet 300 Mbps</div>
+
+                <div class="order-provider">Customer · PT Nusa Data</div>
+              </div>
+
+              <span class="status status-progress"> IN PROGRESS </span>
+            </div>
+
+            <!-- PROGRESS -->
+
+            <div class="progress-wrapper">
+              <div class="progress-header">
+                <span> Survey Progress </span>
+
+                <strong> 65% </strong>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-value" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <!-- WORKFLOW -->
+
+            <div class="workflow">
+              <div class="workflow-item completed">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Assigned</div>
+              </div>
+
+              <div class="workflow-item completed">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Schedule</div>
+              </div>
+
+              <div class="workflow-item current">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Survey</div>
+              </div>
+
+              <div class="workflow-item">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Feasibility</div>
+              </div>
+
+              <div class="workflow-item">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Report</div>
+              </div>
+
+              <div class="workflow-item">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Submit</div>
+              </div>
+            </div>
+
+            <!-- INFO -->
+
+            <div class="info-grid">
+              <div class="info-item">
+                <span> Schedule </span>
+
+                <strong> 16 Sep · 13:30 </strong>
+              </div>
+
+              <div class="info-item">
+                <span> Location </span>
+
+                <strong> KIM Medan </strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- TODAY'S SURVEYS -->
+
+          <div class="section-header">
+            <h2>Today's Surveys</h2>
+
+            <button type="button" class="section-link" id="todayButton">
+              View all
+            </button>
+          </div>
+
+          <div class="simple-order" data-order="WO-2026-00127">
+            <div class="simple-order-left">
+              <div class="simple-order-number">WO-2026-00127</div>
+
+              <div class="simple-order-title">Internet Dedicated 200 Mbps</div>
+
+              <div class="simple-order-date">
+                Today · 10:00 · Jl. Gatot Subroto
+              </div>
+            </div>
+
+            <div class="simple-order-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- RECENT SURVEY -->
+
+          <div class="simple-order" data-order="WO-2026-00119">
+            <div class="simple-order-left">
+              <div class="simple-order-number">WO-2026-00119</div>
+
+              <div class="simple-order-title">Fiber Internet 100 Mbps</div>
+
+              <div class="simple-order-date">Completed · 15 Sep 2026</div>
+            </div>
+
+            <div class="simple-order-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item active" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- SURVEYS -->
+
+          <button type="button" class="nav-item" data-page="surveys">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 3h12v18H6z"></path>
+
+              <path d="M9 7h6"></path>
+
+              <path d="M9 11h6"></path>
+
+              <path d="M9 15h4"></path>
+            </svg>
+
+            Surveys
+          </button>
+
+          <!-- ALERTS -->
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      const assignmentButton = document.getElementById("assignmentButton");
+
+      const activeSurvey = document.getElementById("activeSurvey");
+
+      const notificationButton = document.getElementById("notificationButton");
+
+      const viewSurveysButton = document.getElementById("viewSurveysButton");
+
+      const todayButton = document.getElementById("todayButton");
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2500);
+      }
+
+      /* =====================================================
+       NEW ASSIGNMENT
+    ===================================================== */
+
+      assignmentButton.addEventListener("click", function () {
+        window.location.href = "surveys.html";
+      });
+
+      /* =====================================================
+       ACTIVE SURVEY
+    ===================================================== */
+
+      activeSurvey.addEventListener("click", function () {
+        window.location.href = "survey-detail.html?id=WO-2026-00124";
+      });
+
+      /* =====================================================
+       VIEW SURVEYS
+    ===================================================== */
+
+      viewSurveysButton.addEventListener("click", function () {
+        window.location.href = "surveys.html";
+      });
+
+      todayButton.addEventListener("click", function () {
+        window.location.href = "surveys.html";
+      });
+
+      /* =====================================================
+       SIMPLE SURVEYS
+    ===================================================== */
+
+      document.querySelectorAll(".simple-order").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const order = item.dataset.order;
+
+          window.location.href =
+            "survey-detail.html?id=" + encodeURIComponent(order);
+        });
+      });
+
+      /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+      notificationButton.addEventListener("click", function () {
+        window.location.href = "notifications.html";
+      });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "surveys") {
+            window.location.href = "surveys.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

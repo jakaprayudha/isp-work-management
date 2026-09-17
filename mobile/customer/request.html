@@ -1,0 +1,1796 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>New Request - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        height: 100dvh;
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        -webkit-overflow-scrolling: auto;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 14px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+      }
+
+      .back-button:active {
+        transform: scale(0.94);
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .app-version {
+        font-size: 10px;
+
+        color: #9ca3af;
+
+        font-weight: 500;
+      }
+
+      /* =====================================================
+       MAIN
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 20px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       PAGE INTRO
+    ===================================================== */
+
+      .page-intro {
+        margin-top: 7px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .page-intro p {
+        margin-top: 5px;
+
+        font-size: 11px;
+
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       FORM CARD
+    ===================================================== */
+
+      .form-card {
+        margin-top: 15px;
+
+        padding: 18px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+      }
+
+      /* =====================================================
+       FORM GRID
+    ===================================================== */
+
+      .field {
+        width: 100%;
+
+        margin-bottom: 12px;
+      }
+
+      .field-row {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+      }
+
+      .field-label {
+        display: block;
+
+        margin-bottom: 6px;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      .required {
+        color: var(--danger);
+      }
+
+      /* =====================================================
+       INPUT
+    ===================================================== */
+
+      .input-wrapper {
+        position: relative;
+
+        width: 100%;
+      }
+
+      .input-icon {
+        position: absolute;
+
+        left: 13px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 17px;
+        height: 17px;
+
+        color: #9ca3af;
+
+        pointer-events: none;
+
+        z-index: 2;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        outline: none;
+
+        background: #f9fafb;
+
+        color: var(--text);
+
+        font-family: inherit;
+
+        font-size: 12px;
+
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          box-shadow 0.2s ease;
+
+        -webkit-appearance: none;
+
+        appearance: none;
+      }
+
+      .form-input,
+      .form-select {
+        height: 44px;
+
+        padding: 0 12px;
+      }
+
+      .has-icon .form-input,
+      .has-icon .form-select {
+        padding-left: 39px;
+      }
+
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: #a1a1aa;
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        background: white;
+
+        border-color: var(--accent);
+
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+      }
+
+      .form-select {
+        padding-right: 35px;
+
+        cursor: pointer;
+
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+        background-repeat: no-repeat;
+
+        background-position: right 11px center;
+      }
+
+      /* =====================================================
+       TEXTAREA
+    ===================================================== */
+
+      .form-textarea {
+        height: 60px;
+
+        padding: 11px 12px;
+
+        resize: none;
+
+        line-height: 1.45;
+      }
+
+      /* =====================================================
+       LOCATION
+    ===================================================== */
+
+      .location-box {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+      }
+
+      .location-input {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .location-button {
+        width: 44px;
+        height: 44px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+
+        cursor: pointer;
+      }
+
+      .location-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* =====================================================
+       SERVICE TYPE
+    ===================================================== */
+
+      .service-options {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 8px;
+      }
+
+      .service-option {
+        position: relative;
+      }
+
+      .service-option input {
+        position: absolute;
+
+        opacity: 0;
+
+        pointer-events: none;
+      }
+
+      .service-option label {
+        min-height: 48px;
+
+        padding: 8px 5px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: #f9fafb;
+
+        color: #6b7280;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .service-option label svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .service-option input:checked + label {
+        border-color: var(--accent);
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      /* =====================================================
+       SUBMIT
+    ===================================================== */
+
+      .submit-section {
+        margin-top: 3px;
+      }
+
+      .submit-button {
+        width: 100%;
+
+        height: 49px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 9px;
+
+        border: 0;
+
+        border-radius: 14px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-family: inherit;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        box-shadow: 0 9px 18px rgba(17, 24, 39, 0.14);
+
+        transition:
+          transform 0.15s ease,
+          opacity 0.2s ease;
+      }
+
+      .submit-button:active {
+        transform: scale(0.98);
+      }
+
+      .submit-button:disabled {
+        opacity: 0.7;
+
+        cursor: not-allowed;
+
+        transform: none;
+      }
+
+      .submit-button svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* =====================================================
+       FOOT NOTE
+    ===================================================== */
+
+      .form-note {
+        margin-top: 9px;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 6px;
+
+        font-size: 9px;
+
+        line-height: 1.4;
+
+        color: #9ca3af;
+      }
+
+      .form-note svg {
+        width: 13px;
+        height: 13px;
+
+        flex-shrink: 0;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       SUCCESS MODAL
+    ===================================================== */
+
+      .modal-overlay {
+        position: fixed;
+
+        inset: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+
+        background: rgba(17, 24, 39, 0.45);
+
+        backdrop-filter: blur(5px);
+
+        -webkit-backdrop-filter: blur(5px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 100;
+      }
+
+      .modal-overlay.show {
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+      }
+
+      .success-modal {
+        width: 100%;
+
+        max-width: 360px;
+
+        padding: 24px;
+
+        border-radius: 22px;
+
+        background: white;
+
+        text-align: center;
+
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+
+        transform: translateY(15px) scale(0.97);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal-overlay.show .success-modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .success-icon {
+        width: 58px;
+        height: 58px;
+
+        margin: 0 auto 15px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 18px;
+
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      .success-icon svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .success-modal h2 {
+        font-size: 19px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .success-modal p {
+        margin-top: 7px;
+
+        font-size: 11px;
+
+        line-height: 1.5;
+
+        color: var(--muted);
+      }
+
+      .wo-number {
+        margin-top: 14px;
+
+        padding: 10px;
+
+        border-radius: 11px;
+
+        background: #f9fafb;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        color: var(--primary);
+      }
+
+      .modal-button {
+        width: 100%;
+
+        height: 46px;
+
+        margin-top: 16px;
+
+        border: 0;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-family: inherit;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 110;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       LOADING
+    ===================================================== */
+
+      .spinner {
+        width: 16px;
+        height: 16px;
+
+        border: 2px solid rgba(255, 255, 255, 0.35);
+
+        border-top-color: white;
+
+        border-radius: 50%;
+
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(12px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .back-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+        }
+
+        .form-card {
+          margin-top: 11px;
+
+          padding: 14px;
+        }
+
+        .field {
+          margin-bottom: 9px;
+        }
+
+        .field-label {
+          margin-bottom: 5px;
+
+          font-size: 10px;
+        }
+
+        .form-input,
+        .form-select {
+          height: 41px;
+
+          font-size: 11px;
+        }
+
+        .service-option label {
+          min-height: 43px;
+
+          font-size: 8px;
+        }
+
+        .form-textarea {
+          height: 52px;
+        }
+
+        .submit-button {
+          height: 45px;
+        }
+
+        .form-note {
+          margin-top: 6px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .page-intro p {
+          display: none;
+        }
+
+        .form-card {
+          margin-top: 8px;
+
+          padding: 12px;
+        }
+
+        .field {
+          margin-bottom: 7px;
+        }
+
+        .form-input,
+        .form-select {
+          height: 38px;
+        }
+
+        .service-option label {
+          min-height: 39px;
+        }
+
+        .form-textarea {
+          height: 45px;
+        }
+
+        .submit-button {
+          height: 42px;
+        }
+
+        .form-note {
+          display: none;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          min-height: 0;
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5"></path>
+
+                  <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> New Request </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <span class="app-version"> NPN Mobile </span>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- INTRO -->
+
+          <div class="page-intro">
+            <h1>Create Service Request</h1>
+
+            <p>
+              Tell us what service you need and our team will process your
+              request.
+            </p>
+          </div>
+
+          <!-- =================================================
+             FORM CARD
+        ================================================= -->
+
+          <div class="form-card">
+            <form id="requestForm">
+              <!-- SERVICE TYPE -->
+
+              <div class="field">
+                <label class="field-label">
+                  Service Type
+                  <span class="required">*</span>
+                </label>
+
+                <div class="service-options">
+                  <div class="service-option">
+                    <input
+                      type="radio"
+                      name="serviceType"
+                      id="internet"
+                      value="Internet"
+                      checked
+                    />
+
+                    <label for="internet">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      >
+                        <circle cx="12" cy="12" r="9"></circle>
+
+                        <path d="M3 12h18"></path>
+
+                        <path d="M12 3c3 3.5 3 14.5 0 18"></path>
+
+                        <path d="M12 3c-3 3.5-3 14.5 0 18"></path>
+                      </svg>
+
+                      Internet
+                    </label>
+                  </div>
+
+                  <div class="service-option">
+                    <input
+                      type="radio"
+                      name="serviceType"
+                      id="metro"
+                      value="Metro Ethernet"
+                    />
+
+                    <label for="metro">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      >
+                        <rect x="3" y="6" width="18" height="12" rx="2"></rect>
+
+                        <path d="M7 10h3"></path>
+
+                        <path d="M14 10h3"></path>
+
+                        <path d="M7 14h10"></path>
+                      </svg>
+
+                      Metro Ethernet
+                    </label>
+                  </div>
+
+                  <div class="service-option">
+                    <input
+                      type="radio"
+                      name="serviceType"
+                      id="other"
+                      value="Other"
+                    />
+
+                    <label for="other">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      >
+                        <circle cx="12" cy="12" r="9"></circle>
+
+                        <path d="M8 12h8"></path>
+
+                        <path d="M12 8v8"></path>
+                      </svg>
+
+                      Other
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BANDWIDTH + PRIORITY -->
+
+              <div class="field-row">
+                <div class="field">
+                  <label class="field-label" for="bandwidth">
+                    Bandwidth
+                    <span class="required">*</span>
+                  </label>
+
+                  <select id="bandwidth" class="form-select" required>
+                    <option value="">Select</option>
+
+                    <option value="20 Mbps">20 Mbps</option>
+
+                    <option value="50 Mbps">50 Mbps</option>
+
+                    <option value="100 Mbps">100 Mbps</option>
+
+                    <option value="200 Mbps">200 Mbps</option>
+
+                    <option value="300 Mbps">300 Mbps</option>
+
+                    <option value="500 Mbps">500 Mbps</option>
+
+                    <option value="1 Gbps">1 Gbps</option>
+
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="requestType">
+                    Request Type
+                  </label>
+
+                  <select id="requestType" class="form-select">
+                    <option value="New Installation">New Installation</option>
+
+                    <option value="Upgrade">Upgrade</option>
+
+                    <option value="Relocation">Relocation</option>
+
+                    <option value="Additional">Additional</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- LOCATION -->
+
+              <div class="field">
+                <label class="field-label" for="location">
+                  Installation Location
+                  <span class="required">*</span>
+                </label>
+
+                <div class="location-box">
+                  <div class="input-wrapper location-input has-icon">
+                    <svg
+                      class="input-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"
+                      ></path>
+
+                      <circle cx="12" cy="10" r="2.5"></circle>
+                    </svg>
+
+                    <input
+                      type="text"
+                      id="location"
+                      class="form-input"
+                      placeholder="Enter installation address"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    class="location-button"
+                    id="locationButton"
+                    aria-label="Use current location"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="3"></circle>
+
+                      <path d="M12 2v3"></path>
+
+                      <path d="M12 19v3"></path>
+
+                      <path d="M2 12h3"></path>
+
+                      <path d="M19 12h3"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- SITE / BUILDING -->
+
+              <div class="field-row">
+                <div class="field">
+                  <label class="field-label" for="building">
+                    Building / Site
+                  </label>
+
+                  <input
+                    type="text"
+                    id="building"
+                    class="form-input"
+                    placeholder="e.g. Head Office"
+                  />
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="contact">
+                    Contact Person
+                  </label>
+
+                  <input
+                    type="text"
+                    id="contact"
+                    class="form-input"
+                    placeholder="PIC at location"
+                  />
+                </div>
+              </div>
+
+              <!-- NOTES -->
+
+              <div class="field">
+                <label class="field-label" for="notes">
+                  Additional Information
+                </label>
+
+                <textarea
+                  id="notes"
+                  class="form-textarea"
+                  placeholder="Describe your requirements or special instructions..."
+                ></textarea>
+              </div>
+
+              <!-- SUBMIT -->
+
+              <div class="submit-section">
+                <button type="submit" class="submit-button" id="submitButton">
+                  <span id="submitText"> Submit Request </span>
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14"></path>
+
+                    <path d="M13 6l6 6-6 6"></path>
+                  </svg>
+                </button>
+
+                <div class="form-note">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <circle cx="12" cy="12" r="9"></circle>
+
+                    <path d="M12 11v5"></path>
+
+                    <path d="M12 8h.01"></path>
+                  </svg>
+
+                  <span>
+                    After submission, our team will verify your request and
+                    contact you for the next step.
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <button type="button" class="nav-item" data-page="orders">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2h9l4 4v16H6z"></path>
+
+              <path d="M14 2v5h5"></path>
+
+              <path d="M9 12h6"></path>
+
+              <path d="M9 16h6"></path>
+            </svg>
+
+            Orders
+          </button>
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            Alerts
+          </button>
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       SUCCESS MODAL
+  ===================================================== -->
+
+    <div class="modal-overlay" id="successModal">
+      <div class="success-modal">
+        <div class="success-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+        </div>
+
+        <h2>Request Submitted</h2>
+
+        <p>
+          Your service request has been successfully registered. Our team will
+          verify the request and process the next step.
+        </p>
+
+        <div class="wo-number">
+          Work Order ·
+          <span id="generatedWO"> WO-2026-00125 </span>
+        </div>
+
+        <button type="button" class="modal-button" id="viewOrderButton">
+          View My Order
+        </button>
+      </div>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const form = document.getElementById("requestForm");
+
+      const submitButton = document.getElementById("submitButton");
+
+      const submitText = document.getElementById("submitText");
+
+      const successModal = document.getElementById("successModal");
+
+      const generatedWO = document.getElementById("generatedWO");
+
+      const locationButton = document.getElementById("locationButton");
+
+      const locationInput = document.getElementById("location");
+
+      const toast = document.getElementById("toast");
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2500);
+      }
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       CURRENT LOCATION
+    ===================================================== */
+
+      locationButton.addEventListener("click", function () {
+        if (!navigator.geolocation) {
+          showToast("Location is not supported by this device.");
+
+          return;
+        }
+
+        locationButton.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const lat = position.coords.latitude.toFixed(6);
+
+            const lng = position.coords.longitude.toFixed(6);
+
+            locationInput.value = `GPS Location: ${lat}, ${lng}`;
+
+            locationButton.disabled = false;
+
+            showToast("Current location captured.");
+          },
+
+          function () {
+            locationButton.disabled = false;
+
+            showToast("Unable to access your location.");
+          },
+
+          {
+            enableHighAccuracy: true,
+
+            timeout: 10000,
+
+            maximumAge: 0,
+          },
+        );
+      });
+
+      /* =====================================================
+       SUBMIT FORM
+    ===================================================== */
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        /* -----------------------------------------------
+           VALIDATION
+        ------------------------------------------------ */
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+
+          return;
+        }
+
+        const serviceType = document.querySelector(
+          'input[name="serviceType"]:checked',
+        ).value;
+
+        const bandwidth = document.getElementById("bandwidth").value;
+
+        const requestType = document.getElementById("requestType").value;
+
+        const location = document.getElementById("location").value.trim();
+
+        const building = document.getElementById("building").value.trim();
+
+        const contact = document.getElementById("contact").value.trim();
+
+        const notes = document.getElementById("notes").value.trim();
+
+        /* -----------------------------------------------
+           LOADING
+        ------------------------------------------------ */
+
+        submitButton.disabled = true;
+
+        submitText.innerHTML = `
+          <span class="spinner"></span>
+          Submitting...
+        `;
+
+        /*
+         * =================================================
+         * FUTURE API
+         * =================================================
+         *
+         * const response = await fetch(
+         *   "/api/customer/work-orders.php",
+         *   {
+         *     method: "POST",
+         *
+         *     headers: {
+         *       "Content-Type":
+         *         "application/json"
+         *     },
+         *
+         *     body: JSON.stringify({
+         *       service_type: serviceType,
+         *       bandwidth: bandwidth,
+         *       request_type: requestType,
+         *       location: location,
+         *       building: building,
+         *       contact: contact,
+         *       notes: notes
+         *     })
+         *   }
+         * );
+         *
+         * =================================================
+         */
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        /* -----------------------------------------------
+           GENERATE DEMO WO NUMBER
+        ------------------------------------------------ */
+
+        const randomNumber = Math.floor(10000 + Math.random() * 89999);
+
+        generatedWO.textContent = `WO-2026-${randomNumber}`;
+
+        /* -----------------------------------------------
+           RESET BUTTON
+        ------------------------------------------------ */
+
+        submitButton.disabled = false;
+
+        submitText.textContent = "Submit Request";
+
+        /* -----------------------------------------------
+           SHOW SUCCESS
+        ------------------------------------------------ */
+
+        successModal.classList.add("show");
+
+        console.log({
+          serviceType,
+          bandwidth,
+          requestType,
+          location,
+          building,
+          contact,
+          notes,
+        });
+      });
+
+      /* =====================================================
+       VIEW ORDER
+    ===================================================== */
+
+      document
+        .getElementById("viewOrderButton")
+        .addEventListener("click", function () {
+          window.location.href = "order-detail.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "orders") {
+            window.location.href = "orders.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

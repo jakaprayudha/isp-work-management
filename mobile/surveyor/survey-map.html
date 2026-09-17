@@ -1,0 +1,1481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Survey Map - Surveyor - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        color: var(--text);
+
+        background: var(--background);
+
+        overflow: hidden;
+      }
+
+      body {
+        height: 100dvh;
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+      }
+
+      .back-button,
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .back-button svg,
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+
+        min-width: 0;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       MAIN
+    ===================================================== */
+
+      .main-content {
+        flex: 1;
+
+        min-height: 0;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       MAP AREA
+    ===================================================== */
+
+      .map-area {
+        position: absolute;
+
+        inset: 0;
+
+        overflow: hidden;
+
+        background: #e9eef3;
+      }
+
+      /*
+      Stylized map background.
+      Replace with Leaflet / Google Maps later.
+    */
+
+      .map-grid {
+        position: absolute;
+
+        inset: -30%;
+
+        transform: rotate(-3deg);
+
+        background:
+          linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 48%,
+            rgba(255, 255, 255, 0.8) 48%,
+            rgba(255, 255, 255, 0.8) 49%,
+            transparent 49%,
+            transparent 70%,
+            rgba(255, 255, 255, 0.75) 70%,
+            rgba(255, 255, 255, 0.75) 71%,
+            transparent 71%
+          ),
+          linear-gradient(
+            25deg,
+            transparent 0,
+            transparent 38%,
+            rgba(255, 255, 255, 0.8) 38%,
+            rgba(255, 255, 255, 0.8) 39%,
+            transparent 39%,
+            transparent 62%,
+            rgba(255, 255, 255, 0.8) 62%,
+            rgba(255, 255, 255, 0.8) 63%,
+            transparent 63%
+          ),
+          #e7edf1;
+
+        background-size:
+          150px 150px,
+          190px 190px;
+      }
+
+      .map-road {
+        position: absolute;
+
+        height: 9px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.95);
+
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+        transform-origin: center;
+      }
+
+      .road-1 {
+        width: 150%;
+
+        top: 39%;
+        left: -20%;
+
+        transform: rotate(-13deg);
+      }
+
+      .road-2 {
+        width: 130%;
+
+        top: 61%;
+        left: -12%;
+
+        transform: rotate(8deg);
+      }
+
+      .road-3 {
+        width: 100%;
+
+        top: 25%;
+        left: 12%;
+
+        transform: rotate(31deg);
+      }
+
+      .road-4 {
+        width: 100%;
+
+        top: 74%;
+        left: -8%;
+
+        transform: rotate(-28deg);
+      }
+
+      .road-secondary {
+        position: absolute;
+
+        height: 3px;
+
+        background: rgba(255, 255, 255, 0.8);
+
+        border-radius: 10px;
+
+        transform-origin: center;
+      }
+
+      .road-secondary.s1 {
+        width: 90%;
+
+        top: 48%;
+
+        left: 0;
+
+        transform: rotate(24deg);
+      }
+
+      .road-secondary.s2 {
+        width: 100%;
+
+        top: 53%;
+
+        left: 18%;
+
+        transform: rotate(-18deg);
+      }
+
+      /* =====================================================
+       MAP LABELS
+    ===================================================== */
+
+      .map-label {
+        position: absolute;
+
+        font-size: 8px;
+
+        color: #718096;
+
+        font-weight: 700;
+
+        letter-spacing: 0.2px;
+
+        opacity: 0.8;
+      }
+
+      .label-1 {
+        top: 22%;
+        left: 17%;
+      }
+
+      .label-2 {
+        top: 36%;
+        right: 15%;
+      }
+
+      .label-3 {
+        bottom: 31%;
+        left: 10%;
+      }
+
+      .label-4 {
+        bottom: 21%;
+        right: 13%;
+      }
+
+      /* =====================================================
+       COVERAGE CIRCLE
+    ===================================================== */
+
+      .coverage-circle {
+        position: absolute;
+
+        width: 190px;
+        height: 190px;
+
+        left: 50%;
+        top: 48%;
+
+        transform: translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        background: rgba(37, 99, 235, 0.09);
+
+        border: 1px solid rgba(37, 99, 235, 0.28);
+      }
+
+      .coverage-circle::before {
+        content: "";
+
+        position: absolute;
+
+        inset: 25px;
+
+        border-radius: 50%;
+
+        border: 1px dashed rgba(37, 99, 235, 0.35);
+      }
+
+      /* =====================================================
+       SURVEY MARKER
+    ===================================================== */
+
+      .survey-marker {
+        position: absolute;
+
+        left: 50%;
+        top: 48%;
+
+        transform: translate(-50%, -100%);
+
+        z-index: 5;
+      }
+
+      .marker-pin {
+        width: 44px;
+        height: 44px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50% 50% 50% 0;
+
+        transform: rotate(-45deg);
+
+        background: var(--primary);
+
+        box-shadow: 0 7px 16px rgba(15, 23, 42, 0.22);
+      }
+
+      .marker-pin svg {
+        width: 21px;
+        height: 21px;
+
+        color: white;
+
+        transform: rotate(45deg);
+      }
+
+      .marker-dot {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 7px;
+        height: 7px;
+
+        transform: translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        background: white;
+      }
+
+      /* =====================================================
+       CURRENT LOCATION
+    ===================================================== */
+
+      .current-location {
+        position: absolute;
+
+        left: calc(50% + 55px);
+        top: calc(48% + 55px);
+
+        width: 15px;
+        height: 15px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        border: 3px solid white;
+
+        box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.16);
+      }
+
+      /* =====================================================
+       TOP MAP CARD
+    ===================================================== */
+
+      .map-info {
+        position: absolute;
+
+        top: 12px;
+
+        left: 14px;
+        right: 14px;
+
+        z-index: 10;
+
+        padding: 12px 13px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        border: 1px solid rgba(229, 231, 235, 0.9);
+
+        border-radius: 15px;
+
+        box-shadow: 0 7px 20px rgba(15, 23, 42, 0.1);
+      }
+
+      .map-info-main {
+        min-width: 0;
+      }
+
+      .map-info-main span {
+        display: block;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        margin-bottom: 3px;
+      }
+
+      .map-info-main strong {
+        display: block;
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+      }
+
+      .map-info-main small {
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+      }
+
+      .map-status {
+        flex-shrink: 0;
+
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        background: var(--success-light);
+
+        color: var(--success);
+
+        font-size: 8px;
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       MAP CONTROLS
+    ===================================================== */
+
+      .map-controls {
+        position: absolute;
+
+        top: 92px;
+
+        right: 14px;
+
+        z-index: 10;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 7px;
+      }
+
+      .map-control {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(229, 231, 235, 0.95);
+
+        border-radius: 11px;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        color: #4b5563;
+
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.08);
+
+        cursor: pointer;
+      }
+
+      .map-control svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* =====================================================
+       COORDINATE BADGE
+    ===================================================== */
+
+      .coordinate-badge {
+        position: absolute;
+
+        left: 14px;
+
+        bottom: 175px;
+
+        z-index: 10;
+
+        padding: 7px 9px;
+
+        background: rgba(17, 24, 39, 0.9);
+
+        color: white;
+
+        border-radius: 9px;
+
+        font-size: 7px;
+
+        line-height: 10px;
+
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.14);
+      }
+
+      .coordinate-badge strong {
+        font-size: 8px;
+      }
+
+      /* =====================================================
+       BOTTOM SHEET
+    ===================================================== */
+
+      .bottom-sheet {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        z-index: 15;
+
+        padding: 14px 16px calc(82px + env(safe-area-inset-bottom));
+
+        background: rgba(255, 255, 255, 0.97);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        border-radius: 22px 22px 0 0;
+
+        box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      .sheet-handle {
+        width: 34px;
+        height: 4px;
+
+        margin: 0 auto 11px;
+
+        border-radius: 20px;
+
+        background: #d1d5db;
+      }
+
+      .sheet-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .sheet-title {
+        min-width: 0;
+      }
+
+      .sheet-title span {
+        display: block;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        margin-bottom: 3px;
+      }
+
+      .sheet-title strong {
+        display: block;
+
+        font-size: 13px;
+
+        font-weight: 800;
+      }
+
+      .sheet-badge {
+        flex-shrink: 0;
+
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+
+        font-size: 8px;
+
+        font-weight: 700;
+      }
+
+      .sheet-address {
+        margin-top: 7px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        font-size: 8px;
+
+        color: #6b7280;
+      }
+
+      .sheet-address svg {
+        width: 12px;
+        height: 12px;
+
+        flex-shrink: 0;
+
+        color: var(--accent);
+      }
+
+      .sheet-actions {
+        display: grid;
+
+        grid-template-columns: 1fr 1.4fr;
+
+        gap: 8px;
+
+        margin-top: 11px;
+      }
+
+      .sheet-button {
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 5px;
+
+        border-radius: 11px;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .sheet-button svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .sheet-button.secondary {
+        border: 1px solid var(--border);
+
+        background: white;
+
+        color: #374151;
+      }
+
+      .sheet-button.primary {
+        border: 0;
+
+        background: var(--primary);
+
+        color: white;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 10px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .back-button,
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .map-info {
+          top: 8px;
+
+          padding: 10px 11px;
+        }
+
+        .map-controls {
+          top: 75px;
+        }
+
+        .bottom-sheet {
+          padding-top: 10px;
+        }
+
+        .sheet-handle {
+          margin-bottom: 8px;
+        }
+
+        .sheet-address {
+          margin-top: 5px;
+        }
+
+        .sheet-actions {
+          margin-top: 8px;
+        }
+
+        .sheet-button {
+          height: 35px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .map-info {
+          left: 10px;
+          right: 10px;
+        }
+
+        .map-controls {
+          right: 10px;
+        }
+
+        .map-control {
+          width: 33px;
+          height: 33px;
+        }
+
+        .coverage-circle {
+          width: 160px;
+          height: 160px;
+        }
+
+        .coordinate-badge {
+          bottom: 155px;
+        }
+
+        .bottom-sheet {
+          padding-left: 13px;
+          padding-right: 13px;
+
+          padding-bottom: calc(72px + env(safe-area-inset-bottom));
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          overflow: hidden;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Survey Map </strong>
+
+                <span> Field Operations </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="header-button"
+              id="layersButton"
+              aria-label="Map layers"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+
+                <path d="m3 12 9 5 9-5" />
+
+                <path d="m3 16 9 5 9-5" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN MAP
+      ================================================= -->
+
+        <section class="main-content">
+          <div class="map-area">
+            <!-- MAP BACKGROUND -->
+
+            <div class="map-grid"></div>
+
+            <div class="map-road road-1"></div>
+
+            <div class="map-road road-2"></div>
+
+            <div class="map-road road-3"></div>
+
+            <div class="map-road road-4"></div>
+
+            <div class="road-secondary s1"></div>
+
+            <div class="road-secondary s2"></div>
+
+            <!-- MAP LABELS -->
+
+            <div class="map-label label-1">KIM</div>
+
+            <div class="map-label label-2">MEDAN INDUSTRIAL</div>
+
+            <div class="map-label label-3">HELVETIA</div>
+
+            <div class="map-label label-4">DELI SERDANG</div>
+
+            <!-- COVERAGE -->
+
+            <div class="coverage-circle"></div>
+
+            <!-- SURVEY LOCATION -->
+
+            <div class="survey-marker">
+              <div class="marker-pin">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </div>
+
+              <div class="marker-dot"></div>
+            </div>
+
+            <!-- CURRENT LOCATION -->
+
+            <div class="current-location" title="Current location"></div>
+
+            <!-- =================================================
+               TOP INFO
+          ================================================= -->
+
+            <div class="map-info">
+              <div class="map-info-main">
+                <span> SURVEY LOCATION </span>
+
+                <strong> WO-2026-00124 </strong>
+
+                <small> Kawasan Industri Medan </small>
+              </div>
+
+              <div class="map-status">GPS READY</div>
+            </div>
+
+            <!-- =================================================
+               MAP CONTROLS
+          ================================================= -->
+
+            <div class="map-controls">
+              <!-- ZOOM IN -->
+
+              <button
+                type="button"
+                class="map-control"
+                id="zoomIn"
+                aria-label="Zoom in"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 5v14"></path>
+
+                  <path d="M5 12h14"></path>
+                </svg>
+              </button>
+
+              <!-- ZOOM OUT -->
+
+              <button
+                type="button"
+                class="map-control"
+                id="zoomOut"
+                aria-label="Zoom out"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M5 12h14"></path>
+                </svg>
+              </button>
+
+              <!-- MY LOCATION -->
+
+              <button
+                type="button"
+                class="map-control"
+                id="myLocation"
+                aria-label="My location"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="7" />
+
+                  <circle cx="12" cy="12" r="2" />
+
+                  <path d="M12 2v3"></path>
+
+                  <path d="M12 19v3"></path>
+
+                  <path d="M2 12h3"></path>
+
+                  <path d="M19 12h3"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- =================================================
+               COORDINATES
+          ================================================= -->
+
+            <div class="coordinate-badge">
+              <strong> Survey Point </strong>
+
+              <br />
+
+              3.6258° N · 98.6721° E
+            </div>
+
+            <!-- =================================================
+               BOTTOM SHEET
+          ================================================= -->
+
+            <div class="bottom-sheet">
+              <div class="sheet-handle"></div>
+
+              <div class="sheet-header">
+                <div class="sheet-title">
+                  <span> TARGET SITE </span>
+
+                  <strong> PT Nusa Data </strong>
+                </div>
+
+                <div class="sheet-badge">300 Mbps</div>
+              </div>
+
+              <div class="sheet-address">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+
+                Kawasan Industri Medan, Medan, Sumatera Utara
+              </div>
+
+              <div class="sheet-actions">
+                <!-- CAPTURE -->
+
+                <button
+                  type="button"
+                  class="sheet-button secondary"
+                  id="captureButton"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="3" />
+
+                    <path
+                      d="M20 7h-3l-1.5-2h-7L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"
+                    />
+                  </svg>
+
+                  Capture
+                </button>
+
+                <!-- NAVIGATE -->
+
+                <button
+                  type="button"
+                  class="sheet-button primary"
+                  id="navigateButton"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3 11.5 21 3l-8.5 18-2.3-7.2L3 11.5Z" />
+                  </svg>
+
+                  Open Navigation
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      /* =====================================================
+       QUERY PARAMETER
+    ===================================================== */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const workOrder = params.get("id") || "WO-2026-00124";
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href =
+            "survey-detail.html?id=" + encodeURIComponent(workOrder);
+        });
+
+      /* =====================================================
+       LAYERS
+    ===================================================== */
+
+      document
+        .getElementById("layersButton")
+        .addEventListener("click", function () {
+          showToast("Map layers: Site, Coverage, Current Location");
+        });
+
+      /* =====================================================
+       ZOOM
+    ===================================================== */
+
+      let zoomLevel = 1;
+
+      document.getElementById("zoomIn").addEventListener("click", function () {
+        zoomLevel = Math.min(zoomLevel + 0.15, 1.5);
+
+        document.querySelector(".map-grid").style.transform =
+          "scale(" + zoomLevel + ") rotate(-3deg)";
+
+        showToast("Zoom level " + Math.round(zoomLevel * 100) + "%");
+      });
+
+      document.getElementById("zoomOut").addEventListener("click", function () {
+        zoomLevel = Math.max(zoomLevel - 0.15, 0.7);
+
+        document.querySelector(".map-grid").style.transform =
+          "scale(" + zoomLevel + ") rotate(-3deg)";
+
+        showToast("Zoom level " + Math.round(zoomLevel * 100) + "%");
+      });
+
+      /* =====================================================
+       CURRENT LOCATION
+    ===================================================== */
+
+      document
+        .getElementById("myLocation")
+        .addEventListener("click", function () {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                const lat = position.coords.latitude.toFixed(5);
+
+                const lng = position.coords.longitude.toFixed(5);
+
+                showToast("Current location: " + lat + ", " + lng);
+              },
+
+              function () {
+                showToast("Unable to access current location.");
+              },
+            );
+          } else {
+            showToast("Geolocation is not supported.");
+          }
+        });
+
+      /* =====================================================
+       CAPTURE LOCATION
+    ===================================================== */
+
+      document
+        .getElementById("captureButton")
+        .addEventListener("click", function () {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                const lat = position.coords.latitude.toFixed(6);
+
+                const lng = position.coords.longitude.toFixed(6);
+
+                showToast("Location captured: " + lat + ", " + lng);
+              },
+
+              function () {
+                showToast("Location permission is required.");
+              },
+            );
+          } else {
+            showToast("Geolocation is not supported.");
+          }
+        });
+
+      /* =====================================================
+       OPEN NAVIGATION
+    ===================================================== */
+
+      document
+        .getElementById("navigateButton")
+        .addEventListener("click", function () {
+          /*
+            Target coordinates:
+
+            Latitude  : 3.6258
+            Longitude : 98.6721
+
+            Replace with actual coordinates
+            from work_order / survey_location.
+          */
+
+          const latitude = 3.6258;
+
+          const longitude = 98.6721;
+
+          const mapsUrl =
+            "https://www.google.com/maps/dir/?api=1" +
+            "&destination=" +
+            latitude +
+            "," +
+            longitude;
+
+          window.open(mapsUrl, "_blank");
+        });
+    </script>
+  </body>
+</html>

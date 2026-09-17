@@ -1,0 +1,1935 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>My Orders - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP SHELL
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+      }
+
+      .back-button:active {
+        transform: scale(0.94);
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .notification-button {
+        width: 38px;
+        height: 38px;
+
+        position: relative;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .notification-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .notification-badge {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 5px 20px 15px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       PAGE INTRO
+    ===================================================== */
+
+      .page-intro {
+        margin-top: 6px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .page-intro p {
+        margin-top: 4px;
+
+        font-size: 11px;
+
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+      .summary-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 8px;
+
+        margin-top: 14px;
+      }
+
+      .summary-card {
+        min-width: 0;
+
+        padding: 11px 9px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        background: white;
+      }
+
+      .summary-number {
+        font-size: 18px;
+
+        line-height: 1;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .summary-label {
+        margin-top: 5px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+
+        font-weight: 600;
+
+        white-space: nowrap;
+      }
+
+      .summary-card.active .summary-number {
+        color: var(--accent);
+      }
+
+      .summary-card.completed .summary-number {
+        color: var(--success);
+      }
+
+      .summary-card.pending .summary-number {
+        color: var(--warning);
+      }
+
+      /* =====================================================
+       SEARCH
+    ===================================================== */
+
+      .search-filter {
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin-top: 13px;
+      }
+
+      .search-box {
+        flex: 1;
+
+        min-width: 0;
+
+        height: 42px;
+
+        position: relative;
+      }
+
+      .search-box svg {
+        position: absolute;
+
+        left: 12px;
+
+        top: 50%;
+
+        width: 16px;
+        height: 16px;
+
+        transform: translateY(-50%);
+
+        color: #9ca3af;
+
+        pointer-events: none;
+      }
+
+      .search-input {
+        width: 100%;
+        height: 42px;
+
+        padding: 0 12px 0 37px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        outline: none;
+
+        background: white;
+
+        color: var(--text);
+
+        font-family: inherit;
+
+        font-size: 11px;
+      }
+
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .search-input:focus {
+        border-color: var(--accent);
+
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.07);
+      }
+
+      .filter-button {
+        width: 42px;
+        height: 42px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .filter-button svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* =====================================================
+       FILTER CHIPS
+    ===================================================== */
+
+      .filter-chips {
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        margin-top: 9px;
+
+        overflow: hidden;
+      }
+
+      .filter-chip {
+        flex-shrink: 0;
+
+        height: 28px;
+
+        padding: 0 11px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: white;
+
+        color: #6b7280;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+      }
+
+      .filter-chip.active {
+        border-color: var(--primary);
+
+        background: var(--primary);
+
+        color: white;
+      }
+
+      /* =====================================================
+       ORDER LIST
+    ===================================================== */
+
+      .orders-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 13px;
+
+        margin-bottom: 8px;
+      }
+
+      .orders-header h2 {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .orders-count {
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .orders-list {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+      }
+
+      /* =====================================================
+       ORDER CARD
+    ===================================================== */
+
+      .order-card {
+        width: 100%;
+
+        padding: 13px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+
+        cursor: pointer;
+
+        transition: transform 0.15s ease;
+      }
+
+      .order-card:active {
+        transform: scale(0.99);
+      }
+
+      .order-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .order-main {
+        min-width: 0;
+      }
+
+      .order-number {
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+
+        margin-bottom: 4px;
+      }
+
+      .order-title {
+        font-size: 12px;
+
+        font-weight: 700;
+
+        line-height: 1.3;
+
+        letter-spacing: -0.15px;
+      }
+
+      .order-meta {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .meta-dot {
+        width: 3px;
+        height: 3px;
+
+        border-radius: 50%;
+
+        background: #d1d5db;
+      }
+
+      .status {
+        flex-shrink: 0;
+
+        padding: 5px 7px;
+
+        border-radius: 7px;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .status-progress {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .status-pending {
+        background: var(--warning-light);
+
+        color: var(--warning);
+      }
+
+      .status-active {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      .status-completed {
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      /* =====================================================
+       ORDER PROGRESS
+    ===================================================== */
+
+      .order-progress {
+        margin-top: 11px;
+      }
+
+      .progress-info {
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 5px;
+
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      .progress-info strong {
+        color: var(--text);
+
+        font-weight: 700;
+      }
+
+      .progress-track {
+        width: 100%;
+
+        height: 4px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: #eef0f3;
+      }
+
+      .progress-value {
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: var(--accent);
+      }
+
+      .order-card.completed-card .progress-value {
+        background: var(--success);
+      }
+
+      /* =====================================================
+       ORDER FOOTER
+    ===================================================== */
+
+      .order-footer {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 10px;
+
+        padding-top: 9px;
+
+        border-top: 1px solid #f1f2f4;
+      }
+
+      .order-location {
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        min-width: 0;
+
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      .order-location svg {
+        width: 12px;
+        height: 12px;
+
+        flex-shrink: 0;
+      }
+
+      .order-location span {
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+      }
+
+      .order-date {
+        flex-shrink: 0;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        font-weight: 500;
+      }
+
+      /* =====================================================
+       EMPTY STATE
+    ===================================================== */
+
+      .empty-state {
+        display: none;
+
+        padding: 28px 20px;
+
+        border: 1px dashed var(--border);
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.6);
+
+        text-align: center;
+      }
+
+      .empty-state.show {
+        display: block;
+      }
+
+      .empty-icon {
+        width: 44px;
+        height: 44px;
+
+        margin: 0 auto 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background: #f3f4f6;
+
+        color: #9ca3af;
+      }
+
+      .empty-icon svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .empty-state strong {
+        display: block;
+
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .empty-state p {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+
+        line-height: 1.4;
+      }
+
+      /* =====================================================
+       NEW REQUEST BUTTON
+    ===================================================== */
+
+      .new-request-button {
+        position: absolute;
+
+        right: 20px;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 0;
+
+        border-radius: 15px;
+
+        background: var(--primary);
+
+        color: white;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.2);
+
+        cursor: pointer;
+
+        z-index: 15;
+      }
+
+      .new-request-button:active {
+        transform: scale(0.94);
+      }
+
+      .new-request-button svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(12px, env(safe-area-inset-top));
+
+          padding-bottom: 8px;
+        }
+
+        .back-button,
+        .notification-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+        }
+
+        .summary-grid {
+          margin-top: 10px;
+        }
+
+        .summary-card {
+          padding: 9px;
+        }
+
+        .summary-number {
+          font-size: 16px;
+        }
+
+        .search-filter {
+          margin-top: 9px;
+        }
+
+        .orders-header {
+          margin-top: 9px;
+        }
+
+        .order-card {
+          padding: 11px;
+        }
+
+        .order-progress {
+          margin-top: 8px;
+        }
+
+        .order-footer {
+          margin-top: 7px;
+          padding-top: 7px;
+        }
+
+        .new-request-button {
+          right: 18px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .page-intro p {
+          display: none;
+        }
+
+        .summary-card {
+          padding: 7px;
+        }
+
+        .summary-number {
+          font-size: 14px;
+        }
+
+        .summary-label {
+          margin-top: 3px;
+        }
+
+        .filter-chips {
+          margin-top: 6px;
+        }
+
+        .filter-chip {
+          height: 25px;
+        }
+
+        .orders-header {
+          margin-top: 7px;
+        }
+
+        .orders-list {
+          gap: 6px;
+        }
+
+        .order-card {
+          padding: 9px;
+        }
+
+        .order-meta {
+          margin-top: 2px;
+        }
+
+        .order-progress {
+          margin-top: 6px;
+        }
+
+        .order-footer {
+          margin-top: 5px;
+          padding-top: 5px;
+        }
+
+        .new-request-button {
+          width: 44px;
+          height: 44px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5"></path>
+
+                  <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> My Orders </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="notification-button"
+              id="notificationButton"
+              aria-label="Notifications"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                ></path>
+
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+
+              <span class="notification-badge"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- INTRO -->
+
+          <div class="page-intro">
+            <h1>My Work Orders</h1>
+
+            <p>Track all your service requests and installation progress.</p>
+          </div>
+
+          <!-- =================================================
+             SUMMARY
+        ================================================= -->
+
+          <div class="summary-grid">
+            <div class="summary-card active">
+              <div class="summary-number">02</div>
+
+              <div class="summary-label">Active</div>
+            </div>
+
+            <div class="summary-card pending">
+              <div class="summary-number">01</div>
+
+              <div class="summary-label">Pending</div>
+            </div>
+
+            <div class="summary-card completed">
+              <div class="summary-number">08</div>
+
+              <div class="summary-label">Completed</div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             SEARCH
+        ================================================= -->
+
+          <div class="search-filter">
+            <div class="search-box">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+
+                <path d="m20 20-4-4"></path>
+              </svg>
+
+              <input
+                type="search"
+                class="search-input"
+                id="searchInput"
+                placeholder="Search work order..."
+                autocomplete="off"
+              />
+            </div>
+
+            <button
+              type="button"
+              class="filter-button"
+              id="filterButton"
+              aria-label="Filter orders"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              >
+                <path d="M4 6h16"></path>
+
+                <path d="M7 12h10"></path>
+
+                <path d="M10 18h4"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- =================================================
+             FILTER CHIPS
+        ================================================= -->
+
+          <div class="filter-chips">
+            <button type="button" class="filter-chip active" data-filter="all">
+              All
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="progress">
+              In Progress
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="pending">
+              Pending
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="active">
+              Active
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="completed">
+              Completed
+            </button>
+          </div>
+
+          <!-- =================================================
+             ORDERS HEADER
+        ================================================= -->
+
+          <div class="orders-header">
+            <h2>Orders</h2>
+
+            <span class="orders-count" id="ordersCount"> 4 orders </span>
+          </div>
+
+          <!-- =================================================
+             ORDERS
+        ================================================= -->
+
+          <div class="orders-list" id="ordersList">
+            <!-- ORDER 1 -->
+
+            <div
+              class="order-card"
+              data-status="progress"
+              data-search="WO-2026-00124 Internet Dedicated 100 Mbps TELKOM Medan"
+              data-order="WO-2026-00124"
+            >
+              <div class="order-top">
+                <div class="order-main">
+                  <div class="order-number">WO-2026-00124</div>
+
+                  <div class="order-title">Internet Dedicated 100 Mbps</div>
+
+                  <div class="order-meta">
+                    <span> TELKOM </span>
+
+                    <span class="meta-dot"></span>
+
+                    <span> Installation </span>
+                  </div>
+                </div>
+
+                <span class="status status-progress"> IN PROGRESS </span>
+              </div>
+
+              <div class="order-progress">
+                <div class="progress-info">
+                  <span> Installation </span>
+
+                  <strong> 65% </strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-value" style="width: 65%"></div>
+                </div>
+              </div>
+
+              <div class="order-footer">
+                <div class="order-location">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"
+                    ></path>
+
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+
+                  <span> Medan </span>
+                </div>
+
+                <span class="order-date"> Due 18 Sep </span>
+              </div>
+            </div>
+
+            <!-- ORDER 2 -->
+
+            <div
+              class="order-card"
+              data-status="progress"
+              data-search="WO-2026-00121 Metro Ethernet 300 Mbps Fiberstar Kabanjahe"
+              data-order="WO-2026-00121"
+            >
+              <div class="order-top">
+                <div class="order-main">
+                  <div class="order-number">WO-2026-00121</div>
+
+                  <div class="order-title">Metro Ethernet 300 Mbps</div>
+
+                  <div class="order-meta">
+                    <span> FIBERSTAR </span>
+
+                    <span class="meta-dot"></span>
+
+                    <span> ULO </span>
+                  </div>
+                </div>
+
+                <span class="status status-progress"> IN PROGRESS </span>
+              </div>
+
+              <div class="order-progress">
+                <div class="progress-info">
+                  <span> ULO / Acceptance </span>
+
+                  <strong> 85% </strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-value" style="width: 85%"></div>
+                </div>
+              </div>
+
+              <div class="order-footer">
+                <div class="order-location">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"
+                    ></path>
+
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+
+                  <span> Kabanjahe </span>
+                </div>
+
+                <span class="order-date"> Due 17 Sep </span>
+              </div>
+            </div>
+
+            <!-- ORDER 3 -->
+
+            <div
+              class="order-card"
+              data-status="pending"
+              data-search="WO-2026-00125 Internet 200 Mbps Provider Check Medan"
+              data-order="WO-2026-00125"
+            >
+              <div class="order-top">
+                <div class="order-main">
+                  <div class="order-number">WO-2026-00125</div>
+
+                  <div class="order-title">Internet 200 Mbps</div>
+
+                  <div class="order-meta">
+                    <span> Provider Check </span>
+
+                    <span class="meta-dot"></span>
+
+                    <span> Verification </span>
+                  </div>
+                </div>
+
+                <span class="status status-pending"> PENDING </span>
+              </div>
+
+              <div class="order-progress">
+                <div class="progress-info">
+                  <span> Verification </span>
+
+                  <strong> 25% </strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-value" style="width: 25%"></div>
+                </div>
+              </div>
+
+              <div class="order-footer">
+                <div class="order-location">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"
+                    ></path>
+
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+
+                  <span> Medan </span>
+                </div>
+
+                <span class="order-date"> Submitted Today </span>
+              </div>
+            </div>
+
+            <!-- ORDER 4 -->
+
+            <div
+              class="order-card completed-card"
+              data-status="completed"
+              data-search="WO-2026-00118 Fiber Internet 300 Mbps Fiberstar Medan"
+              data-order="WO-2026-00118"
+            >
+              <div class="order-top">
+                <div class="order-main">
+                  <div class="order-number">WO-2026-00118</div>
+
+                  <div class="order-title">Fiber Internet 300 Mbps</div>
+
+                  <div class="order-meta">
+                    <span> FIBERSTAR </span>
+
+                    <span class="meta-dot"></span>
+
+                    <span> Service Active </span>
+                  </div>
+                </div>
+
+                <span class="status status-completed"> COMPLETED </span>
+              </div>
+
+              <div class="order-progress">
+                <div class="progress-info">
+                  <span> Service Completed </span>
+
+                  <strong> 100% </strong>
+                </div>
+
+                <div class="progress-track">
+                  <div class="progress-value" style="width: 100%"></div>
+                </div>
+              </div>
+
+              <div class="order-footer">
+                <div class="order-location">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"
+                    ></path>
+
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+
+                  <span> Medan </span>
+                </div>
+
+                <span class="order-date"> Completed 12 Sep </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- EMPTY -->
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 2h9l4 4v16H6z"></path>
+
+                <path d="M14 2v5h5"></path>
+
+                <path d="M9 12h6"></path>
+
+                <path d="M9 16h4"></path>
+              </svg>
+            </div>
+
+            <strong> No orders found </strong>
+
+            <p>Try another search or filter.</p>
+          </div>
+        </section>
+
+        <!-- =================================================
+           NEW REQUEST
+      ================================================= -->
+
+        <button
+          type="button"
+          class="new-request-button"
+          id="newRequestButton"
+          aria-label="Create new request"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M12 5v14"></path>
+
+            <path d="M5 12h14"></path>
+          </svg>
+        </button>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <button type="button" class="nav-item active" data-page="orders">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2h9l4 4v16H6z"></path>
+
+              <path d="M14 2v5h5"></path>
+
+              <path d="M9 12h6"></path>
+
+              <path d="M9 16h6"></path>
+            </svg>
+
+            Orders
+          </button>
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            Alerts
+          </button>
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const searchInput = document.getElementById("searchInput");
+
+      const orderCards = Array.from(document.querySelectorAll(".order-card"));
+
+      const filterChips = Array.from(document.querySelectorAll(".filter-chip"));
+
+      const ordersCount = document.getElementById("ordersCount");
+
+      const emptyState = document.getElementById("emptyState");
+
+      const toast = document.getElementById("toast");
+
+      let currentFilter = "all";
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =====================================================
+       FILTER ORDERS
+    ===================================================== */
+
+      function filterOrders() {
+        const keyword = searchInput.value.trim().toLowerCase();
+
+        let visibleCount = 0;
+
+        orderCards.forEach(function (card) {
+          const status = card.dataset.status;
+
+          const searchText = card.dataset.search.toLowerCase();
+
+          const matchesFilter =
+            currentFilter === "all" || status === currentFilter;
+
+          const matchesSearch = searchText.includes(keyword);
+
+          const visible = matchesFilter && matchesSearch;
+
+          card.style.display = visible ? "block" : "none";
+
+          if (visible) {
+            visibleCount++;
+          }
+        });
+
+        ordersCount.textContent = `${visibleCount} order${visibleCount === 1 ? "" : "s"}`;
+
+        if (visibleCount === 0) {
+          emptyState.classList.add("show");
+        } else {
+          emptyState.classList.remove("show");
+        }
+      }
+
+      /* =====================================================
+       SEARCH
+    ===================================================== */
+
+      searchInput.addEventListener("input", filterOrders);
+
+      /* =====================================================
+       FILTER CHIPS
+    ===================================================== */
+
+      filterChips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          filterChips.forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          chip.classList.add("active");
+
+          currentFilter = chip.dataset.filter;
+
+          filterOrders();
+        });
+      });
+
+      /* =====================================================
+       ORDER DETAIL
+    ===================================================== */
+
+      orderCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          const order = card.dataset.order;
+
+          /*
+           * Future:
+           *
+           * window.location.href =
+           *   `order-detail.html?id=${order}`;
+           *
+           */
+
+          window.location.href = "order-detail.html";
+        });
+      });
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       NEW REQUEST
+    ===================================================== */
+
+      document
+        .getElementById("newRequestButton")
+        .addEventListener("click", function () {
+          window.location.href = "request.html";
+        });
+
+      /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+      document
+        .getElementById("notificationButton")
+        .addEventListener("click", function () {
+          window.location.href = "notifications.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "orders") {
+            window.location.href = "orders.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+
+      /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+      filterOrders();
+    </script>
+  </body>
+</html>

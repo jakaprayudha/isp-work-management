@@ -1,0 +1,1891 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Notifications - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+           BASE
+        ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font-family: inherit;
+      }
+
+      button {
+        border: 0;
+
+        background: transparent;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+           APP SHELL
+        ===================================================== */
+
+      .app {
+        width: 100%;
+
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+
+        max-width: 480px;
+
+        height: 100dvh;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+           HEADER
+        ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+
+        transition: transform 0.15s ease;
+      }
+
+      .back-button:active {
+        transform: scale(0.94);
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .header-action {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+
+        position: relative;
+      }
+
+      .header-action:active {
+        transform: scale(0.94);
+      }
+
+      .header-action svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .header-badge {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        min-width: 7px;
+        height: 7px;
+
+        padding: 0;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+
+        font-size: 0;
+
+        transition: opacity 0.2s ease;
+      }
+
+      /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+      .main-content {
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 5px 20px 15px;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+      }
+
+      /* =====================================================
+           PAGE INTRO
+        ===================================================== */
+
+      .page-intro {
+        margin-top: 6px;
+      }
+
+      .page-intro-row {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .page-intro h1 {
+        font-size: 22px;
+
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .page-intro p {
+        margin-top: 4px;
+
+        font-size: 11px;
+
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      .unread-summary {
+        flex-shrink: 0;
+
+        padding: 6px 9px;
+
+        border-radius: 8px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+      .notification-toolbar {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 13px;
+
+        margin-bottom: 8px;
+      }
+
+      .notification-toolbar-title {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .notification-count {
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .mark-read-button {
+        padding: 6px 9px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        background: white;
+
+        color: var(--accent);
+
+        font-size: 8px;
+
+        font-weight: 700;
+      }
+
+      .mark-read-button:active {
+        transform: scale(0.96);
+      }
+
+      /* =====================================================
+           FILTER CHIPS
+        ===================================================== */
+
+      .filter-chips {
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        margin-bottom: 9px;
+
+        overflow: hidden;
+      }
+
+      .filter-chip {
+        flex-shrink: 0;
+
+        height: 28px;
+
+        padding: 0 11px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: white;
+
+        color: #6b7280;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.15s ease;
+      }
+
+      .filter-chip:active {
+        transform: scale(0.96);
+      }
+
+      .filter-chip.active {
+        border-color: var(--primary);
+
+        background: var(--primary);
+
+        color: white;
+      }
+
+      /* =====================================================
+           NOTIFICATION LIST
+        ===================================================== */
+
+      .notification-list {
+        flex: 1;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+           NOTIFICATION CARD
+        ===================================================== */
+
+      .notification-card {
+        width: 100%;
+
+        padding: 11px 12px;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+
+        cursor: pointer;
+
+        position: relative;
+
+        transition:
+          transform 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .notification-card:active {
+        transform: scale(0.99);
+      }
+
+      .notification-card.unread {
+        border-color: #dbeafe;
+
+        background: #ffffff;
+      }
+
+      .notification-card.unread::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+
+        top: 12px;
+
+        bottom: 12px;
+
+        width: 3px;
+
+        border-radius: 0 5px 5px 0;
+
+        background: var(--accent);
+      }
+
+      /* =====================================================
+           NOTIFICATION ICON
+        ===================================================== */
+
+      .notification-icon {
+        width: 36px;
+        height: 36px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 11px;
+      }
+
+      .notification-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .notification-icon.info {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .notification-icon.success {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      .notification-icon.warning {
+        background: var(--warning-light);
+
+        color: var(--warning);
+      }
+
+      .notification-icon.danger {
+        background: var(--danger-light);
+
+        color: var(--danger);
+      }
+
+      .notification-icon.system {
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      /* =====================================================
+           NOTIFICATION BODY
+        ===================================================== */
+
+      .notification-body {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .notification-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .notification-title {
+        min-width: 0;
+
+        font-size: 11px;
+
+        line-height: 1.3;
+
+        font-weight: 700;
+
+        letter-spacing: -0.1px;
+      }
+
+      .notification-time {
+        flex-shrink: 0;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+
+        white-space: nowrap;
+      }
+
+      .notification-message {
+        margin-top: 3px;
+
+        font-size: 9px;
+
+        line-height: 1.4;
+
+        color: var(--muted);
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+           NOTIFICATION FOOTER
+        ===================================================== */
+
+      .notification-footer {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 7px;
+
+        padding-top: 6px;
+
+        border-top: 1px solid #f1f2f4;
+      }
+
+      .notification-tag {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        padding: 4px 6px;
+
+        border-radius: 6px;
+
+        background: #f8fafc;
+
+        color: #6b7280;
+
+        font-size: 7px;
+
+        font-weight: 700;
+
+        letter-spacing: 0.1px;
+      }
+
+      .notification-card.unread .notification-tag {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .notification-unread {
+        width: 6px;
+        height: 6px;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+      }
+
+      /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+      .empty-state {
+        display: none;
+
+        flex: 1;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        border: 1px dashed var(--border);
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.6);
+
+        text-align: center;
+      }
+
+      .empty-state.show {
+        display: flex;
+      }
+
+      .empty-icon {
+        width: 44px;
+        height: 44px;
+
+        margin: 0 auto 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background: #f3f4f6;
+
+        color: #9ca3af;
+      }
+
+      .empty-icon svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .empty-state strong {
+        display: block;
+
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .empty-state p {
+        margin-top: 4px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+
+        line-height: 1.4;
+      }
+
+      /* =====================================================
+           BOTTOM NAV
+        ===================================================== */
+
+      .bottom-nav {
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+
+        position: relative;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-notification {
+        position: absolute;
+
+        top: 2px;
+
+        right: calc(50% - 17px);
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+           TOAST
+        ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+           SMALL HEIGHT
+        ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(12px, env(safe-area-inset-top));
+
+          padding-bottom: 8px;
+        }
+
+        .back-button,
+        .header-action {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+
+          padding-right: 18px;
+        }
+
+        .page-intro h1 {
+          font-size: 20px;
+        }
+
+        .page-intro p {
+          font-size: 10px;
+        }
+
+        .notification-toolbar {
+          margin-top: 9px;
+        }
+
+        .filter-chips {
+          margin-bottom: 7px;
+        }
+
+        .filter-chip {
+          height: 26px;
+        }
+
+        .notification-list {
+          gap: 6px;
+        }
+
+        .notification-card {
+          padding: 9px 10px;
+        }
+
+        .notification-icon {
+          width: 33px;
+          height: 33px;
+        }
+
+        .notification-icon svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        .notification-message {
+          -webkit-line-clamp: 1;
+        }
+
+        .notification-footer {
+          margin-top: 5px;
+
+          padding-top: 5px;
+        }
+      }
+
+      /* =====================================================
+           VERY SMALL HEIGHT
+        ===================================================== */
+
+      @media (max-height: 620px) {
+        .page-intro p {
+          display: none;
+        }
+
+        .notification-toolbar {
+          margin-top: 7px;
+        }
+
+        .filter-chips {
+          margin-bottom: 5px;
+        }
+
+        .filter-chip {
+          height: 24px;
+
+          padding-left: 9px;
+
+          padding-right: 9px;
+        }
+
+        .notification-card {
+          padding: 7px 9px;
+        }
+
+        .notification-icon {
+          width: 30px;
+          height: 30px;
+
+          border-radius: 9px;
+        }
+
+        .notification-title {
+          font-size: 10px;
+        }
+
+        .notification-message {
+          font-size: 8px;
+        }
+
+        .notification-footer {
+          margin-top: 4px;
+
+          padding-top: 4px;
+        }
+
+        .notification-tag {
+          padding: 3px 5px;
+        }
+      }
+
+      /* =====================================================
+           DESKTOP PREVIEW
+        ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+        }
+      }
+
+      /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5"></path>
+
+                  <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Notifications </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <!-- MARK ALL READ -->
+            <button
+              type="button"
+              class="header-action"
+              id="headerMarkRead"
+              aria-label="Mark all notifications as read"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+
+              <span class="header-badge" id="headerBadge"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+             MAIN
+        ================================================= -->
+
+        <section class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <div class="page-intro-row">
+              <div>
+                <h1>Notifications</h1>
+
+                <p>Stay updated on your work orders and service progress.</p>
+              </div>
+
+              <span class="unread-summary" id="unreadSummary"> 3 Unread </span>
+            </div>
+          </div>
+
+          <!-- =================================================
+                 TOOLBAR
+            ================================================= -->
+
+          <div class="notification-toolbar">
+            <div>
+              <div class="notification-toolbar-title">Recent Updates</div>
+
+              <div class="notification-count" id="notificationCount">
+                6 notifications
+              </div>
+            </div>
+
+            <button type="button" class="mark-read-button" id="markReadButton">
+              Mark all read
+            </button>
+          </div>
+
+          <!-- =================================================
+                 FILTER
+            ================================================= -->
+
+          <div class="filter-chips">
+            <button type="button" class="filter-chip active" data-filter="all">
+              All
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="unread">
+              Unread
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="orders">
+              Orders
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="system">
+              System
+            </button>
+          </div>
+
+          <!-- =================================================
+                 NOTIFICATION LIST
+            ================================================= -->
+
+          <div class="notification-list" id="notificationList">
+            <!-- =================================================
+                     NOTIFICATION 1
+                ================================================= -->
+
+            <div
+              class="notification-card unread"
+              data-type="orders"
+              data-unread="true"
+              data-order="WO-2026-00124"
+            >
+              <div class="notification-icon info">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                  ></path>
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Installation Started</div>
+
+                  <div class="notification-time">10 min ago</div>
+                </div>
+
+                <div class="notification-message">
+                  Your Internet Dedicated 100 Mbps installation is currently in
+                  progress.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> WO-2026-00124 </span>
+
+                  <span class="notification-unread"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                     NOTIFICATION 2
+                ================================================= -->
+
+            <div
+              class="notification-card unread"
+              data-type="orders"
+              data-unread="true"
+              data-order="WO-2026-00121"
+            >
+              <div class="notification-icon success">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Provider Selected</div>
+
+                  <div class="notification-time">1 hour ago</div>
+                </div>
+
+                <div class="notification-message">
+                  Your Metro Ethernet 300 Mbps request has passed provider
+                  selection.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> WO-2026-00121 </span>
+
+                  <span class="notification-unread"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                     NOTIFICATION 3
+                ================================================= -->
+
+            <div
+              class="notification-card unread"
+              data-type="orders"
+              data-unread="true"
+              data-order="WO-2026-00125"
+            >
+              <div class="notification-icon warning">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.3 2.9L1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0z"
+                  ></path>
+
+                  <path d="M12 9v4"></path>
+
+                  <path d="M12 17h.01"></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Verification Required</div>
+
+                  <div class="notification-time">3 hours ago</div>
+                </div>
+
+                <div class="notification-message">
+                  Additional information may be required to continue processing
+                  your request.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> WO-2026-00125 </span>
+
+                  <span class="notification-unread"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                     NOTIFICATION 4
+                ================================================= -->
+
+            <div
+              class="notification-card"
+              data-type="orders"
+              data-unread="false"
+              data-order="WO-2026-00118"
+            >
+              <div class="notification-icon success">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+
+                  <path d="M22 4L12 14.01l-3-3"></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Service Activated</div>
+
+                  <div class="notification-time">Yesterday</div>
+                </div>
+
+                <div class="notification-message">
+                  Your Fiber Internet 300 Mbps service has been successfully
+                  activated.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> WO-2026-00118 </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                     NOTIFICATION 5
+                ================================================= -->
+
+            <div
+              class="notification-card"
+              data-type="system"
+              data-unread="false"
+            >
+              <div class="notification-icon system">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9"></circle>
+
+                  <path d="M12 10v6"></path>
+
+                  <path d="M12 7h.01"></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Customer Portal Updated</div>
+
+                  <div class="notification-time">2 days ago</div>
+                </div>
+
+                <div class="notification-message">
+                  New order tracking and service progress features are now
+                  available.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> SYSTEM </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                     NOTIFICATION 6
+                ================================================= -->
+
+            <div
+              class="notification-card"
+              data-type="system"
+              data-unread="false"
+            >
+              <div class="notification-icon success">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8
+                                8.5 8.5 0 0 1-7.6 4.7
+                                8.38 8.38 0 0 1-3.8-.9
+                                L3 21l1.9-5.7
+                                a8.38 8.38 0 0 1-.9-3.8
+                                8.5 8.5 0 0 1 4.7-7.6
+                                8.38 8.38 0 0 1 3.8-.9
+                                h.5a8.48 8.48 0 0 1 8 8v.5Z"
+                  ></path>
+                </svg>
+              </div>
+
+              <div class="notification-body">
+                <div class="notification-top">
+                  <div class="notification-title">Support Request Received</div>
+
+                  <div class="notification-time">3 days ago</div>
+                </div>
+
+                <div class="notification-message">
+                  Our support team has received your request and will follow up
+                  shortly.
+                </div>
+
+                <div class="notification-footer">
+                  <span class="notification-tag"> SUPPORT </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+                 EMPTY
+            ================================================= -->
+
+          <div class="empty-state" id="emptyState">
+            <div>
+              <div class="empty-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 8a6 6 0 0 0-12 0
+                                c0 7-3 7-3 9h18
+                                c0-2-3-2-3-9"
+                  ></path>
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+
+              <strong> No notifications </strong>
+
+              <p>You're all caught up. New updates will appear here.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+             BOTTOM NAV
+        ================================================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <!-- ORDERS -->
+
+          <button type="button" class="nav-item" data-page="orders">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2h9l4 4v16H6z"></path>
+
+              <path d="M14 2v5h5"></path>
+
+              <path d="M9 12h6"></path>
+
+              <path d="M9 16h6"></path>
+            </svg>
+
+            Orders
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            data-page="notifications"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M18 8a6 6 0 0 0-12 0
+                        c0 7-3 7-3 9h18
+                        c0-2-3-2-3-9"
+              ></path>
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            <span class="nav-notification" id="navNotification"></span>
+
+            Alerts
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+
+      <!-- =====================================================
+         TOAST
+    ===================================================== -->
+
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const notificationCards = Array.from(
+        document.querySelectorAll(".notification-card"),
+      );
+
+      const filterChips = Array.from(document.querySelectorAll(".filter-chip"));
+
+      const notificationCount = document.getElementById("notificationCount");
+
+      const unreadSummary = document.getElementById("unreadSummary");
+
+      const headerBadge = document.getElementById("headerBadge");
+
+      const navNotification = document.getElementById("navNotification");
+
+      const emptyState = document.getElementById("emptyState");
+
+      const toast = document.getElementById("toast");
+
+      let currentFilter = "all";
+
+      let toastTimer;
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =====================================================
+       UPDATE COUNTERS
+    ===================================================== */
+
+      function updateCounters() {
+        const unread = notificationCards.filter(function (card) {
+          return card.dataset.unread === "true";
+        }).length;
+
+        unreadSummary.textContent =
+          unread > 0 ? `${unread} Unread` : "All Read";
+
+        notificationCount.textContent = `${notificationCards.length} notification${notificationCards.length === 1 ? "" : "s"}`;
+
+        if (unread > 0) {
+          headerBadge.style.display = "block";
+
+          navNotification.style.display = "block";
+        } else {
+          headerBadge.style.display = "none";
+
+          navNotification.style.display = "none";
+        }
+      }
+
+      /* =====================================================
+       FILTER
+    ===================================================== */
+
+      function filterNotifications() {
+        let visibleCount = 0;
+
+        notificationCards.forEach(function (card) {
+          const type = card.dataset.type;
+
+          const unread = card.dataset.unread === "true";
+
+          let show = false;
+
+          if (currentFilter === "all") {
+            show = true;
+          } else if (currentFilter === "unread") {
+            show = unread;
+          } else {
+            show = type === currentFilter;
+          }
+
+          card.style.display = show ? "flex" : "none";
+
+          if (show) {
+            visibleCount++;
+          }
+        });
+
+        if (visibleCount === 0) {
+          emptyState.classList.add("show");
+        } else {
+          emptyState.classList.remove("show");
+        }
+      }
+
+      /* =====================================================
+       FILTER EVENTS
+    ===================================================== */
+
+      filterChips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          filterChips.forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          chip.classList.add("active");
+
+          currentFilter = chip.dataset.filter;
+
+          filterNotifications();
+        });
+      });
+
+      /* =====================================================
+       MARK ALL READ
+    ===================================================== */
+
+      function markAllRead() {
+        notificationCards.forEach(function (card) {
+          card.dataset.unread = "false";
+
+          card.classList.remove("unread");
+
+          const unreadDot = card.querySelector(".notification-unread");
+
+          if (unreadDot) {
+            unreadDot.remove();
+          }
+        });
+
+        updateCounters();
+
+        filterNotifications();
+
+        showToast("All notifications marked as read");
+      }
+
+      document
+        .getElementById("markReadButton")
+        .addEventListener("click", markAllRead);
+
+      document
+        .getElementById("headerMarkRead")
+        .addEventListener("click", markAllRead);
+
+      /* =====================================================
+       OPEN NOTIFICATION
+    ===================================================== */
+
+      notificationCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          const order = card.dataset.order;
+
+          /*
+           * Future API:
+           *
+           * POST /api/customer/notifications/read.php
+           *
+           * Mark notification as read
+           */
+
+          if (card.dataset.unread === "true") {
+            card.dataset.unread = "false";
+
+            card.classList.remove("unread");
+
+            const dot = card.querySelector(".notification-unread");
+
+            if (dot) {
+              dot.remove();
+            }
+
+            updateCounters();
+          }
+
+          if (order) {
+            window.location.href =
+              "order-detail.html?id=" + encodeURIComponent(order);
+          } else {
+            showToast("Notification opened");
+          }
+        });
+      });
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "dashboard.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "orders") {
+            window.location.href = "orders.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+
+      /* =====================================================
+       ESCAPE
+    ===================================================== */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          window.location.href = "dashboard.html";
+        }
+      });
+
+      /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+      updateCounters();
+
+      filterNotifications();
+    </script>
+  </body>
+</html>

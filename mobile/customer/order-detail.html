@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Order Detail - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP SHELL
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .back-button {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+      }
+
+      .back-button:active {
+        transform: scale(0.94);
+      }
+
+      .back-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .header-action {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .header-action svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* =====================================================
+       MAIN
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 15px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       ORDER HERO
+    ===================================================== */
+
+      .order-hero {
+        margin-top: 6px;
+
+        padding: 16px;
+
+        border-radius: 19px;
+
+        background: linear-gradient(135deg, #111827, #1f2937);
+
+        color: white;
+
+        box-shadow: 0 12px 26px rgba(17, 24, 39, 0.14);
+      }
+
+      .order-hero-top {
+        display: flex;
+
+        align-items: flex-start;
+
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .hero-number {
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+
+        margin-bottom: 5px;
+      }
+
+      .hero-title {
+        font-size: 17px;
+
+        line-height: 1.25;
+
+        font-weight: 800;
+
+        letter-spacing: -0.35px;
+      }
+
+      .hero-status {
+        flex-shrink: 0;
+
+        padding: 6px 8px;
+
+        border-radius: 8px;
+
+        background: rgba(37, 99, 235, 0.18);
+
+        color: #93c5fd;
+
+        font-size: 8px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .hero-meta {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-top: 8px;
+
+        color: #d1d5db;
+
+        font-size: 9px;
+      }
+
+      .hero-dot {
+        width: 3px;
+        height: 3px;
+
+        border-radius: 50%;
+
+        background: #6b7280;
+      }
+
+      /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+      .hero-progress {
+        margin-top: 15px;
+      }
+
+      .hero-progress-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-bottom: 6px;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+      }
+
+      .hero-progress-header strong {
+        color: white;
+
+        font-size: 9px;
+      }
+
+      .hero-progress-track {
+        width: 100%;
+
+        height: 5px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-progress-value {
+        height: 100%;
+
+        width: 65%;
+
+        border-radius: inherit;
+
+        background: #60a5fa;
+      }
+
+      /* =====================================================
+       ORDER INFO
+    ===================================================== */
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        margin-top: 10px;
+      }
+
+      .info-card {
+        padding: 11px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        background: white;
+      }
+
+      .info-card span {
+        display: block;
+
+        margin-bottom: 4px;
+
+        font-size: 8px;
+
+        color: #9ca3af;
+      }
+
+      .info-card strong {
+        display: block;
+
+        font-size: 10px;
+
+        color: #374151;
+
+        font-weight: 700;
+
+        line-height: 1.3;
+      }
+
+      /* =====================================================
+       SECTION
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-top: 13px;
+
+        margin-bottom: 8px;
+      }
+
+      .section-header h2 {
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-header span {
+        font-size: 8px;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       TIMELINE
+    ===================================================== */
+
+      .timeline-card {
+        padding: 13px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 17px;
+
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+      }
+
+      .timeline {
+        position: relative;
+      }
+
+      .timeline-item {
+        min-height: 31px;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        position: relative;
+      }
+
+      .timeline-item:last-child {
+        min-height: 23px;
+      }
+
+      .timeline-rail {
+        width: 18px;
+
+        flex-shrink: 0;
+
+        position: relative;
+
+        display: flex;
+
+        justify-content: center;
+      }
+
+      .timeline-rail::after {
+        content: "";
+
+        position: absolute;
+
+        top: 15px;
+        bottom: -1px;
+
+        width: 1px;
+
+        background: #e5e7eb;
+      }
+
+      .timeline-item.completed .timeline-rail::after {
+        background: #93c5fd;
+      }
+
+      .timeline-item:last-child .timeline-rail::after {
+        display: none;
+      }
+
+      .timeline-dot {
+        width: 10px;
+        height: 10px;
+
+        position: relative;
+
+        z-index: 2;
+
+        margin-top: 3px;
+
+        border-radius: 50%;
+
+        background: #e5e7eb;
+
+        box-shadow: 0 0 0 2px white;
+      }
+
+      .timeline-item.completed .timeline-dot {
+        background: var(--accent);
+      }
+
+      .timeline-item.current .timeline-dot {
+        width: 11px;
+        height: 11px;
+
+        background: white;
+
+        border: 3px solid var(--accent);
+
+        box-shadow:
+          0 0 0 2px white,
+          0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .timeline-content {
+        flex: 1;
+
+        min-width: 0;
+
+        padding-left: 8px;
+
+        padding-bottom: 7px;
+      }
+
+      .timeline-top {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 8px;
+      }
+
+      .timeline-title {
+        font-size: 10px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      .timeline-item.current .timeline-title {
+        color: var(--accent);
+      }
+
+      .timeline-date {
+        flex-shrink: 0;
+
+        font-size: 7px;
+
+        color: #9ca3af;
+      }
+
+      .timeline-description {
+        margin-top: 2px;
+
+        font-size: 8px;
+
+        line-height: 1.35;
+
+        color: #9ca3af;
+      }
+
+      /* =====================================================
+       CURRENT STEP CARD
+    ===================================================== */
+
+      .next-step {
+        margin-top: 9px;
+
+        padding: 11px 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        border-radius: 13px;
+
+        background: var(--accent-light);
+
+        border: 1px solid #dbeafe;
+      }
+
+      .next-step-icon {
+        width: 30px;
+        height: 30px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: white;
+
+        color: var(--accent);
+      }
+
+      .next-step-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .next-step-content {
+        min-width: 0;
+      }
+
+      .next-step-label {
+        font-size: 7px;
+
+        color: var(--accent);
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.3px;
+      }
+
+      .next-step-title {
+        margin-top: 2px;
+
+        font-size: 10px;
+
+        color: #1e3a8a;
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       FOOTER ACTIONS
+    ===================================================== */
+
+      .action-row {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+
+        margin-top: 10px;
+      }
+
+      .action-button {
+        height: 41px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        border-radius: 12px;
+
+        font-family: inherit;
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      .action-button svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .action-secondary {
+        border: 1px solid var(--border);
+
+        background: white;
+
+        color: #374151;
+      }
+
+      .action-primary {
+        border: 0;
+
+        background: var(--primary);
+
+        color: white;
+
+        box-shadow: 0 7px 15px rgba(17, 24, 39, 0.12);
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        flex-shrink: 0;
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 12px 15px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(12px, env(safe-area-inset-top));
+
+          padding-bottom: 8px;
+        }
+
+        .back-button,
+        .header-action {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .order-hero {
+          margin-top: 4px;
+
+          padding: 13px;
+        }
+
+        .hero-title {
+          font-size: 15px;
+        }
+
+        .hero-progress {
+          margin-top: 11px;
+        }
+
+        .info-grid {
+          margin-top: 7px;
+        }
+
+        .info-card {
+          padding: 9px;
+        }
+
+        .section-header {
+          margin-top: 10px;
+          margin-bottom: 6px;
+        }
+
+        .timeline-card {
+          padding: 10px;
+        }
+
+        .timeline-item {
+          min-height: 27px;
+        }
+
+        .timeline-content {
+          padding-bottom: 4px;
+        }
+
+        .next-step {
+          margin-top: 6px;
+
+          padding: 8px 10px;
+        }
+
+        .action-row {
+          margin-top: 7px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .hero-meta {
+          display: none;
+        }
+
+        .hero-progress {
+          margin-top: 8px;
+        }
+
+        .info-card {
+          padding: 7px;
+        }
+
+        .timeline-card {
+          padding: 8px;
+        }
+
+        .timeline-item {
+          min-height: 24px;
+        }
+
+        .timeline-description {
+          display: none;
+        }
+
+        .next-step {
+          padding: 7px 9px;
+        }
+
+        .action-button {
+          height: 37px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-left">
+              <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5"></path>
+
+                  <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <div class="header-title">
+                <strong> Order Detail </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="header-action"
+              id="moreButton"
+              aria-label="More options"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <circle cx="5" cy="12" r="1"></circle>
+
+                <circle cx="12" cy="12" r="1"></circle>
+
+                <circle cx="19" cy="12" r="1"></circle>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN
+      ================================================= -->
+
+        <section class="main-content">
+          <!-- =================================================
+             ORDER HERO
+        ================================================= -->
+
+          <div class="order-hero">
+            <div class="order-hero-top">
+              <div>
+                <div class="hero-number">WO-2026-00124</div>
+
+                <div class="hero-title">Internet Dedicated 100 Mbps</div>
+              </div>
+
+              <span class="hero-status"> IN PROGRESS </span>
+            </div>
+
+            <div class="hero-meta">
+              <span> TELKOM </span>
+
+              <span class="hero-dot"></span>
+
+              <span> New Installation </span>
+
+              <span class="hero-dot"></span>
+
+              <span> Medan </span>
+            </div>
+
+            <!-- PROGRESS -->
+
+            <div class="hero-progress">
+              <div class="hero-progress-header">
+                <span> Overall Progress </span>
+
+                <strong> 65% </strong>
+              </div>
+
+              <div class="hero-progress-track">
+                <div class="hero-progress-value"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             ORDER INFO
+        ================================================= -->
+
+          <div class="info-grid">
+            <div class="info-card">
+              <span> SERVICE </span>
+
+              <strong> Dedicated Internet </strong>
+            </div>
+
+            <div class="info-card">
+              <span> BANDWIDTH </span>
+
+              <strong> 100 Mbps </strong>
+            </div>
+
+            <div class="info-card">
+              <span> LOCATION </span>
+
+              <strong> Medan, North Sumatra </strong>
+            </div>
+
+            <div class="info-card">
+              <span> EXPECTED COMPLETION </span>
+
+              <strong> 18 Sep 2026 </strong>
+            </div>
+          </div>
+
+          <!-- =================================================
+             WORKFLOW
+        ================================================= -->
+
+          <div class="section-header">
+            <h2>Order Progress</h2>
+
+            <span> 4 of 6 stages </span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline">
+              <!-- REQUEST -->
+
+              <div class="timeline-item completed">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Request Submitted </span>
+
+                    <span class="timeline-date"> 15 Sep </span>
+                  </div>
+
+                  <div class="timeline-description">
+                    Service request successfully registered.
+                  </div>
+                </div>
+              </div>
+
+              <!-- VERIFICATION -->
+
+              <div class="timeline-item completed">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Data Verification </span>
+
+                    <span class="timeline-date"> 15 Sep </span>
+                  </div>
+
+                  <div class="timeline-description">
+                    Customer and service information verified.
+                  </div>
+                </div>
+              </div>
+
+              <!-- APPROVED -->
+
+              <div class="timeline-item completed">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Request Approved </span>
+
+                    <span class="timeline-date"> 16 Sep </span>
+                  </div>
+
+                  <div class="timeline-description">
+                    Request approved for service processing.
+                  </div>
+                </div>
+              </div>
+
+              <!-- PROVIDER -->
+
+              <div class="timeline-item completed">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Provider Selected </span>
+
+                    <span class="timeline-date"> 16 Sep </span>
+                  </div>
+
+                  <div class="timeline-description">
+                    Network provider has been assigned.
+                  </div>
+                </div>
+              </div>
+
+              <!-- INSTALLATION -->
+
+              <div class="timeline-item current">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Installation </span>
+
+                    <span class="timeline-date"> Current </span>
+                  </div>
+
+                  <div class="timeline-description">
+                    Service installation is currently in progress.
+                  </div>
+                </div>
+              </div>
+
+              <!-- ULO -->
+
+              <div class="timeline-item">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> ULO & Acceptance </span>
+
+                    <span class="timeline-date"> Upcoming </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ACTIVE -->
+
+              <div class="timeline-item">
+                <div class="timeline-rail">
+                  <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-content">
+                  <div class="timeline-top">
+                    <span class="timeline-title"> Service Active </span>
+
+                    <span class="timeline-date"> Upcoming </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CURRENT NEXT STEP -->
+
+            <div class="next-step">
+              <div class="next-step-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 12h18"></path>
+
+                  <path d="M13 6l6 6-6 6"></path>
+                </svg>
+              </div>
+
+              <div class="next-step-content">
+                <div class="next-step-label">Current Stage</div>
+
+                <div class="next-step-title">Installation is in progress</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================================================
+             ACTIONS
+        ================================================= -->
+
+          <div class="action-row">
+            <button
+              type="button"
+              class="action-button action-secondary"
+              id="supportButton"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"
+                ></path>
+              </svg>
+
+              Contact Support
+            </button>
+
+            <button
+              type="button"
+              class="action-button action-primary"
+              id="backOrdersButton"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H5"></path>
+
+                <path d="M12 19l-7-7 7-7"></path>
+              </svg>
+
+              My Orders
+            </button>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+
+        <nav class="bottom-nav">
+          <button type="button" class="nav-item" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 10.5L12 3l9 7.5"></path>
+
+              <path d="M5 9.5V21h14V9.5"></path>
+
+              <path d="M9 21v-6h6v6"></path>
+            </svg>
+
+            Home
+          </button>
+
+          <button type="button" class="nav-item active" data-page="orders">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2h9l4 4v16H6z"></path>
+
+              <path d="M14 2v5h5"></path>
+
+              <path d="M9 12h6"></path>
+
+              <path d="M9 16h6"></path>
+            </svg>
+
+            Orders
+          </button>
+
+          <button type="button" class="nav-item" data-page="notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+
+            Alerts
+          </button>
+
+          <button type="button" class="nav-item" data-page="profile">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="4"></circle>
+
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+
+            Profile
+          </button>
+        </nav>
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+      const toast = document.getElementById("toast");
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      function showToast(message) {
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2300);
+      }
+
+      /* =====================================================
+       BACK
+    ===================================================== */
+
+      document
+        .getElementById("backButton")
+        .addEventListener("click", function () {
+          window.location.href = "orders.html";
+        });
+
+      /* =====================================================
+       MORE
+    ===================================================== */
+
+      document
+        .getElementById("moreButton")
+        .addEventListener("click", function () {
+          showToast("More order options will be available here.");
+        });
+
+      /* =====================================================
+       SUPPORT
+    ===================================================== */
+
+      document
+        .getElementById("supportButton")
+        .addEventListener("click", function () {
+          showToast("Customer support contact will open here.");
+        });
+
+      /* =====================================================
+       MY ORDERS
+    ===================================================== */
+
+      document
+        .getElementById("backOrdersButton")
+        .addEventListener("click", function () {
+          window.location.href = "orders.html";
+        });
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      document.querySelectorAll(".nav-item").forEach(function (item) {
+        item.addEventListener("click", function () {
+          const page = item.dataset.page;
+
+          if (page === "dashboard") {
+            window.location.href = "dashboard.html";
+
+            return;
+          }
+
+          if (page === "orders") {
+            window.location.href = "orders.html";
+
+            return;
+          }
+
+          if (page === "notifications") {
+            window.location.href = "notifications.html";
+
+            return;
+          }
+
+          if (page === "profile") {
+            window.location.href = "profile.html";
+
+            return;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

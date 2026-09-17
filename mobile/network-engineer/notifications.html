@@ -1,0 +1,2042 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Notifications — NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --background: #f8fafc;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        height: 100dvh;
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* =========================
+   HEADER
+========================= */
+
+      .app-header {
+        flex-shrink: 0;
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        z-index: 10;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+      }
+
+      .header-back {
+        width: 38px;
+        height: 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .header-back:active {
+        transform: scale(0.94);
+      }
+
+      .header-back svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-copy {
+        min-width: 0;
+      }
+
+      .header-title {
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* =========================
+   MAIN
+========================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        flex-shrink: 0;
+      }
+
+      .page-eyebrow {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .page-intro h1 {
+        margin: 0;
+
+        font-size: 22px;
+        line-height: 1.15;
+        letter-spacing: -0.45px;
+
+        font-weight: 800;
+      }
+
+      .page-intro p {
+        margin: 5px 0 0;
+
+        color: var(--muted);
+
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      /* =========================
+   SUMMARY
+========================= */
+
+      .summary-bar {
+        margin-top: 13px;
+
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        padding: 10px 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        flex-shrink: 0;
+      }
+
+      .unread-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .unread-icon {
+        width: 31px;
+        height: 31px;
+
+        border-radius: 10px;
+
+        background: var(--accent-light);
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .unread-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .unread-copy {
+        min-width: 0;
+      }
+
+      .unread-value {
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .unread-label {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 7px;
+      }
+
+      .mark-read {
+        border: 0;
+        background: transparent;
+
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        padding: 6px;
+      }
+
+      /* =========================
+   FILTER
+========================= */
+
+      .filter-row {
+        display: flex;
+        gap: 6px;
+
+        margin-top: 9px;
+
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .filter-btn {
+        border: 1px solid var(--border);
+        background: #fff;
+
+        color: var(--muted);
+
+        border-radius: 999px;
+
+        padding: 6px 10px;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      .filter-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* =========================
+   NOTIFICATION LIST
+========================= */
+
+      .section-header {
+        margin-top: 12px;
+        margin-bottom: 7px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        flex-shrink: 0;
+      }
+
+      .section-header h2 {
+        margin: 0;
+
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .section-count {
+        color: var(--muted);
+        font-size: 8px;
+        font-weight: 600;
+      }
+
+      .notification-list {
+        display: grid;
+        gap: 7px;
+
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .notification-card {
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 16px;
+
+        padding: 10px 11px;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+
+        box-shadow: 0 4px 14px rgba(17, 24, 39, 0.035);
+
+        position: relative;
+
+        transition: 0.15s ease;
+      }
+
+      .notification-card:active {
+        transform: scale(0.995);
+      }
+
+      .notification-card.unread {
+        border-color: #dbeafe;
+        background: #fcfdff;
+      }
+
+      .notification-card.unread::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        top: 11px;
+        bottom: 11px;
+
+        width: 3px;
+
+        border-radius: 0 4px 4px 0;
+
+        background: var(--accent);
+      }
+
+      .notification-icon {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 11px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .notification-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .notification-icon.warning {
+        background: #fff7ed;
+        color: var(--warning);
+      }
+
+      .notification-icon.success {
+        background: #f0fdf4;
+        color: var(--success);
+      }
+
+      .notification-icon.danger {
+        background: #fef2f2;
+        color: var(--danger);
+      }
+
+      .notification-icon.system {
+        background: #f3f4f6;
+        color: var(--primary);
+      }
+
+      .notification-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .notification-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 7px;
+      }
+
+      .notification-title {
+        font-size: 9px;
+        line-height: 1.3;
+        font-weight: 800;
+      }
+
+      .notification-time {
+        color: #9ca3af;
+        font-size: 7px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .notification-text {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 7.5px;
+        line-height: 1.4;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .notification-meta {
+        margin-top: 5px;
+
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .notification-tag {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 3px 6px;
+
+        border-radius: 999px;
+
+        background: #f3f4f6;
+        color: var(--muted);
+
+        font-size: 6px;
+        font-weight: 800;
+      }
+
+      .notification-tag.blue {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .notification-tag.orange {
+        background: #fff7ed;
+        color: var(--warning);
+      }
+
+      .notification-tag.green {
+        background: #f0fdf4;
+        color: var(--success);
+      }
+
+      .notification-dot {
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        flex-shrink: 0;
+      }
+
+      /* =========================
+   EMPTY
+========================= */
+
+      .empty-state {
+        display: none;
+
+        background: #fff;
+
+        border: 1px dashed var(--border);
+        border-radius: 15px;
+
+        padding: 22px 14px;
+
+        text-align: center;
+      }
+
+      .empty-state svg {
+        width: 25px;
+        height: 25px;
+
+        color: var(--muted);
+      }
+
+      .empty-state strong {
+        display: block;
+
+        margin-top: 7px;
+
+        font-size: 10px;
+      }
+
+      .empty-state span {
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+      }
+
+      /* =========================
+   BOTTOM NAV
+========================= */
+      /* =========================
+   BOTTOM NAV
+========================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      /* =========================
+   NAV ITEM
+========================= */
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        transition:
+          color 0.15s ease,
+          transform 0.15s ease;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item span {
+        display: block;
+
+        line-height: 1;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================
+   MORE / CENTER BUTTON
+========================= */
+
+      .nav-more {
+        position: relative;
+
+        overflow: visible;
+      }
+
+      .more-button-icon {
+        width: 38px;
+        height: 38px;
+
+        margin-top: -13px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow: 0 6px 16px rgba(17, 24, 39, 0.18);
+
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .more-button-icon svg {
+        width: 18px;
+        height: 18px;
+
+        stroke-width: 2;
+      }
+
+      .nav-more.open .more-button-icon {
+        transform: rotate(45deg);
+      }
+
+      .nav-more:active .more-button-icon {
+        transform: scale(0.92);
+      }
+
+      .nav-more.open:active .more-button-icon {
+        transform: rotate(45deg) scale(0.92);
+      }
+
+      /* =========================
+   MORE MENU
+========================= */
+
+      .more-menu {
+        position: absolute;
+
+        left: 16px;
+        right: 16px;
+
+        bottom: 78px;
+
+        padding: 8px;
+
+        background: rgba(255, 255, 255, 0.98);
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        box-shadow: 0 16px 40px rgba(17, 24, 39, 0.14);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transform: translateY(10px) scale(0.97);
+
+        transform-origin: bottom center;
+
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 35;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        transform: translateY(0) scale(1);
+      }
+
+      /* =========================
+   MORE MENU HEADER
+========================= */
+
+      .more-menu-header {
+        min-height: 42px;
+
+        padding: 6px 7px 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 1px solid var(--border);
+
+        margin-bottom: 2px;
+      }
+
+      .more-menu-title {
+        font-size: 10px;
+
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        color: var(--text);
+      }
+
+      .more-menu-subtitle {
+        margin-top: 3px;
+
+        font-size: 7px;
+
+        line-height: 1.2;
+
+        font-weight: 500;
+
+        color: var(--muted);
+      }
+
+      .more-close {
+        width: 27px;
+        height: 27px;
+
+        padding: 0;
+
+        border: 0;
+
+        border-radius: 9px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 18px;
+
+        line-height: 1;
+
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease;
+      }
+
+      .more-close:active {
+        transform: scale(0.92);
+
+        background: #e5e7eb;
+      }
+
+      /* =========================
+   MORE ITEM
+========================= */
+
+      .more-item {
+        width: 100%;
+
+        min-height: 52px;
+
+        padding: 7px 6px;
+
+        border: 0;
+
+        border-bottom: 1px solid var(--border);
+
+        background: transparent;
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        color: var(--text);
+
+        text-align: left;
+
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease;
+      }
+
+      .more-item:last-child {
+        border-bottom: 0;
+      }
+
+      .more-item:active {
+        background: #f8fafc;
+
+        transform: scale(0.985);
+      }
+
+      /* =========================
+   MORE ITEM ICON
+========================= */
+
+      .more-item-icon {
+        width: 33px;
+        height: 33px;
+
+        border-radius: 10px;
+
+        background: var(--accent-light);
+
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .more-item-icon svg {
+        width: 16px;
+        height: 16px;
+
+        stroke-width: 1.8;
+      }
+
+      /* =========================
+   MORE ITEM COPY
+========================= */
+
+      .more-item-copy {
+        flex: 1;
+
+        min-width: 0;
+      }
+
+      .more-item-title {
+        font-size: 9px;
+
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        color: var(--text);
+      }
+
+      .more-item-text {
+        margin-top: 3px;
+
+        font-size: 6.8px;
+
+        line-height: 1.3;
+
+        font-weight: 500;
+
+        color: var(--muted);
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+      }
+
+      /* =========================
+   MORE ITEM ARROW
+========================= */
+
+      .more-arrow {
+        width: 15px;
+        height: 15px;
+
+        color: #9ca3af;
+
+        flex-shrink: 0;
+      }
+
+      /* =========================
+   MORE MENU MOBILE
+========================= */
+
+      @media (max-width: 360px) {
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .nav-item {
+          font-size: 7px;
+        }
+
+        .nav-item svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .more-button-icon {
+          width: 35px;
+          height: 35px;
+
+          border-radius: 12px;
+        }
+
+        .more-menu {
+          left: 10px;
+          right: 10px;
+        }
+      }
+
+      /* =========================
+   TOAST
+========================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+        bottom: 82px;
+
+        padding: 11px 13px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 10px;
+        font-weight: 600;
+
+        text-align: center;
+
+        opacity: 0;
+
+        transform: translateY(8px);
+
+        pointer-events: none;
+
+        transition: 0.2s ease;
+
+        z-index: 50;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* =========================
+   RESPONSIVE HEIGHT
+========================= */
+
+      @media (max-height: 700px) {
+        .page-intro p {
+          display: none;
+        }
+
+        .summary-bar {
+          margin-top: 9px;
+          padding: 8px 10px;
+        }
+
+        .filter-row {
+          margin-top: 6px;
+        }
+
+        .section-header {
+          margin-top: 8px;
+        }
+
+        .notification-card {
+          padding: 8px 10px;
+        }
+
+        .notification-icon {
+          width: 31px;
+          height: 31px;
+        }
+
+        .notification-text {
+          -webkit-line-clamp: 1;
+        }
+
+        .notification-meta {
+          margin-top: 3px;
+        }
+      }
+
+      @media (max-height: 620px) {
+        .notification-card:nth-child(n + 5) {
+          display: none;
+        }
+
+        .notification-card:nth-child(3) .notification-text {
+          display: none;
+        }
+      }
+
+      /* =========================
+   DESKTOP PREVIEW
+========================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(17, 24, 39, 0.12);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =========================
+     HEADER
+========================= -->
+
+        <header class="app-header">
+          <div class="header-left">
+            <button class="header-back" onclick="go('dashboard.html')">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
+
+            <div class="header-copy">
+              <div class="header-title">Notifications</div>
+
+              <div class="header-subtitle">Network Engineer Portal</div>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <button class="header-btn" onclick="markAllRead()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m5 12 4 4L19 6"></path>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- =========================
+     MAIN
+========================= -->
+
+        <main class="main-content">
+          <!-- INTRO -->
+
+          <section class="page-intro">
+            <div class="page-eyebrow">Network Operations</div>
+
+            <h1>Notifications</h1>
+
+            <p>
+              Stay updated with technical tasks, SLA reminders and work order
+              changes.
+            </p>
+          </section>
+
+          <!-- SUMMARY -->
+
+          <section class="summary-bar">
+            <div class="unread-info">
+              <div class="unread-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                  ></path>
+
+                  <path d="M10 21h4"></path>
+                </svg>
+              </div>
+
+              <div class="unread-copy">
+                <div class="unread-value" id="unreadCount">4 unread</div>
+
+                <div class="unread-label">Latest network activity</div>
+              </div>
+            </div>
+
+            <button class="mark-read" onclick="markAllRead()">
+              Mark all as read
+            </button>
+          </section>
+
+          <!-- FILTER -->
+
+          <div class="filter-row">
+            <button
+              class="filter-btn active"
+              data-filter="ALL"
+              onclick="setFilter('ALL', this)"
+            >
+              All
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="UNREAD"
+              onclick="setFilter('UNREAD', this)"
+            >
+              Unread
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="TASK"
+              onclick="setFilter('TASK', this)"
+            >
+              Tasks
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="SLA"
+              onclick="setFilter('SLA', this)"
+            >
+              SLA
+            </button>
+          </div>
+
+          <!-- SECTION -->
+
+          <div class="section-header">
+            <h2>Recent Updates</h2>
+
+            <span class="section-count" id="notificationCount">
+              6 updates
+            </span>
+          </div>
+
+          <!-- =========================
+     NOTIFICATION LIST
+========================= -->
+
+          <div class="notification-list" id="notificationList">
+            <!-- 1 -->
+
+            <article
+              class="notification-card unread"
+              data-read="false"
+              data-type="TASK"
+              onclick="openNotification('WO-2026-00127')"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+
+                  <path d="M8 9h8"></path>
+                  <path d="M8 13h5"></path>
+                  <path d="m8 17 2 2 4-4"></path>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">
+                    New Technical Task Assigned
+                  </div>
+
+                  <div class="notification-time">10 min</div>
+                </div>
+
+                <div class="notification-text">
+                  WO-2026-00127 requires fiber coverage review and network
+                  feasibility assessment.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag blue"> TASK </span>
+
+                  <span class="notification-tag"> WO-2026-00127 </span>
+
+                  <span class="notification-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2 -->
+
+            <article
+              class="notification-card unread"
+              data-read="false"
+              data-type="SLA"
+              onclick="openNotification('WO-2026-00124')"
+            >
+              <div class="notification-icon warning">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9"></circle>
+
+                  <path d="M12 7v5l3 2"></path>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">SLA Deadline Reminder</div>
+
+                  <div class="notification-time">35 min</div>
+                </div>
+
+                <div class="notification-text">
+                  Technical feasibility for WO-2026-00124 is due today at 16:00.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag orange"> SLA </span>
+
+                  <span class="notification-tag"> Due 16:00 </span>
+
+                  <span class="notification-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3 -->
+
+            <article
+              class="notification-card unread"
+              data-read="false"
+              data-type="TASK"
+              onclick="openNotification('WO-2026-00124')"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 7h16"></path>
+                  <path d="M4 12h16"></path>
+                  <path d="M4 17h16"></path>
+
+                  <circle cx="8" cy="7" r="1"></circle>
+
+                  <circle cx="15" cy="12" r="1"></circle>
+
+                  <circle cx="10" cy="17" r="1"></circle>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">Survey Result Available</div>
+
+                  <div class="notification-time">1 hr</div>
+                </div>
+
+                <div class="notification-text">
+                  Surveyor submitted the field survey for KIM Medan. Network
+                  feasibility can now be reviewed.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag blue"> TASK </span>
+
+                  <span class="notification-tag"> SURVEY READY </span>
+
+                  <span class="notification-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4 -->
+
+            <article
+              class="notification-card unread"
+              data-read="false"
+              data-type="TASK"
+              onclick="openNotification('WO-2026-00122')"
+            >
+              <div class="notification-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v18"></path>
+                  <path d="M3 12h18"></path>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">
+                    IP Allocation Task Updated
+                  </div>
+
+                  <div class="notification-time">2 hr</div>
+                </div>
+
+                <div class="notification-text">
+                  WO-2026-00122 is ready for public IP allocation. Required
+                  subnet: /30.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag blue"> TASK </span>
+
+                  <span class="notification-tag"> IP PLAN </span>
+
+                  <span class="notification-dot"></span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5 -->
+
+            <article
+              class="notification-card"
+              data-read="true"
+              data-type="TASK"
+              onclick="openNotification('WO-2026-00119')"
+            >
+              <div class="notification-icon success">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">
+                    Network Configuration Completed
+                  </div>
+
+                  <div class="notification-time">Yesterday</div>
+                </div>
+
+                <div class="notification-text">
+                  Configuration for WO-2026-00119 was completed and is ready for
+                  technician handover.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag green"> COMPLETED </span>
+
+                  <span class="notification-tag"> WO-2026-00119 </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 6 -->
+
+            <article
+              class="notification-card"
+              data-read="true"
+              data-type="SYSTEM"
+            >
+              <div class="notification-icon system">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="3"></circle>
+
+                  <path
+                    d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.7-1.7.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6.7v-2.4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L8 8.6l1.7-1.7.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.1h2.4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1V14h-.1a1.7 1.7 0 0 0-1.6 1z"
+                  ></path>
+                </svg>
+              </div>
+
+              <div class="notification-copy">
+                <div class="notification-top">
+                  <div class="notification-title">
+                    Network Management System Update
+                  </div>
+
+                  <div class="notification-time">1 day</div>
+                </div>
+
+                <div class="notification-text">
+                  Network inventory synchronization completed successfully.
+                </div>
+
+                <div class="notification-meta">
+                  <span class="notification-tag"> SYSTEM </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- EMPTY -->
+
+            <div class="empty-state" id="emptyState">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                ></path>
+
+                <path d="M10 21h4"></path>
+              </svg>
+
+              <strong> No notifications </strong>
+
+              <span> There are no notifications matching this filter. </span>
+            </div>
+          </div>
+        </main>
+
+        <!-- =========================
+     BOTTOM NAV
+========================= -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button class="nav-item" onclick="go('dashboard.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 10 9-7 9 7"></path>
+              <path d="M5 9v11h14V9"></path>
+              <path d="M9 20v-6h6v6"></path>
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- TASKS -->
+
+          <button class="nav-item" onclick="go('tasks.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+
+              <path d="M8 9h8"></path>
+              <path d="M8 13h5"></path>
+              <path d="m8 17 2 2 4-4"></path>
+            </svg>
+
+            <span> Tasks </span>
+          </button>
+
+          <!-- MORE -->
+
+          <button
+            class="nav-item nav-more"
+            id="moreButton"
+            onclick="toggleMoreMenu()"
+          >
+            <div class="more-button-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </div>
+
+            <span>More</span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button class="nav-item active" onclick="go('notifications.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M10 21h4"></path>
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button class="nav-item" onclick="go('profile.html')">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="8" r="3"></circle>
+
+              <path d="M5 20c.8-3.2 3.2-5 7-5s6.2 1.8 7 5"></path>
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =========================
+     MORE MENU
+========================= -->
+
+        <div class="more-menu" id="moreMenu">
+          <!-- HEADER -->
+
+          <div class="more-menu-header">
+            <div>
+              <div class="more-menu-title">Technical Access</div>
+
+              <div class="more-menu-subtitle">Network engineering tools</div>
+            </div>
+
+            <button
+              class="more-close"
+              onclick="toggleMoreMenu()"
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+          </div>
+
+          <!-- WORK ORDERS -->
+
+          <button class="more-item" onclick="go('work-orders.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="3"></rect>
+
+                <path d="M7 9h10"></path>
+                <path d="M7 13h6"></path>
+                <path d="M7 16h4"></path>
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Work Orders</div>
+
+              <div class="more-item-text">
+                Customer work orders and service progress
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+
+          <!-- PROVIDER -->
+
+          <button class="more-item" onclick="go('provider.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+
+                <path d="M8 9h8"></path>
+                <path d="M8 13h3"></path>
+                <path d="M15 13h1"></path>
+                <path d="M8 17h8"></path>
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">Provider</div>
+
+              <div class="more-item-text">
+                Provider, POP and access node information
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+
+          <!-- IP MANAGEMENT -->
+
+          <button class="more-item" onclick="go('ip-management.html')">
+            <div class="more-item-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="8"></circle>
+
+                <path d="M12 8v8"></path>
+                <path d="M8 12h8"></path>
+              </svg>
+            </div>
+
+            <div class="more-item-copy">
+              <div class="more-item-title">IP Management</div>
+
+              <div class="more-item-text">
+                IP pool, subnet and IP allocation
+              </div>
+            </div>
+
+            <svg
+              class="more-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================
+   STATE
+========================= */
+
+      let currentFilter = "ALL";
+
+      /* =========================
+   NAVIGATION
+========================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      /* =========================
+   FILTER
+========================= */
+
+      function setFilter(filter, button) {
+        currentFilter = filter;
+
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        renderNotifications();
+      }
+
+      /* =========================
+   RENDER
+========================= */
+
+      function renderNotifications() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const type = card.dataset.type;
+
+          const read = card.dataset.read === "true";
+
+          let filterMatch = true;
+
+          if (currentFilter === "UNREAD") {
+            filterMatch = !read;
+          } else if (currentFilter === "TASK" || currentFilter === "SLA") {
+            filterMatch = type === currentFilter;
+          }
+
+          const show = filterMatch;
+
+          if (show) {
+            card.style.display = "flex";
+
+            visible++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        document.getElementById("notificationCount").textContent =
+          visible + (visible === 1 ? " update" : " updates");
+
+        document.getElementById("emptyState").style.display =
+          visible === 0 ? "block" : "none";
+      }
+
+      /* =========================
+   UNREAD COUNT
+========================= */
+
+      function updateUnreadCount() {
+        const unread = document.querySelectorAll(
+          ".notification-card.unread",
+        ).length;
+
+        document.getElementById("unreadCount").textContent =
+          unread + (unread === 1 ? " unread" : " unread");
+      }
+
+      /* =========================
+   MARK ALL READ
+========================= */
+
+      function markAllRead() {
+        const cards = document.querySelectorAll(".notification-card");
+
+        cards.forEach((card) => {
+          card.dataset.read = "true";
+
+          card.classList.remove("unread");
+
+          const dot = card.querySelector(".notification-dot");
+
+          if (dot) {
+            dot.remove();
+          }
+        });
+
+        updateUnreadCount();
+
+        renderNotifications();
+
+        showToast("All notifications marked as read");
+      }
+
+      /* =========================
+   OPEN NOTIFICATION
+========================= */
+
+      function openNotification(id) {
+        const card = event.currentTarget;
+
+        card.dataset.read = "true";
+
+        card.classList.remove("unread");
+
+        const dot = card.querySelector(".notification-dot");
+
+        if (dot) {
+          dot.remove();
+        }
+
+        updateUnreadCount();
+
+        if (id) {
+          window.location.href =
+            "task-detail.html?id=" + encodeURIComponent(id);
+        }
+      }
+
+      /* =========================
+   TOAST
+========================= */
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      /* =========================
+   ESC
+========================= */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          go("dashboard.html");
+        }
+      });
+
+      /* =========================
+   INIT
+========================= */
+
+      updateUnreadCount();
+
+      renderNotifications();
+      /* =========================
+   MORE MENU
+========================= */
+
+      function toggleMoreMenu() {
+        const menu = document.getElementById("moreMenu");
+
+        const button = document.getElementById("moreButton");
+
+        const isOpen = menu.classList.contains("show");
+
+        if (isOpen) {
+          menu.classList.remove("show");
+
+          button.classList.remove("open");
+        } else {
+          menu.classList.add("show");
+
+          button.classList.add("open");
+        }
+      }
+
+      /* =========================
+   CLOSE MORE MENU
+========================= */
+
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("moreMenu");
+
+        const button = document.getElementById("moreButton");
+
+        if (!menu || !button) {
+          return;
+        }
+
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.remove("show");
+
+          button.classList.remove("open");
+        }
+      });
+    </script>
+  </body>
+</html>

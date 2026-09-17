@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Harian | NPN ISP</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/dashboard-admin.css" />
+    <link rel="stylesheet" href="../css/laporan-harian.css" />
+  </head>
+
+  <body>
+    <!-- Sidebar reusable: file ../components/sidebar.html -->
+    <div id="sidebar-container"></div>
+
+    <main class="main">
+</div>
+      </div>
+      <header class="topbar">
+        <div style="display: flex; align-items: center; gap: 11px">
+          <button class="mobile-menu" id="mobileMenu" type="button">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="title-wrap">
+            <h1>Laporan Harian</h1>
+            <p>Aktivitas pekerjaan · Operasional NPN</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              class="search"
+              id="headerSearch"
+              type="search"
+              placeholder="Cari pelanggan, invoice, layanan..."
+              autocomplete="off"
+            />
+          </div>
+
+          <button class="top-icon" type="button">
+            <i class="fa-regular fa-bell"></i>
+            <span class="dot"></span>
+          </button>
+
+          <button class="top-icon" type="button">
+            <i class="fa-regular fa-circle-question"></i>
+          </button>
+
+          <div class="profile">
+            <div class="profile-avatar">JP</div>
+            <div>
+              <strong>Jaka Prayudha</strong>
+              <span>Administrator</span>
+            </div>
+            <i
+              class="fa-solid fa-chevron-down"
+              style="font-size: 8px; color: #9aa6b8; margin-left: 3px"
+            ></i>
+          </div>
+        </div>
+      </header>
+<section class="content laporan-page">
+        <!-- Ringkasan -->
+        <div class="summary-row">
+          <div class="summary-card total">
+            <div class="summary-icon">
+              <i class="fa-regular fa-clipboard"></i>
+            </div>
+            <div>
+              <strong id="totalCount">10</strong>
+              <span>Total Laporan</span>
+            </div>
+          </div>
+
+          <div class="summary-card progress">
+            <div class="summary-icon"><i class="fa-solid fa-spinner"></i></div>
+            <div>
+              <strong id="progressCount">4</strong>
+              <span>On Progress</span>
+            </div>
+          </div>
+
+          <div class="summary-card done">
+            <div class="summary-icon">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+              <strong id="doneCount">6</strong>
+              <span>Selesai / Done</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+            <div>
+              <strong>Nov</strong>
+              <span>Periode Laporan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-top">
+            <div class="panel-heading">
+              <h2>Daftar Laporan Harian</h2>
+              <p>Kelola pekerjaan, tindak lanjut, dan status laporan harian.</p>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="report-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Pencarian laporan..."
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="toolbar-right">
+              <button class="report-filter-btn" id="filterBtn" type="button">
+                <i class="fa-solid fa-filter"></i>
+                <span id="filterLabel">Semua Status</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <button class="report-btn" id="addButton" type="button">
+                <i class="fa-solid fa-square-plus"></i>
+                Tambah Data
+              </button>
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th class="no">No</th>
+                  <th class="creator-col">Di Buat Oleh</th>
+                  <th>Judul</th>
+                  <th class="status-col">Status</th>
+                  <th class="action-col">Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody id="reportBody">
+                <tr class="done" data-status="done">
+                  <td class="no">1</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>19-11-2025</span
+                      ><span>09:19:45</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    tim Bantu FU Berkas ya upgrade PT ZAYN NET SOLUTION 300 Mbps
+                    di harga 8.5 jt inc PPN, progress teknis sudah saya kerjakan
+                    untuk upgrade lan, jatuh tempo tetap tgl 26, billing sudah
+                    saya buat juga, tinggal FAB Upgrade bantu FU ya tim ke
+                    direktur PT Mitra
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=1"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="done" data-status="done">
+                  <td class="no">2</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>16-11-2025</span
+                      ><span>23:08:17</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    bu ririn ijin, untuk di data layanan udh awag tambahkan ya
+                    layanan baru nya 200 Mbps di harga 6.5 jt
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=2"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="done" data-status="done">
+                  <td class="no">3</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>16-11-2025</span
+                      ><span>23:05:25</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    Tim bantu FU ya untuk PT HABRIAN JARINDO PERSADA berkas
+                    Upgrade bandwidth + metro ke 200mbps di harga 6.5 jt blm
+                    PPN, untuk logic teknis udh sya handel, seharusnya besok udh
+                    done progres teknis upgrade bandwidthnya, bantu tinjut untuk
+                    berkas2 nya semua ya
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=3"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="progress" data-status="progress">
+                  <td class="no">4</td>
+                  <td>
+                    <div class="creator">
+                      <strong>adit89</strong><span>07-11-2025</span
+                      ><span>15:57:34</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    PENAMBAHAN MITRA BARU (PT RAHA NETWORK BERSAMA - DESA KOLAM
+                    TEMBUNG) &amp; PAK LUKMAN (BELAWAN) ON Progres PEMBUATAN PT
+                  </td>
+                  <td>
+                    <span class="status">On Progress</span>
+                  </td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=4"
+                      >Detail</a
+                    ><button
+                      class="report-action-btn btn-done done-action"
+                      type="button"
+                    >
+                      Done
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="progress" data-status="progress">
+                  <td class="no">5</td>
+                  <td>
+                    <div class="creator">
+                      <strong>adit89</strong><span>07-11-2025</span
+                      ><span>08:59:01</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    PT BBM PONSEL (100Mb) &amp; PT AFATH NETWORK(200 Mb) UNTUK
+                    INSTALASI POP VIA TELKOM @PAK ASWIN MOBAN
+                  </td>
+                  <td>
+                    <span class="status">On Progress</span>
+                  </td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=5"
+                      >Detail</a
+                    ><button
+                      class="report-action-btn btn-done done-action"
+                      type="button"
+                    >
+                      Done
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="done" data-status="done">
+                  <td class="no">6</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>07-11-2025</span
+                      ><span>08:37:14</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    Billing PT METRO HOME NETWORK / Binjai Sudah di input dan
+                    PAID / colek bu ririn bantu NOTED ya
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=6"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="progress" data-status="progress">
+                  <td class="no">7</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>07-11-2025</span
+                      ><span>08:13:21</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    Bantu progress FU orderan bang yahya, kampung kolam 1 gb
+                    subnet ke NPN
+                  </td>
+                  <td>
+                    <span class="status">On Progress</span>
+                  </td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=7"
+                      >Detail</a
+                    ><button
+                      class="report-action-btn btn-done done-action"
+                      type="button"
+                    >
+                      Done
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="done" data-status="done">
+                  <td class="no">8</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>07-11-2025</span
+                      ><span>07:59:52</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    Billing sono net sudah di input, colek bu ririn.
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=8"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="done" data-status="done">
+                  <td class="no">9</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>05-11-2025</span
+                      ><span>09:20:23</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    tempat mengingatkan : bang maja / PT Jeck Connection mau
+                    nambah pop di pantai labu, 100mbps, mau di prospek
+                  </td>
+                  <td><span class="status">Done</span></td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=9"
+                      >Detail</a
+                    >
+                  </td>
+                </tr>
+
+                <tr class="progress" data-status="progress">
+                  <td class="no">10</td>
+                  <td>
+                    <div class="creator">
+                      <strong>aswinrsc</strong><span>05-11-2025</span
+                      ><span>09:10:00</span>
+                    </div>
+                  </td>
+                  <td class="title">
+                    tempat mengingatkan : om rudi / PT Sahabat Media Broadband
+                    mau nambah pop di buluh cina, hampiran perak
+                  </td>
+                  <td>
+                    <span class="status">On Progress</span>
+                  </td>
+                  <td class="action">
+                    <a
+                      class="report-action-btn btn-detail"
+                      href="laporan-harian-detail.html?id=10"
+                      >Detail</a
+                    ><button
+                      class="report-action-btn btn-done done-action"
+                      type="button"
+                    >
+                      Done
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="empty hidden" id="emptyState">
+              <i class="fa-regular fa-folder-open"></i>
+              <h3>Data tidak ditemukan</h3>
+              <p>
+                Coba gunakan kata pencarian atau filter status yang berbeda.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <div class="report-info">
+              Menampilkan <strong id="visibleCount">10</strong> data
+            </div>
+            <div class="pagination">
+              <button class="page-btn active" type="button">1</button>
+              <button class="page-btn" type="button">2</button>
+              <button class="page-btn" type="button">3</button>
+              <button class="page-btn" type="button">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Tambah -->
+    <div class="laporan-modal-overlay" id="reportModal" aria-hidden="true">
+      <div
+        class="laporan-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="laporan-modal-header">
+          <h2 id="modalTitle">Tambah Laporan Harian</h2>
+          <button
+            class="laporan-modal-close"
+            id="closeModal"
+            type="button"
+            aria-label="Tutup"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="reportForm">
+          <div class="laporan-modal-body">
+            <div class="form-group">
+              <label for="judul">Judul</label>
+              <input
+                class="report-input"
+                id="judul"
+                name="judul"
+                type="text"
+                maxlength="255"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="laporan-modal-footer">
+            <button class="cancel" id="cancelModal" type="button">Batal</button>
+            <button class="save" type="submit">
+              <i class="fa-solid fa-floppy-disk"></i>
+              Simpan Data
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <script src="../js/laporan-harian.js"></script>
+  </body>
+</html>

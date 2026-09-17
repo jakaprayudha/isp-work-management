@@ -1,0 +1,2018 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Profile — Technician Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+   ROOT
+========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+   RESET
+========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================================================
+   APP
+========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+   HEADER
+========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn,
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        padding: 0;
+      }
+
+      .back-btn:active,
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg,
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      /* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 800;
+
+        letter-spacing: -0.5px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+   PROFILE HERO
+========================================================= */
+
+      .profile-hero {
+        margin-top: 10px;
+
+        padding: 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+
+        color: #fff;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.12);
+      }
+
+      .profile-top {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 46px;
+        height: 46px;
+
+        border-radius: 14px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 15px;
+        font-weight: 800;
+
+        flex-shrink: 0;
+      }
+
+      .profile-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .profile-name {
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.25;
+      }
+
+      .profile-role {
+        margin-top: 3px;
+
+        color: #cbd5e1;
+
+        font-size: 7px;
+        font-weight: 600;
+      }
+
+      .verified {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 4px;
+
+        margin-top: 5px;
+
+        padding: 4px 6px;
+
+        border-radius: 999px;
+
+        background: rgba(37, 99, 235, 0.18);
+        color: #bfdbfe;
+
+        font-size: 5.8px;
+        font-weight: 800;
+      }
+
+      .verified svg {
+        width: 9px;
+        height: 9px;
+      }
+
+      /* =========================================================
+   SECTION HEADER
+========================================================= */
+
+      .section-header {
+        margin-top: 10px;
+        margin-bottom: 6px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-header h2 {
+        margin: 0;
+
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+      .info-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px 10px;
+      }
+
+      .info-item {
+        min-width: 0;
+      }
+
+      .info-label {
+        color: #9ca3af;
+
+        font-size: 5.8px;
+        font-weight: 600;
+      }
+
+      .info-value {
+        margin-top: 3px;
+
+        color: var(--text);
+
+        font-size: 7px;
+        line-height: 1.3;
+        font-weight: 700;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* =========================================================
+   PERFORMANCE
+========================================================= */
+
+      .performance-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .metric-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+      }
+
+      .metric {
+        min-width: 0;
+
+        padding: 8px 7px;
+
+        border: 1px solid #f1f5f9;
+        border-radius: 11px;
+
+        background: #fafafa;
+      }
+
+      .metric-label {
+        color: #9ca3af;
+
+        font-size: 5.8px;
+        font-weight: 600;
+      }
+
+      .metric-value {
+        margin-top: 3px;
+
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .metric-sub {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 5.5px;
+      }
+
+      /* =========================================================
+   PREFERENCES
+========================================================= */
+
+      .preferences-card {
+        width: 100%;
+
+        padding: 4px 10px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+
+        overflow: hidden;
+      }
+
+      /* ---------------------------------------------------------
+   IMPORTANT:
+   Reset native button appearance.
+   This prevents the black border/uneven width shown
+   in the previous screenshot.
+--------------------------------------------------------- */
+
+      .preference-row {
+        width: 100%;
+        min-width: 0;
+        min-height: 42px;
+
+        margin: 0;
+        padding: 7px 0;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        border: 0;
+        border-bottom: 1px solid #f1f5f9;
+
+        border-radius: 0;
+
+        outline: none;
+
+        background: transparent;
+
+        color: inherit;
+
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: normal;
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        box-shadow: none;
+
+        box-sizing: border-box;
+
+        cursor: pointer;
+      }
+
+      .preference-row:last-child {
+        border-bottom: 0;
+      }
+
+      .preference-row:hover {
+        background: #fafafa;
+      }
+
+      .preference-row:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      .preference-row:focus-visible {
+        outline: 2px solid rgba(37, 99, 235, 0.18);
+        outline-offset: -2px;
+      }
+
+      .preference-row:active {
+        background: #f8fafc;
+      }
+
+      /* ---------------------------------------------------------
+   PREFERENCE ICON
+--------------------------------------------------------- */
+
+      .preference-icon {
+        width: 29px;
+        height: 29px;
+
+        border-radius: 9px;
+
+        background: var(--accent-light);
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .preference-icon.dark {
+        background: #f3f4f6;
+        color: var(--primary);
+      }
+
+      .preference-icon.danger {
+        background: #fef2f2;
+        color: var(--danger);
+      }
+
+      .preference-icon svg {
+        width: 14px;
+        height: 14px;
+
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        fill: none;
+      }
+
+      /* ---------------------------------------------------------
+   PREFERENCE COPY
+--------------------------------------------------------- */
+
+      .preference-copy {
+        min-width: 0;
+        flex: 1;
+
+        display: block;
+      }
+
+      .preference-title {
+        display: block;
+
+        font-size: 7.5px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        color: var(--text);
+      }
+
+      .preference-description {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.8px;
+        line-height: 1.25;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .preference-value {
+        display: block;
+
+        margin-top: 2px;
+
+        color: #9ca3af;
+
+        font-size: 5.5px;
+        line-height: 1.2;
+
+        font-weight: 600;
+      }
+
+      /* ---------------------------------------------------------
+   PREFERENCE ARROW
+--------------------------------------------------------- */
+
+      .preference-arrow {
+        width: 14px;
+        height: 14px;
+
+        color: #9ca3af;
+
+        flex-shrink: 0;
+
+        stroke: currentColor;
+        stroke-width: 1.7;
+
+        fill: none;
+      }
+
+      /* =========================================================
+   ACCOUNT STATUS
+========================================================= */
+
+      .status-row {
+        margin-top: 7px;
+
+        padding: 8px 9px;
+
+        border: 1px solid #dcfce7;
+
+        background: #f0fdf4;
+
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+
+        background: var(--success);
+
+        box-shadow: 0 0 0 3px #dcfce7;
+
+        flex-shrink: 0;
+      }
+
+      .status-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .status-title {
+        display: block;
+
+        font-size: 7px;
+        font-weight: 800;
+
+        color: #166534;
+      }
+
+      .status-text {
+        display: block;
+
+        margin-top: 2px;
+
+        color: #4d7c5b;
+
+        font-size: 5.7px;
+      }
+
+      .status-pill {
+        font-size: 5.8px;
+        font-weight: 800;
+
+        color: #15803d;
+      }
+
+      /* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        fill: none;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+   MORE BUTTON
+========================================================= */
+
+      .nav-more {
+        position: relative;
+
+        overflow: visible;
+      }
+
+      .more-button-icon {
+        width: 38px;
+        height: 38px;
+
+        margin-top: -13px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+        color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow: 0 6px 16px rgba(17, 24, 39, 0.18);
+
+        transition: transform 0.2s ease;
+      }
+
+      .more-button-icon svg {
+        width: 18px;
+        height: 18px;
+
+        stroke: currentColor;
+        stroke-width: 2;
+
+        fill: none;
+      }
+
+      .nav-more.open .more-button-icon {
+        transform: rotate(45deg);
+      }
+
+      /* =========================================================
+   MORE MENU
+========================================================= */
+
+      .more-menu {
+        position: absolute;
+
+        left: 16px;
+        right: 16px;
+        bottom: 78px;
+
+        padding: 8px;
+
+        background: rgba(255, 255, 255, 0.98);
+
+        border: 1px solid var(--border);
+        border-radius: 18px;
+
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(10px) scale(0.98);
+
+        transform-origin: bottom center;
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 90;
+      }
+
+      .more-menu.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0) scale(1);
+      }
+
+      .more-menu-header {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 5px 6px 8px;
+      }
+
+      .more-menu-title {
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .more-menu-subtitle {
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 6px;
+      }
+
+      .more-close {
+        width: 27px;
+        height: 27px;
+
+        padding: 0;
+
+        border: 0;
+        border-radius: 9px;
+
+        background: #f3f4f6;
+
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .more-item {
+        width: 100%;
+
+        margin: 0;
+        padding: 9px 7px;
+
+        border: 0;
+        border-top: 1px solid #f1f5f9;
+
+        background: transparent;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        text-align: left;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .more-item:first-of-type {
+        border-top: 0;
+      }
+
+      .more-item:active {
+        background: #f8fafc;
+      }
+
+      .more-item-icon {
+        width: 30px;
+        height: 30px;
+
+        border-radius: 9px;
+
+        background: var(--accent-light);
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .more-item-icon svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .more-item-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .more-item-title {
+        display: block;
+
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .more-item-text {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.6px;
+      }
+
+      .more-arrow {
+        width: 14px;
+        height: 14px;
+
+        color: #9ca3af;
+
+        fill: none;
+        stroke: currentColor;
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 7px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: #fff;
+
+        color: var(--primary);
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .modal-btn:active {
+        transform: scale(0.98);
+      }
+
+      .modal-btn.primary {
+        border-color: var(--primary);
+
+        background: var(--primary);
+
+        color: #fff;
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+   RESPONSIVE — SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 18px;
+        }
+
+        .profile-hero {
+          margin-top: 7px;
+          padding: 9px;
+        }
+
+        .section-header {
+          margin-top: 7px;
+          margin-bottom: 4px;
+        }
+
+        .info-card,
+        .performance-card {
+          padding: 7px;
+        }
+
+        .preference-row {
+          min-height: 37px;
+          padding: 5px 0;
+        }
+
+        .preference-icon {
+          width: 27px;
+          height: 27px;
+        }
+
+        .status-row {
+          margin-top: 5px;
+          padding: 6px 8px;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — VERY SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .profile-hero {
+          margin-top: 5px;
+          padding: 8px;
+        }
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+
+          border-radius: 12px;
+
+          font-size: 13px;
+        }
+
+        .section-header {
+          margin-top: 5px;
+        }
+
+        .info-grid {
+          gap: 5px 8px;
+        }
+
+        .metric {
+          padding: 6px;
+        }
+
+        .metric-value {
+          font-size: 11px;
+        }
+
+        .preference-row {
+          min-height: 34px;
+          padding: 4px 0;
+        }
+
+        .preference-icon {
+          width: 25px;
+          height: 25px;
+        }
+
+        .preference-icon svg {
+          width: 12px;
+          height: 12px;
+        }
+
+        .status-row {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — SMALL WIDTH
+========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .profile-name {
+          font-size: 11px;
+        }
+
+        .page-title {
+          font-size: 18px;
+        }
+
+        .info-grid {
+          gap: 6px;
+        }
+
+        .preference-description {
+          font-size: 5.4px;
+        }
+      }
+
+      /* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+     HEADER
+===================================================== -->
+
+        <header class="app-header">
+          <button class="back-btn" onclick="goBack()" aria-label="Go back">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">Technician Portal</div>
+          </div>
+
+          <button
+            class="header-btn"
+            onclick="go('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+          </button>
+        </header>
+
+        <!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+        <main class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Account</div>
+
+            <div class="page-title">Profile</div>
+
+            <div class="page-description">
+              Technician identity, work information, performance and account
+              preferences.
+            </div>
+          </div>
+
+          <!-- ===================================================
+       PROFILE HERO
+  =================================================== -->
+
+          <section class="profile-hero">
+            <div class="profile-top">
+              <div class="avatar">JP</div>
+
+              <div class="profile-copy">
+                <div class="profile-name">Jaka Prayudha</div>
+
+                <div class="profile-role">
+                  Field Technician · NPN Work Management
+                </div>
+
+                <div class="verified">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M5 12l4 4L19 6" />
+                  </svg>
+
+                  Verified Account
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       WORK INFORMATION
+  =================================================== -->
+
+          <div class="section-header">
+            <h2>Work Information</h2>
+          </div>
+
+          <section class="info-card">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Employee ID</div>
+
+                <div class="info-value">TECH-2026-0012</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Role</div>
+
+                <div class="info-value">Field Technician</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Team</div>
+
+                <div class="info-value">Field Operations</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Coverage</div>
+
+                <div class="info-value">Medan &amp; Surrounding</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       PERFORMANCE
+  =================================================== -->
+
+          <div class="section-header">
+            <h2>Performance</h2>
+          </div>
+
+          <section class="performance-card">
+            <div class="metric-grid">
+              <div class="metric">
+                <div class="metric-label">Completed</div>
+
+                <div class="metric-value">18</div>
+
+                <div class="metric-sub">tasks</div>
+              </div>
+
+              <div class="metric">
+                <div class="metric-label">On Time</div>
+
+                <div class="metric-value">96%</div>
+
+                <div class="metric-sub">SLA</div>
+              </div>
+
+              <div class="metric">
+                <div class="metric-label">Active</div>
+
+                <div class="metric-value">05</div>
+
+                <div class="metric-sub">tasks</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       PREFERENCES
+  =================================================== -->
+
+          <div class="section-header">
+            <h2>Preferences</h2>
+          </div>
+
+          <section class="preferences-card">
+            <!-- =================================================
+         NOTIFICATIONS
+    ================================================= -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="
+                openPreference(
+                  'Notifications',
+                  'Task assignments, reminders and SLA alerts.',
+                )
+              "
+            >
+              <span class="preference-icon">
+                <svg fill="none" viewBox="0 0 24 24">
+                  <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M10 21h4" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Notifications </span>
+
+                <span class="preference-description">
+                  Task assignments, reminders and SLA alerts
+                </span>
+
+                <span class="preference-value"> Enabled </span>
+              </span>
+
+              <svg class="preference-arrow" fill="none" viewBox="0 0 24 24">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            <!-- =================================================
+         SECURITY
+    ================================================= -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="
+                openPreference(
+                  'Security',
+                  'Password, session and account security settings.',
+                )
+              "
+            >
+              <span class="preference-icon dark">
+                <svg fill="none" viewBox="0 0 24 24">
+                  <rect x="5" y="10" width="14" height="10" rx="2" />
+
+                  <path d="M8 10V7a4 4 0 018 0v3" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Security </span>
+
+                <span class="preference-description">
+                  Password, session and account security
+                </span>
+
+                <span class="preference-value"> Protected </span>
+              </span>
+
+              <svg class="preference-arrow" fill="none" viewBox="0 0 24 24">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            <!-- =================================================
+         FIELD AVAILABILITY
+    ================================================= -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="toggleAvailability()"
+            >
+              <span class="preference-icon">
+                <svg fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M12 8v4l3 2" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Field Availability </span>
+
+                <span class="preference-description">
+                  Receive new installation assignments
+                </span>
+
+                <span class="preference-value" id="availabilityValue">
+                  Available
+                </span>
+              </span>
+
+              <svg class="preference-arrow" fill="none" viewBox="0 0 24 24">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            <!-- =================================================
+         SIGN OUT
+    ================================================= -->
+
+            <button
+              type="button"
+              class="preference-row"
+              onclick="openSignOut()"
+            >
+              <span class="preference-icon danger">
+                <svg fill="none" viewBox="0 0 24 24">
+                  <path d="M10 17l5-5-5-5" />
+
+                  <path d="M15 12H3" />
+
+                  <path d="M19 4h2v16h-2" />
+                </svg>
+              </span>
+
+              <span class="preference-copy">
+                <span class="preference-title"> Sign Out </span>
+
+                <span class="preference-description">
+                  End this technician session
+                </span>
+              </span>
+
+              <svg class="preference-arrow" fill="none" viewBox="0 0 24 24">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </section>
+
+          <!-- ===================================================
+       ACCOUNT STATUS
+  =================================================== -->
+
+          <section class="status-row">
+            <span class="status-dot"></span>
+
+            <span class="status-copy">
+              <span class="status-title"> Account Active </span>
+
+              <span class="status-text">
+                You are available for field assignments.
+              </span>
+            </span>
+
+            <span class="status-pill" id="statusPill"> ONLINE </span>
+          </section>
+        </main>
+
+        <!-- =====================================================
+     MORE MENU
+===================================================== -->
+
+        <div class="more-menu" id="moreMenu">
+          <div class="more-menu-header">
+            <div>
+              <div class="more-menu-title">Field Operations</div>
+
+              <div class="more-menu-subtitle">Technician tools</div>
+            </div>
+
+            <button
+              type="button"
+              class="more-close"
+              onclick="toggleMore(false)"
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+          </div>
+
+          <!-- INSTALLATION -->
+
+          <button
+            type="button"
+            class="more-item"
+            onclick="go('installation.html?id=WO-2026-00124')"
+          >
+            <span class="more-item-icon">
+              <svg fill="none" viewBox="0 0 24 24">
+                <path d="M14 7l-7 7 3 3 7-7" />
+
+                <path d="M15 6l3-3 3 3-3 3" />
+
+                <path d="M5 19h6" />
+              </svg>
+            </span>
+
+            <span class="more-item-copy">
+              <span class="more-item-title"> Installation </span>
+
+              <span class="more-item-text"> Field installation workspace </span>
+            </span>
+
+            <svg class="more-arrow" fill="none" viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button type="button" class="more-item" onclick="go('my-tasks.html')">
+            <span class="more-item-icon">
+              <svg fill="none" viewBox="0 0 24 24">
+                <path d="M6 4h12v16H6z" />
+
+                <path d="M9 8h6M9 12h6M9 16h4" />
+              </svg>
+            </span>
+
+            <span class="more-item-copy">
+              <span class="more-item-title"> My Tasks </span>
+
+              <span class="more-item-text"> Assigned installation tasks </span>
+            </span>
+
+            <svg class="more-arrow" fill="none" viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg fill="none" viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button type="button" class="nav-item" onclick="go('my-tasks.html')">
+            <svg fill="none" viewBox="0 0 24 24">
+              <path d="M6 4h12v16H6z" />
+
+              <path d="M9 8h6M9 12h6M9 16h4" />
+            </svg>
+
+            <span> My Tasks </span>
+          </button>
+
+          <!-- MORE -->
+
+          <button
+            type="button"
+            class="nav-item nav-more"
+            id="moreButton"
+            onclick="toggleMore()"
+          >
+            <span class="more-button-icon">
+              <svg fill="none" viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+
+            <span> More </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item"
+            onclick="go('notifications.html')"
+          >
+            <svg fill="none" viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="window.scrollTo(0, 0)"
+          >
+            <svg fill="none" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+     MODAL
+===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">Sign Out</div>
+
+            <div class="modal-text" id="modalText">
+              Are you sure you want to sign out from the Technician Portal?
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                class="modal-btn primary"
+                id="modalPrimary"
+                onclick="confirmSignOut()"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+     TOAST
+===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   NAVIGATION
+========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("dashboard.html");
+        }
+      }
+
+      /* =========================================================
+   MORE MENU
+========================================================= */
+
+      function toggleMore(force) {
+        const menu = document.getElementById("moreMenu");
+
+        const button = document.getElementById("moreButton");
+
+        const shouldOpen =
+          typeof force === "boolean" ? force : !menu.classList.contains("show");
+
+        menu.classList.toggle("show", shouldOpen);
+
+        button.classList.toggle("open", shouldOpen);
+      }
+
+      /* Close More Menu when clicking outside */
+
+      document.addEventListener("click", function (e) {
+        const menu = document.getElementById("moreMenu");
+
+        const button = document.getElementById("moreButton");
+
+        if (!menu.contains(e.target) && !button.contains(e.target)) {
+          toggleMore(false);
+        }
+      });
+
+      /* =========================================================
+   PREFERENCES
+========================================================= */
+
+      function openPreference(title, text) {
+        toggleMore(false);
+
+        document.getElementById("modalTitle").textContent = title;
+
+        document.getElementById("modalText").textContent = text;
+
+        const primary = document.getElementById("modalPrimary");
+
+        primary.textContent = "Close";
+
+        primary.onclick = hideModal;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+   FIELD AVAILABILITY
+========================================================= */
+
+      function toggleAvailability() {
+        const value = document.getElementById("availabilityValue");
+
+        const pill = document.getElementById("statusPill");
+
+        if (value.textContent.trim() === "Available") {
+          value.textContent = "Unavailable";
+
+          pill.textContent = "OFFLINE";
+
+          showToast("Field availability set to unavailable");
+        } else {
+          value.textContent = "Available";
+
+          pill.textContent = "ONLINE";
+
+          showToast("Field availability set to available");
+        }
+      }
+
+      /* =========================================================
+   SIGN OUT
+========================================================= */
+
+      function openSignOut() {
+        toggleMore(false);
+
+        document.getElementById("modalTitle").textContent = "Sign Out";
+
+        document.getElementById("modalText").textContent =
+          "Are you sure you want to sign out from the Technician Portal?";
+
+        const primary = document.getElementById("modalPrimary");
+
+        primary.textContent = "Sign Out";
+
+        primary.onclick = confirmSignOut;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      function closeModal(e) {
+        if (e.target.id === "modal") {
+          hideModal();
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+   CONFIRM SIGN OUT
+========================================================= */
+
+      function confirmSignOut() {
+        hideModal();
+
+        showToast("Signed out successfully");
+
+        setTimeout(function () {
+          go("../index.html");
+        }, 900);
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+   ESC KEY
+========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          toggleMore(false);
+
+          hideModal();
+        }
+      });
+    </script>
+  </body>
+</html>

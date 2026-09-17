@@ -1,0 +1,1745 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>Task Detail — QC Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+   ROOT
+========================================================= */
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      /* =========================================================
+   RESET
+========================================================= */
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        height: 100dvh;
+
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+
+      /* =========================================================
+   APP
+========================================================= */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+      }
+
+      /* =========================================================
+   HEADER
+========================================================= */
+
+      .app-header {
+        flex-shrink: 0;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 12px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        z-index: 50;
+      }
+
+      .back-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .back-btn:active {
+        transform: scale(0.94);
+      }
+
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .header-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .header-title {
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .header-subtitle {
+        margin-top: 3px;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .header-btn {
+        width: 38px;
+        height: 38px;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+        color: var(--primary);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .header-btn:active {
+        transform: scale(0.94);
+      }
+
+      .header-btn svg {
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      /* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+      .main-content {
+        flex: 1;
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-intro {
+        margin-top: 1px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+
+        font-size: 8px;
+        font-weight: 800;
+
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+      }
+
+      .page-title {
+        margin-top: 4px;
+
+        font-size: 18px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.4px;
+      }
+
+      .page-description {
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 8px;
+        line-height: 1.4;
+      }
+
+      /* =========================================================
+   HERO
+========================================================= */
+
+      .task-hero {
+        margin-top: 9px;
+
+        padding: 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+
+        color: #fff;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.12);
+      }
+
+      .hero-top {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 8px;
+      }
+
+      .hero-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .wo-number {
+        color: #cbd5e1;
+
+        font-size: 7px;
+        font-weight: 700;
+      }
+
+      .hero-title {
+        margin-top: 4px;
+
+        font-size: 11px;
+        line-height: 1.3;
+
+        font-weight: 800;
+      }
+
+      .hero-customer {
+        margin-top: 4px;
+
+        color: #cbd5e1;
+
+        font-size: 6.5px;
+      }
+
+      .status-badge {
+        flex-shrink: 0;
+
+        padding: 5px 7px;
+
+        border-radius: 999px;
+
+        background: rgba(37, 99, 235, 0.2);
+        color: #bfdbfe;
+
+        font-size: 5.3px;
+        font-weight: 800;
+      }
+
+      .hero-progress {
+        margin-top: 10px;
+      }
+
+      .progress-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .progress-label {
+        color: #cbd5e1;
+
+        font-size: 6px;
+        font-weight: 600;
+      }
+
+      .progress-value {
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 5px;
+
+        margin-top: 5px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        border-radius: 999px;
+
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        width: 85%;
+        height: 100%;
+
+        border-radius: 999px;
+
+        background: #fff;
+      }
+
+      /* =========================================================
+   SECTION
+========================================================= */
+
+      .section-header {
+        margin-top: 9px;
+        margin-bottom: 5px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-title {
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      /* =========================================================
+   WORKFLOW
+========================================================= */
+
+      .workflow-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .workflow {
+        width: 100%;
+
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .workflow-step {
+        min-width: 0;
+        flex: 1;
+
+        position: relative;
+
+        text-align: center;
+      }
+
+      .workflow-step:not(:last-child)::after {
+        content: "";
+
+        position: absolute;
+
+        top: 6px;
+        left: 50%;
+
+        width: 100%;
+        height: 1px;
+
+        background: #e5e7eb;
+
+        z-index: 0;
+      }
+
+      .workflow-step.done:not(:last-child)::after {
+        background: #bfdbfe;
+      }
+
+      .workflow-dot {
+        position: relative;
+        z-index: 1;
+
+        width: 12px;
+        height: 12px;
+
+        margin: 0 auto;
+
+        border-radius: 50%;
+
+        border: 2px solid #d1d5db;
+
+        background: #fff;
+      }
+
+      .workflow-step.done .workflow-dot {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .workflow-step.current .workflow-dot {
+        border-color: var(--accent);
+        background: #fff;
+
+        box-shadow: 0 0 0 3px var(--accent-light);
+      }
+
+      .workflow-label {
+        margin-top: 5px;
+
+        color: #9ca3af;
+
+        font-size: 5px;
+        font-weight: 600;
+
+        white-space: nowrap;
+      }
+
+      .workflow-step.done .workflow-label,
+      .workflow-step.current .workflow-label {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      /* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+      .info-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px 10px;
+      }
+
+      .info-item {
+        min-width: 0;
+      }
+
+      .info-label {
+        color: #9ca3af;
+
+        font-size: 5.8px;
+        font-weight: 600;
+      }
+
+      .info-value {
+        margin-top: 3px;
+
+        font-size: 7px;
+        line-height: 1.3;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* =========================================================
+   QC STATUS
+========================================================= */
+
+      .qc-card {
+        padding: 9px;
+
+        background: #fff;
+
+        border: 1px solid var(--border);
+        border-radius: 15px;
+      }
+
+      .qc-row {
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        min-height: 35px;
+
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .qc-row:last-child {
+        border-bottom: 0;
+      }
+
+      .qc-icon {
+        width: 27px;
+        height: 27px;
+
+        border-radius: 9px;
+
+        background: var(--success-light);
+        color: var(--success);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .qc-icon.pending {
+        background: var(--warning-light);
+        color: var(--warning);
+      }
+
+      .qc-icon svg {
+        width: 13px;
+        height: 13px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .qc-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .qc-title {
+        display: block;
+
+        font-size: 6.8px;
+        font-weight: 800;
+      }
+
+      .qc-text {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 5.5px;
+      }
+
+      .qc-result {
+        flex-shrink: 0;
+
+        padding: 4px 6px;
+
+        border-radius: 999px;
+
+        font-size: 5px;
+        font-weight: 800;
+      }
+
+      .qc-result.pass {
+        background: var(--success-light);
+        color: #15803d;
+      }
+
+      .qc-result.pending {
+        background: var(--warning-light);
+        color: #92400e;
+      }
+
+      /* =========================================================
+   CURRENT ACTION
+========================================================= */
+
+      .action-card {
+        margin-top: 7px;
+
+        padding: 9px 10px;
+
+        border: 1px solid #dbeafe;
+
+        background: #eff6ff;
+
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .action-icon {
+        width: 29px;
+        height: 29px;
+
+        border-radius: 9px;
+
+        background: #fff;
+
+        color: var(--accent);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+      }
+
+      .action-icon svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+      }
+
+      .action-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .action-label {
+        color: #60a5fa;
+
+        font-size: 5.5px;
+        font-weight: 800;
+
+        text-transform: uppercase;
+      }
+
+      .action-title {
+        margin-top: 2px;
+
+        font-size: 7px;
+        font-weight: 800;
+      }
+
+      .action-text {
+        margin-top: 2px;
+
+        color: #64748b;
+
+        font-size: 5.5px;
+      }
+
+      .action-button {
+        border: 0;
+
+        padding: 6px 8px;
+
+        border-radius: 9px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 5.7px;
+        font-weight: 800;
+
+        flex-shrink: 0;
+      }
+
+      /* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+      .quick-actions {
+        margin-top: 7px;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 6px;
+      }
+
+      .quick-action {
+        min-width: 0;
+
+        padding: 7px 5px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: #fff;
+
+        color: var(--text);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 5.5px;
+        font-weight: 700;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .quick-action svg {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: var(--primary);
+        stroke-width: 1.8;
+      }
+
+      .quick-action:active {
+        background: #fafafa;
+        transform: scale(0.97);
+      }
+
+      /* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px max(7px, env(safe-area-inset-bottom));
+
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 100;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: 52px;
+
+        margin: 0;
+        padding: 4px 2px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--muted);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        line-height: 1;
+
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        flex-shrink: 0;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      .nav-item:active {
+        transform: scale(0.94);
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      .modal {
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(15, 23, 42, 0.42);
+
+        display: flex;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+
+        z-index: 200;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-sheet {
+        width: 100%;
+
+        padding: 8px 20px max(20px, env(safe-area-inset-bottom));
+
+        background: #fff;
+
+        border-radius: 20px 20px 0 0;
+
+        transform: translateY(100%);
+
+        transition: transform 0.25s ease;
+      }
+
+      .modal.show .modal-sheet {
+        transform: translateY(0);
+      }
+
+      .modal-handle {
+        width: 36px;
+        height: 4px;
+
+        margin: 0 auto 14px;
+
+        border-radius: 999px;
+
+        background: #d1d5db;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .modal-text {
+        margin-top: 7px;
+
+        color: var(--muted);
+
+        font-size: 9px;
+        line-height: 1.5;
+      }
+
+      .modal-actions {
+        margin-top: 16px;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+      }
+
+      .modal-btn {
+        height: 40px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      .toast {
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        bottom: calc(78px + env(safe-area-inset-bottom));
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #fff;
+
+        text-align: center;
+
+        font-size: 8px;
+        font-weight: 700;
+
+        box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(8px);
+
+        transition:
+          opacity 0.18s ease,
+          visibility 0.18s ease,
+          transform 0.18s ease;
+
+        z-index: 180;
+      }
+
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translateY(0);
+      }
+
+      /* =========================================================
+   RESPONSIVE — HEIGHT
+========================================================= */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-bottom: 8px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .task-hero {
+          margin-top: 7px;
+          padding: 9px;
+        }
+
+        .section-header {
+          margin-top: 7px;
+          margin-bottom: 4px;
+        }
+
+        .workflow-card,
+        .info-card,
+        .qc-card {
+          padding: 7px;
+        }
+
+        .qc-row {
+          min-height: 32px;
+        }
+
+        .action-card {
+          margin-top: 5px;
+          padding: 7px 8px;
+        }
+
+        .quick-actions {
+          margin-top: 5px;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — VERY SMALL HEIGHT
+========================================================= */
+
+      @media (max-height: 620px) {
+        .page-description {
+          display: none;
+        }
+
+        .task-hero {
+          padding: 8px;
+        }
+
+        .hero-title {
+          font-size: 10px;
+        }
+
+        .workflow-label {
+          font-size: 4.6px;
+        }
+
+        .info-grid {
+          gap: 5px 8px;
+        }
+
+        .qc-row {
+          min-height: 29px;
+        }
+
+        .qc-icon {
+          width: 24px;
+          height: 24px;
+        }
+
+        .action-card {
+          display: none;
+        }
+      }
+
+      /* =========================================================
+   RESPONSIVE — WIDTH
+========================================================= */
+
+      @media (max-width: 360px) {
+        .app-header {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .main-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .bottom-nav {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        .page-title {
+          font-size: 17px;
+        }
+
+        .workflow-label {
+          font-size: 4.4px;
+        }
+
+        .hero-title {
+          font-size: 9.5px;
+        }
+      }
+
+      /* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+
+      @media (min-width: 700px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          border-radius: 30px;
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="mobile-container">
+        <!-- =====================================================
+     HEADER
+===================================================== -->
+
+        <header class="app-header">
+          <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="header-left">
+            <div class="header-title">NPN / Work Management</div>
+
+            <div class="header-subtitle">QC Portal</div>
+          </div>
+
+          <button
+            type="button"
+            class="header-btn"
+            onclick="go('notifications.html')"
+            aria-label="Notifications"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+          </button>
+        </header>
+
+        <!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+        <main class="main-content">
+          <!-- PAGE INTRO -->
+
+          <div class="page-intro">
+            <div class="eyebrow">Quality Control</div>
+
+            <div class="page-title">Task Detail</div>
+
+            <div class="page-description">
+              Review installation results and validate the work order before
+              ULO.
+            </div>
+          </div>
+
+          <!-- ===================================================
+       TASK HERO
+  =================================================== -->
+
+          <section class="task-hero">
+            <div class="hero-top">
+              <div class="hero-copy">
+                <div class="wo-number">WO-2026-00124</div>
+
+                <div class="hero-title">ULO — Metro Ethernet 300 Mbps</div>
+
+                <div class="hero-customer">PT Nusa Data · KIM Medan</div>
+              </div>
+
+              <span class="status-badge"> READY FOR QC </span>
+            </div>
+
+            <div class="hero-progress">
+              <div class="progress-row">
+                <span class="progress-label"> Task Progress </span>
+
+                <span class="progress-value"> 85% </span>
+              </div>
+
+              <div class="progress-track">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       QC WORKFLOW
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">QC Workflow</div>
+          </div>
+
+          <section class="workflow-card">
+            <div class="workflow">
+              <!-- ASSIGNED -->
+
+              <div class="workflow-step done">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Assigned</div>
+              </div>
+
+              <!-- REVIEW -->
+
+              <div class="workflow-step done">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Review</div>
+              </div>
+
+              <!-- ULO -->
+
+              <div class="workflow-step current">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">ULO</div>
+              </div>
+
+              <!-- TESTING -->
+
+              <div class="workflow-step">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Testing</div>
+              </div>
+
+              <!-- DECISION -->
+
+              <div class="workflow-step">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Decision</div>
+              </div>
+
+              <!-- HANDOVER -->
+
+              <div class="workflow-step">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Handover</div>
+              </div>
+
+              <!-- COMPLETE -->
+
+              <div class="workflow-step">
+                <div class="workflow-dot"></div>
+
+                <div class="workflow-label">Complete</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       TASK INFORMATION
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">Task Information</div>
+          </div>
+
+          <section class="info-card">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Task</div>
+
+                <div class="info-value">ULO Inspection</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Priority</div>
+
+                <div class="info-value">Normal</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">PIC</div>
+
+                <div class="info-value">Jaka Prayudha</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Schedule</div>
+
+                <div class="info-value">16 Sep · 13:00</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Customer</div>
+
+                <div class="info-value">PT Nusa Data</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">Location</div>
+
+                <div class="info-value">KIM Medan</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       QC REVIEW
+  =================================================== -->
+
+          <div class="section-header">
+            <div class="section-title">QC Review</div>
+          </div>
+
+          <section class="qc-card">
+            <!-- PHYSICAL INSTALLATION -->
+
+            <div class="qc-row">
+              <span class="qc-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="qc-copy">
+                <span class="qc-title"> Physical Installation </span>
+
+                <span class="qc-text">
+                  Fiber route and installation verified
+                </span>
+              </span>
+
+              <span class="qc-result pass"> PASS </span>
+            </div>
+
+            <!-- CPE -->
+
+            <div class="qc-row">
+              <span class="qc-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="qc-copy">
+                <span class="qc-title"> CPE Installation </span>
+
+                <span class="qc-text">
+                  CPE installation and configuration verified
+                </span>
+              </span>
+
+              <span class="qc-result pass"> PASS </span>
+            </div>
+
+            <!-- LINK -->
+
+            <div class="qc-row">
+              <span class="qc-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12h14" />
+
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+              </span>
+
+              <span class="qc-copy">
+                <span class="qc-title"> Link Verification </span>
+
+                <span class="qc-text">
+                  Link status and connectivity verified
+                </span>
+              </span>
+
+              <span class="qc-result pass"> PASS </span>
+            </div>
+
+            <!-- SERVICE TEST -->
+
+            <div class="qc-row">
+              <span class="qc-icon pending">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+
+                  <path d="M12 8v4l3 2" />
+                </svg>
+              </span>
+
+              <span class="qc-copy">
+                <span class="qc-title"> Service Testing </span>
+
+                <span class="qc-text">
+                  Download, upload, latency and packet loss
+                </span>
+              </span>
+
+              <span class="qc-result pending"> REVIEW </span>
+            </div>
+          </section>
+
+          <!-- ===================================================
+       CURRENT ACTION
+  =================================================== -->
+
+          <section class="action-card">
+            <span class="action-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" />
+
+                <path d="M8 12l2.5 2.5L16 9" />
+              </svg>
+            </span>
+
+            <span class="action-copy">
+              <span class="action-label"> Current Action </span>
+
+              <span class="action-title"> Perform ULO </span>
+
+              <span class="action-text">
+                Validate installation and submit QC decision.
+              </span>
+            </span>
+
+            <button type="button" class="action-button" onclick="openULO()">
+              Open ULO
+            </button>
+          </section>
+
+          <!-- ===================================================
+       QUICK ACTIONS
+  =================================================== -->
+
+          <section class="quick-actions">
+            <!-- ULO -->
+
+            <button type="button" class="quick-action" onclick="openULO()">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" />
+
+                <path d="M8 12l2.5 2.5L16 9" />
+              </svg>
+
+              <span> ULO </span>
+            </button>
+
+            <!-- LOCATION -->
+
+            <button type="button" class="quick-action" onclick="openLocation()">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z" />
+
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+
+              <span> Location </span>
+            </button>
+
+            <!-- CONTACT -->
+
+            <button type="button" class="quick-action" onclick="openContact()">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6 4h3l2 5-2 2a14 14 0 004 4l2-2 5 2v3c0 1-1 2-2 2C10 20 4 14 4 6c0-1 1-2 2-2z"
+                />
+              </svg>
+
+              <span> Contact </span>
+            </button>
+          </section>
+        </main>
+
+        <!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+
+        <nav class="bottom-nav">
+          <!-- HOME -->
+
+          <button type="button" class="nav-item" onclick="go('dashboard.html')">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5L12 4l8 6.5V20H4z" />
+
+              <path d="M9 20v-6h6v6" />
+            </svg>
+
+            <span> Home </span>
+          </button>
+
+          <!-- MY TASKS -->
+
+          <button
+            type="button"
+            class="nav-item active"
+            onclick="go('my-tasks.html')"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M6 4h12v16H6z" />
+
+              <path d="M9 8h6M9 12h6M9 16h4" />
+            </svg>
+
+            <span> My Tasks </span>
+          </button>
+
+          <!-- ULO -->
+
+          <button type="button" class="nav-item" onclick="openULO()">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" />
+
+              <path d="M8 12l2.5 2.5L16 9" />
+            </svg>
+
+            <span> ULO </span>
+          </button>
+
+          <!-- ALERTS -->
+
+          <button
+            type="button"
+            class="nav-item"
+            onclick="go('notifications.html')"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+              <path d="M10 21h4" />
+            </svg>
+
+            <span> Alerts </span>
+          </button>
+
+          <!-- PROFILE -->
+
+          <button type="button" class="nav-item" onclick="go('profile.html')">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+
+              <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
+            </svg>
+
+            <span> Profile </span>
+          </button>
+        </nav>
+
+        <!-- =====================================================
+     MODAL
+===================================================== -->
+
+        <div class="modal" id="modal" onclick="closeModal(event)">
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+
+            <div class="modal-title" id="modalTitle">QC Information</div>
+
+            <div class="modal-text" id="modalText">QC information.</div>
+
+            <div class="modal-actions">
+              <button type="button" class="modal-btn" onclick="hideModal()">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+     TOAST
+===================================================== -->
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   GET WORK ORDER ID
+========================================================= */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const workOrderId = params.get("id") || "WO-2026-00124";
+
+      /* =========================================================
+   NAVIGATION
+========================================================= */
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function goBack() {
+        if (document.referrer) {
+          history.back();
+        } else {
+          go("my-tasks.html");
+        }
+      }
+
+      /* =========================================================
+   OPEN ULO
+========================================================= */
+
+      function openULO() {
+        go("ulo.html?id=" + encodeURIComponent(workOrderId));
+      }
+
+      /* =========================================================
+   LOCATION
+========================================================= */
+
+      function openLocation() {
+        window.open(
+          "https://www.google.com/maps/search/?api=1&query=Kawasan+Industri+Medan+KIM",
+          "_blank",
+        );
+      }
+
+      /* =========================================================
+   CONTACT
+========================================================= */
+
+      function openContact() {
+        openModal(
+          "Customer Contact",
+          "PT Nusa Data · Site contact available for ULO coordination.",
+        );
+      }
+
+      /* =========================================================
+   MODAL
+========================================================= */
+
+      function openModal(title, text) {
+        document.getElementById("modalTitle").textContent = title;
+
+        document.getElementById("modalText").textContent = text;
+
+        document.getElementById("modal").classList.add("show");
+      }
+
+      function closeModal(e) {
+        if (e.target.id === "modal") {
+          hideModal();
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+
+      /* =========================================================
+   TOAST
+========================================================= */
+
+      let toastTimer;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      /* =========================================================
+   ESC
+========================================================= */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          hideModal();
+        }
+      });
+    </script>
+  </body>
+</html>
