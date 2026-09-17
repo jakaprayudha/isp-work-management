@@ -105,8 +105,8 @@ function isActive($pages)
 
     <!-- Beranda -->
     <a
-      href="administrator"
-      class="menu-item <?= isActive('administrator') ?>">
+      href="../dashboard/administrator"
+      class="menu-item <?= isActive('administrator.php') ?>">
       <span class="menu-icon">
         <i class="fa-solid fa-house"></i>
       </span>
@@ -117,8 +117,8 @@ function isActive($pages)
 
     <!-- Laporan Harian -->
     <a
-      href="laporan-harian"
-      class="menu-item <?= isActive('laporan-harian') ?>">
+      href="../admin/report-today"
+      class="menu-item <?= isActive('report-today.php') ?>">
       <span class="menu-icon">
         <i class="fa-regular fa-file-lines"></i>
       </span>
@@ -129,8 +129,8 @@ function isActive($pages)
 
     <!-- Pelanggan Approval -->
     <a
-      href="pelanggan-approval"
-      class="menu-item <?= isActive('pelanggan-approval') ?>">
+      href="customer-approval"
+      class="menu-item <?= isActive('customer-approval.php') ?>">
       <span class="menu-icon">
         <i class="fa-solid fa-user-check"></i>
       </span>

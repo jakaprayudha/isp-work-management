@@ -1,9 +1,9 @@
 /* =========================================================
    NPN ISP - LAPORAN HARIAN
-   File: js/laporan-harian.js
+   File: js/report-today.js
 
    Khusus halaman:
-   laporan-harian.html
+   report-today.html
 
    Fungsi:
    1. Load sidebar
@@ -607,7 +607,7 @@ function addReport(title) {
         <td class="action">
 
             <a
-                href="laporan-harian-detail.html?id=${id}"
+                href="report-today-detail.html?id=${id}"
                 class="report-action-btn btn-detail"
             >
 
