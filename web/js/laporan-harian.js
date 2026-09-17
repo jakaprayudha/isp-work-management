@@ -50,7 +50,7 @@ async function loadSidebar() {
   }
 
   try {
-    const response = await fetch("../components/sidebar.html", {
+    const response = await fetch("../components/sidebar", {
       cache: "no-cache",
     });
 
@@ -80,7 +80,7 @@ async function loadSidebar() {
 
                     <small>
                         Periksa file
-                        components/sidebar.html
+                        components/sidebar
                     </small>
 
                 </div>
