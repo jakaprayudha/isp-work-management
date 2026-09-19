@@ -1,0 +1,2482 @@
+/* =========================================================
+   NPN ISP — MASTER CUSTOMER
+   CUSTOMER.CSS
+   Scoped / aman berdampingan dengan dashboard-admin.css
+   ========================================================= */
+
+/* =========================================================
+   PAGE BASE
+   ========================================================= */
+
+.customer-page {
+  min-width: 0;
+}
+
+.customer-page *,
+.customer-page *::before,
+.customer-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.customer-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.customer-heading {
+  min-width: 0;
+}
+
+.customer-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 15px;
+
+  color: #8b98aa;
+  font-size: 12px;
+}
+
+.customer-breadcrumb i {
+  font-size: 8px;
+}
+
+.customer-breadcrumb strong {
+  color: #263b5b;
+  font-weight: 600;
+}
+
+.customer-title-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.customer-title-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #eaf5ff;
+  color: #0b78c9;
+
+  font-size: 21px;
+}
+
+.customer-title-row h1 {
+  margin: 0 0 5px;
+
+  color: #253a5c;
+
+  font-size: 25px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  letter-spacing: -0.4px;
+}
+
+.customer-title-row p {
+  margin: 0;
+
+  color: #8b98aa;
+  font-size: 12px;
+}
+
+/* =========================================================
+   HEADER ACTION
+   ========================================================= */
+
+.customer-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.customer-btn {
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 0 17px;
+
+  border: 1px solid transparent;
+  border-radius: 7px;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.customer-btn:hover {
+  transform: translateY(-1px);
+}
+
+.customer-btn:active {
+  transform: translateY(0);
+}
+
+.customer-btn-primary {
+  background: #062c59;
+  border-color: #062c59;
+  color: #fff;
+}
+
+.customer-btn-primary:hover {
+  background: #07396f;
+  border-color: #07396f;
+}
+
+.customer-btn-success {
+  background: #16895c;
+  border-color: #16895c;
+  color: #fff;
+}
+
+.customer-btn-success:hover {
+  background: #11764f;
+  border-color: #11764f;
+}
+
+.customer-btn-light {
+  background: #fff;
+  border-color: #dce3ec;
+  color: #30415e;
+}
+
+.customer-btn-light:hover {
+  background: #f8fafc;
+  border-color: #c8d2de;
+}
+
+.customer-btn-danger {
+  background: #df3346;
+  border-color: #df3346;
+  color: #fff;
+}
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.customer-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.customer-summary-card {
+  min-width: 0;
+  min-height: 106px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 18px;
+
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+
+  background: #fff;
+
+  box-shadow: 0 2px 8px rgba(20, 42, 70, 0.025);
+}
+
+.customer-summary-icon {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 17px;
+}
+
+.customer-summary-icon.blue {
+  background: #eaf5ff;
+  color: #0876c5;
+}
+
+.customer-summary-icon.green {
+  background: #e8f8f0;
+  color: #148b5c;
+}
+
+.customer-summary-icon.orange {
+  background: #fff5dc;
+  color: #d08a00;
+}
+
+.customer-summary-icon.red {
+  background: #ffebee;
+  color: #dd3346;
+}
+
+.customer-summary-card span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #8794a7;
+  font-size: 10px;
+}
+
+.customer-summary-card strong {
+  display: block;
+
+  color: #253a5c;
+
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.customer-summary-card small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a1adbb;
+  font-size: 9px;
+}
+
+/* =========================================================
+   MASTER CUSTOMER CARD
+   ========================================================= */
+
+.customer-card {
+  overflow: hidden;
+
+  background: #fff;
+
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 14px rgba(19, 41, 67, 0.035);
+}
+
+.customer-card-header {
+  min-height: 85px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 20px 22px 16px;
+}
+
+.customer-eyebrow {
+  color: #1380ca;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.customer-card-header h2 {
+  margin: 5px 0 3px;
+
+  color: #263b5b;
+
+  font-size: 17px;
+}
+
+.customer-card-header p {
+  margin: 0;
+
+  color: #8d99a9;
+  font-size: 10px;
+}
+
+.customer-result {
+  text-align: right;
+}
+
+.customer-result strong {
+  color: #263b5b;
+  font-size: 18px;
+}
+
+.customer-result span {
+  margin-left: 3px;
+
+  color: #8d99a9;
+  font-size: 10px;
+}
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+.customer-filter {
+  display: grid;
+  grid-template-columns:
+    minmax(240px, 1fr)
+    210px
+    210px
+    auto;
+
+  gap: 9px;
+
+  padding: 15px 22px;
+
+  border-top: 1px solid #edf0f4;
+  border-bottom: 1px solid #edf0f4;
+
+  background: #fbfcfe;
+}
+
+.customer-search,
+.customer-select {
+  position: relative;
+
+  height: 40px;
+}
+
+.customer-search > i,
+.customer-select > i {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  z-index: 2;
+
+  transform: translateY(-50%);
+
+  color: #91a0b2;
+  font-size: 12px;
+
+  pointer-events: none;
+}
+
+.customer-search input,
+.customer-select select {
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid #dce3ec;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #fff;
+  color: #31435f;
+
+  font: inherit;
+  font-size: 11px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.customer-search input {
+  padding: 0 38px 0 36px;
+}
+
+.customer-select select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  padding: 0 32px 0 35px;
+
+  cursor: pointer;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #68778b 50%),
+    linear-gradient(135deg, #68778b 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 18px) 17px,
+    calc(100% - 13px) 17px;
+
+  background-size:
+    6px 6px,
+    6px 6px;
+
+  background-repeat: no-repeat;
+}
+
+.customer-search input:focus,
+.customer-select select:focus {
+  border-color: #1885d0;
+
+  box-shadow: 0 0 0 3px rgba(24, 133, 208, 0.08);
+}
+
+.customer-search button {
+  position: absolute;
+
+  right: 7px;
+  top: 50%;
+
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #a3afbd;
+
+  cursor: pointer;
+}
+
+.customer-reset {
+  height: 40px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dce3ec;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #5e708b;
+
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.customer-reset:hover {
+  border-color: #b8c7d8;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.customer-table-wrap {
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.customer-table {
+  width: 100%;
+  min-width: 1080px;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  table-layout: fixed;
+
+  font-size: 10px;
+}
+
+.customer-table th {
+  height: 42px;
+
+  padding: 0 12px;
+
+  text-align: left;
+
+  background: #f8fafc;
+  color: #7d8b9e;
+
+  border-bottom: 1px solid #e8edf2;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+
+  vertical-align: middle;
+}
+
+.customer-table td {
+  padding: 13px 12px;
+
+  color: #283b5a;
+
+  border-bottom: 1px solid #edf0f4;
+
+  vertical-align: middle !important;
+}
+
+.customer-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.customer-table tbody tr:hover td {
+  background: #fbfdff;
+}
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.customer-no {
+  color: #9aa7b7 !important;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+/* =========================================================
+   CUSTOMER PERSON
+   ========================================================= */
+
+.customer-person {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.customer-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eaf5ff;
+  color: #0878c8;
+
+  font-size: 14px;
+}
+
+.customer-avatar.corporate {
+  background: #eef2fb;
+  color: #294c7a;
+}
+
+.customer-person > div:last-child {
+  min-width: 0;
+}
+
+.customer-person strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #2b3e5c;
+
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 700;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.customer-person span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #95a1b0;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   REGISTRATION
+   ========================================================= */
+
+.customer-regis {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #566983;
+
+  font-size: 9px;
+
+  white-space: nowrap;
+}
+
+.customer-regis i {
+  color: #8ba0b7;
+}
+
+/* =========================================================
+   TYPE / STATUS BADGE
+   ========================================================= */
+
+.customer-type,
+.customer-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.customer-type.corporate {
+  background: #e9f1fc;
+  color: #173f70;
+}
+
+.customer-type.retail {
+  background: #e8f7ef;
+  color: #16865a;
+}
+
+.customer-type.personal {
+  background: #f0ecff;
+  color: #6b4db0;
+}
+
+.customer-status {
+  background: #edf1f5;
+  color: #65758a;
+}
+
+.customer-status i {
+  font-size: 6px;
+}
+
+.customer-status.active {
+  background: #e7f7ef;
+  color: #14895b;
+}
+
+.customer-status.pending {
+  background: #fff3d5;
+  color: #a46b00;
+}
+
+.customer-status.inactive {
+  background: #f1f3f5;
+  color: #7d8998;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.customer-contact {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.customer-contact span {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #65758a;
+
+  font-size: 8px;
+
+  white-space: nowrap;
+}
+
+.customer-contact i {
+  width: 12px;
+
+  color: #91a0b1;
+
+  text-align: center;
+}
+
+/* =========================================================
+   ACTION COLUMN
+   ========================================================= */
+
+/*
+   INI BAGIAN YANG DIPERBAIKI.
+
+   Action tidak lagi menggunakan:
+   justify-content: flex-end;
+
+   Sekarang seluruh action berada di tengah
+   secara vertikal dan horizontal.
+*/
+
+.customer-table th:last-child {
+  width: 185px;
+  min-width: 185px;
+
+  text-align: center;
+}
+
+.customer-table td:last-child {
+  width: 185px;
+  min-width: 185px;
+
+  padding: 12px 10px;
+
+  vertical-align: middle !important;
+}
+
+.customer-actions {
+  width: 100%;
+
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ACTION BUTTON BASE
+   ========================================================= */
+
+.customer-action {
+  height: 38px;
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0;
+
+  border: 1px solid #d8e1eb;
+  border-radius: 9px;
+
+  background: #fff;
+
+  color: #304563;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.customer-action:hover {
+  transform: translateY(-1px);
+}
+
+.customer-action:active {
+  transform: translateY(0);
+}
+
+.customer-action:focus {
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(8, 123, 201, 0.08);
+}
+
+/* =========================================================
+   DETAIL BUTTON
+   ========================================================= */
+
+.customer-action.detail {
+  width: 88px;
+
+  color: #304563;
+}
+
+.customer-action.detail i {
+  font-size: 13px;
+}
+
+.customer-action.detail:hover {
+  background: #f6fbff;
+
+  border-color: #9dc7e6;
+
+  color: #0879c9;
+}
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.customer-action.edit {
+  width: 48px;
+
+  color: #177fc4;
+}
+
+.customer-action.edit i {
+  font-size: 14px;
+}
+
+.customer-action.edit:hover {
+  background: #f2f9fe;
+
+  border-color: #9dc9e8;
+
+  color: #056dad;
+}
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.customer-action.delete {
+  width: 48px;
+
+  color: #df3346;
+}
+
+.customer-action.delete i {
+  font-size: 14px;
+}
+
+.customer-action.delete:hover {
+  background: #fff5f6;
+
+  border-color: #efadb5;
+
+  color: #c82438;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.customer-card-footer {
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 22px;
+
+  border-top: 1px solid #edf0f4;
+
+  color: #8b98a9;
+
+  font-size: 9px;
+}
+
+.customer-card-footer strong {
+  color: #32445f;
+}
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.customer-pagination {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.customer-pagination button {
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+
+  background: #fff;
+  color: #718097;
+
+  font: inherit;
+  font-size: 9px;
+
+  cursor: pointer;
+}
+
+.customer-pagination button:hover:not(:disabled) {
+  border-color: #b9c7d6;
+}
+
+.customer-pagination button.active {
+  border-color: #0a7bc8;
+
+  background: #0a7bc8;
+  color: #fff;
+}
+
+.customer-pagination button:disabled {
+  opacity: 0.45;
+
+  cursor: default;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.customer-empty {
+  padding: 65px 20px;
+
+  text-align: center;
+}
+
+.customer-empty[hidden] {
+  display: none !important;
+}
+
+.customer-empty-icon {
+  width: 54px;
+  height: 54px;
+
+  margin: 0 auto 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #f0f4f8;
+  color: #95a3b3;
+
+  font-size: 20px;
+}
+
+.customer-empty h3 {
+  margin: 0 0 5px;
+
+  color: #334762;
+
+  font-size: 14px;
+}
+
+.customer-empty p {
+  margin: 0 0 15px;
+
+  color: #98a4b3;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   CUSTOMER MODAL
+   ========================================================= */
+
+.customer-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+}
+
+.customer-modal[hidden] {
+  display: none !important;
+}
+
+.customer-modal,
+.customer-modal * {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MODAL OVERLAY
+   ========================================================= */
+
+.customer-modal-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.58);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* =========================================================
+   MODAL DIALOG
+   ========================================================= */
+
+.customer-modal-dialog {
+  position: relative;
+  z-index: 2;
+
+  width: min(920px, 100%);
+  max-height: calc(100vh - 48px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #fff;
+
+  box-shadow:
+    0 25px 60px rgba(15, 23, 42, 0.2),
+    0 8px 24px rgba(15, 23, 42, 0.1);
+
+  animation: customerModalIn 0.2s ease-out;
+}
+
+@keyframes customerModalIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(14px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.customer-modal-header {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 25px 30px 22px;
+
+  border-bottom: 1px solid #e8edf3;
+
+  background: #fff;
+}
+
+.customer-modal-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #0b4a87;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.customer-modal-header h2 {
+  margin: 0;
+
+  color: #172b4d;
+
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.customer-modal-header p {
+  margin: 7px 0 0;
+
+  color: #7b8798;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   MODAL CLOSE
+   ========================================================= */
+
+.customer-modal-close {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #7b8798;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.customer-modal-close:hover {
+  background: #f1f5f9;
+  color: #172b4d;
+}
+
+.customer-modal-close:active {
+  transform: scale(0.94);
+}
+
+/* =========================================================
+   MODAL BODY
+   ========================================================= */
+
+.customer-modal-body {
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 22px 30px 30px;
+
+  background: #f7f9fc;
+}
+
+.customer-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.customer-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.customer-modal-body::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background: #cbd5e1;
+}
+
+.customer-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   FORM SECTION
+   ========================================================= */
+
+.customer-form-section {
+  margin-bottom: 18px;
+
+  padding: 24px;
+
+  border: 1px solid #e7ecf2;
+  border-radius: 13px;
+
+  background: #fff;
+
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+}
+
+.customer-form-section:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.customer-section-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 22px;
+}
+
+.customer-section-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #eaf4fd;
+  color: #0b7dcc;
+
+  font-size: 17px;
+}
+
+.customer-section-heading h3 {
+  margin: 0;
+
+  color: #172b4d;
+
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.customer-section-heading p {
+  margin: 3px 0 0;
+
+  color: #8a96a8;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.customer-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.customer-form-group {
+  min-width: 0;
+}
+
+.customer-form-group.full {
+  grid-column: 1 / -1;
+}
+
+/* =========================================================
+   FORM LABEL
+   ========================================================= */
+
+.customer-form-group label {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: #263754;
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.customer-form-group label span {
+  margin-left: 2px;
+
+  color: #ef4444;
+}
+
+/* =========================================================
+   INPUT ICON WRAPPER
+   ========================================================= */
+
+.customer-input-icon {
+  position: relative;
+}
+
+.customer-input-icon > i {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  z-index: 2;
+
+  transform: translateY(-50%);
+
+  color: #8a98aa;
+
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+.customer-input-icon.textarea-icon > i {
+  top: 17px;
+
+  transform: none;
+}
+
+/* =========================================================
+   INPUT / SELECT / TEXTAREA
+   ========================================================= */
+
+.customer-form-group input,
+.customer-form-group select,
+.customer-form-group textarea {
+  width: 100%;
+
+  border: 1px solid #d8e0ea;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #fff;
+  color: #172b4d;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.customer-form-group input,
+.customer-form-group select {
+  height: 46px;
+
+  padding: 0 14px 0 42px;
+}
+
+.customer-form-group textarea {
+  min-height: 108px;
+
+  padding: 13px 14px 13px 42px;
+
+  resize: vertical;
+
+  line-height: 1.55;
+}
+
+.customer-form-group input::placeholder,
+.customer-form-group textarea::placeholder {
+  color: #a0aabd;
+}
+
+.customer-form-group input:hover,
+.customer-form-group select:hover,
+.customer-form-group textarea:hover {
+  border-color: #b9c6d6;
+}
+
+.customer-form-group input:focus,
+.customer-form-group select:focus,
+.customer-form-group textarea:focus {
+  border-color: #1685d3;
+
+  box-shadow: 0 0 0 3px rgba(22, 133, 211, 0.1);
+
+  background: #fff;
+}
+
+/* =========================================================
+   SELECT ARROW
+   ========================================================= */
+
+.customer-form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  padding-right: 42px;
+
+  cursor: pointer;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #68778b 50%),
+    linear-gradient(135deg, #68778b 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 18px) 19px,
+    calc(100% - 13px) 19px;
+
+  background-size:
+    6px 6px,
+    6px 6px;
+
+  background-repeat: no-repeat;
+}
+
+/* =========================================================
+   PASSWORD
+   ========================================================= */
+
+.customer-input-icon.password-field input {
+  padding-right: 45px;
+}
+
+.customer-password-toggle {
+  position: absolute;
+
+  right: 7px;
+  top: 50%;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #8793a5;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.customer-password-toggle:hover {
+  background: #eef3f8;
+
+  color: #0b7dcc;
+}
+
+/* =========================================================
+   HELP / NOTE
+   ========================================================= */
+
+.customer-field-help {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #8a96a8;
+
+  font-size: 11px;
+}
+
+.customer-form-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-top: 18px;
+
+  padding: 13px 15px;
+
+  border: 1px solid #dcecf8;
+  border-radius: 10px;
+
+  background: #f2f9fe;
+
+  color: #42627f;
+}
+
+.customer-form-note > i {
+  margin-top: 2px;
+
+  color: #1685d3;
+
+  font-size: 15px;
+}
+
+.customer-form-note strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #24445f;
+
+  font-size: 12px;
+}
+
+.customer-form-note p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.customer-form-note p span {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* =========================================================
+   MODAL FOOTER
+   ========================================================= */
+
+.customer-modal-footer {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 17px 30px;
+
+  border-top: 1px solid #e8edf3;
+
+  background: #fff;
+}
+
+/* =========================================================
+   FORM BUTTON
+   ========================================================= */
+
+.customer-modal-footer .customer-btn {
+  height: 43px;
+  min-width: 110px;
+}
+
+.customer-modal-footer .customer-btn-primary {
+  min-width: 145px;
+}
+
+/* =========================================================
+   ERROR / SUCCESS
+   ========================================================= */
+
+.customer-form-group.has-error input,
+.customer-form-group.has-error select,
+.customer-form-group.has-error textarea {
+  border-color: #ef4444;
+}
+
+.customer-form-group.has-error input:focus,
+.customer-form-group.has-error select:focus,
+.customer-form-group.has-error textarea:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.customer-form-group.has-success input,
+.customer-form-group.has-success select,
+.customer-form-group.has-success textarea {
+  border-color: #18a36b;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.customer-btn.is-loading {
+  pointer-events: none;
+
+  opacity: 0.75;
+}
+
+.customer-btn.is-loading i {
+  animation: customerSpin 0.8s linear infinite;
+}
+
+@keyframes customerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   BODY LOCK
+   ========================================================= */
+
+body.customer-modal-open {
+  overflow: hidden;
+}
+
+/* =========================================================
+   DETAIL PROFILE
+   ========================================================= */
+
+.customer-detail-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 15px;
+
+  border: 1px solid #e4eaf0;
+  border-radius: 10px;
+
+  background: #fbfcfe;
+}
+
+.customer-detail-avatar {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #eaf5ff;
+  color: #0879c9;
+
+  font-size: 20px;
+}
+
+.customer-detail-label {
+  display: block;
+
+  color: #9aa5b2;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+}
+
+.customer-detail-profile h3 {
+  margin: 3px 0;
+
+  color: #283d5d;
+
+  font-size: 15px;
+}
+
+.customer-detail-profile p {
+  margin: 0;
+
+  color: #8d99a9;
+
+  font-size: 9px;
+}
+
+.customer-detail-profile .customer-status {
+  margin-left: auto;
+}
+
+.customer-detail-body {
+  padding: 20px 24px;
+
+  overflow-y: auto;
+}
+
+.customer-detail-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-top: 13px;
+}
+
+.customer-detail-section {
+  padding: 16px;
+
+  border: 1px solid #e4eaf0;
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.customer-detail-section-title {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 12px;
+
+  color: #334762;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.customer-detail-section-title i {
+  color: #0879c9;
+}
+
+.customer-detail-item {
+  padding: 9px 0;
+
+  border-bottom: 1px solid #edf0f4;
+}
+
+.customer-detail-item:last-child {
+  border-bottom: 0;
+}
+
+.customer-detail-item span,
+.customer-detail-item strong {
+  display: block;
+}
+
+.customer-detail-item span {
+  margin-bottom: 3px;
+
+  color: #96a2b0;
+
+  font-size: 8px;
+}
+
+.customer-detail-item strong {
+  color: #354864;
+
+  font-size: 10px;
+  line-height: 1.45;
+
+  word-break: break-word;
+}
+
+/* =========================================================
+   CONFIRM DELETE
+   ========================================================= */
+
+.customer-confirm-dialog {
+  position: relative;
+  z-index: 2;
+
+  width: min(400px, 100%);
+
+  padding: 28px;
+
+  border-radius: 14px;
+
+  background: #fff;
+
+  text-align: center;
+
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
+}
+
+.customer-confirm-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 13px;
+
+  border-radius: 50%;
+
+  background: #ffebee;
+  color: #df3346;
+
+  font-size: 18px;
+}
+
+.customer-confirm-dialog h2 {
+  margin: 0 0 7px;
+
+  color: #2b3e5c;
+
+  font-size: 17px;
+}
+
+.customer-confirm-dialog > p {
+  max-width: 310px;
+
+  margin: 0 auto 16px;
+
+  color: #8996a7;
+
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.customer-confirm-name {
+  margin-bottom: 18px;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  background: #f7f9fb;
+}
+
+.customer-confirm-name strong,
+.customer-confirm-name span {
+  display: block;
+}
+
+.customer-confirm-name strong {
+  color: #334762;
+
+  font-size: 10px;
+}
+
+.customer-confirm-name span {
+  margin-top: 3px;
+
+  color: #9aa5b3;
+
+  font-size: 8px;
+}
+
+.customer-confirm-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.customer-toast {
+  position: fixed;
+
+  right: 25px;
+  bottom: 25px;
+
+  z-index: 2000;
+
+  min-width: 280px;
+  max-width: 380px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #dfe7e3;
+  border-radius: 10px;
+
+  background: #fff;
+
+  box-shadow: 0 12px 35px rgba(19, 39, 61, 0.15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: translateY(12px);
+
+  transition: 0.25s ease;
+}
+
+.customer-toast.show {
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: translateY(0);
+}
+
+.customer-toast-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #e8f7ef;
+  color: #16895c;
+}
+
+.customer-toast strong,
+.customer-toast span {
+  display: block;
+}
+
+.customer-toast strong {
+  color: #30435f;
+
+  font-size: 10px;
+}
+
+.customer-toast span {
+  margin-top: 2px;
+
+  color: #8997a7;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   RESPONSIVE 1200
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .customer-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-filter {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .customer-reset {
+    width: max-content;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE 900
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .customer-page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .customer-header-actions {
+    width: 100%;
+  }
+
+  .customer-header-actions .customer-btn {
+    flex: 1;
+  }
+
+  .customer-filter {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-form-group.full {
+    grid-column: auto;
+  }
+
+  .customer-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE 768
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .customer-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-card-header {
+    align-items: flex-start;
+  }
+
+  .customer-result {
+    display: none;
+  }
+
+  .customer-modal {
+    padding: 12px;
+  }
+
+  .customer-modal-dialog {
+    width: 100%;
+
+    max-height: calc(100vh - 24px);
+
+    border-radius: 13px;
+  }
+
+  .customer-modal-header {
+    padding: 20px 20px 18px;
+  }
+
+  .customer-modal-header h2 {
+    font-size: 20px;
+  }
+
+  .customer-modal-body {
+    padding: 16px;
+  }
+
+  .customer-form-section {
+    padding: 18px;
+
+    margin-bottom: 14px;
+  }
+
+  .customer-modal-footer {
+    padding: 14px 16px;
+  }
+
+  .customer-detail-profile {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .customer-detail-profile .customer-status {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE 600
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .customer-title-row {
+    align-items: flex-start;
+  }
+
+  .customer-title-icon {
+    width: 45px;
+    height: 45px;
+    flex-basis: 45px;
+  }
+
+  .customer-title-row h1 {
+    font-size: 21px;
+  }
+
+  .customer-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-header-actions {
+    flex-direction: column;
+  }
+
+  .customer-header-actions .customer-btn {
+    width: 100%;
+  }
+
+  .customer-table {
+    min-width: 1050px;
+  }
+
+  .customer-card-footer {
+    padding: 0 15px;
+  }
+
+  .customer-toast {
+    right: 12px;
+    left: 12px;
+
+    min-width: 0;
+    max-width: none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE 480
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .customer-modal {
+    padding: 0;
+  }
+
+  .customer-modal-dialog {
+    width: 100%;
+    height: 100%;
+
+    max-height: 100vh;
+
+    border-radius: 0;
+  }
+
+  .customer-modal-header {
+    padding: 17px 16px;
+  }
+
+  .customer-modal-eyebrow {
+    font-size: 10px;
+  }
+
+  .customer-modal-header h2 {
+    font-size: 19px;
+  }
+
+  .customer-modal-header p {
+    font-size: 11px;
+  }
+
+  .customer-modal-close {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .customer-modal-body {
+    padding: 12px;
+  }
+
+  .customer-form-section {
+    padding: 16px;
+
+    border-radius: 10px;
+  }
+
+  .customer-section-heading {
+    margin-bottom: 18px;
+  }
+
+  .customer-section-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+
+    font-size: 15px;
+  }
+
+  .customer-section-heading h3 {
+    font-size: 15px;
+  }
+
+  .customer-section-heading p {
+    font-size: 11px;
+  }
+
+  .customer-form-group label {
+    font-size: 12px;
+  }
+
+  .customer-form-group input,
+  .customer-form-group select {
+    height: 44px;
+
+    font-size: 12px;
+  }
+
+  .customer-form-group textarea {
+    font-size: 12px;
+  }
+
+  .customer-modal-footer {
+    padding: 12px;
+
+    gap: 8px;
+  }
+
+  .customer-modal-footer .customer-btn {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .customer-action.detail {
+    width: 82px;
+  }
+
+  .customer-action.edit,
+  .customer-action.delete {
+    width: 44px;
+  }
+}
+
+/* =========================================================
+   CUSTOMER - ACTION COLUMN
+   ========================================================= */
+
+.customer-page .action-cell,
+.customer-page td.actions,
+.customer-page .actions {
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+  padding: 12px 14px !important;
+  vertical-align: middle !important;
+}
+
+/* Container action */
+.customer-page .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Semua tombol action */
+.customer-page .actions button,
+.customer-page .actions a,
+.customer-page .action-btn {
+  box-sizing: border-box;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+
+  margin: 0 !important;
+  padding: 0 14px !important;
+
+  border-radius: 10px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: inherit;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+
+  line-height: 1 !important;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+/* =========================================================
+   DETAIL
+   ========================================================= */
+
+.customer-page .actions .btn-detail,
+.customer-page .actions .btn-detail-action,
+.customer-page .actions a.detail-btn {
+  width: 102px !important;
+  min-width: 102px !important;
+  max-width: 102px !important;
+
+  background: #fff !important;
+  color: #304563 !important;
+
+  border: 1px solid #d7e0eb !important;
+}
+
+.customer-page .actions .btn-detail:hover,
+.customer-page .actions .btn-detail-action:hover,
+.customer-page .actions a.detail-btn:hover {
+  background: #f5f9fd !important;
+  border-color: #b9cde2 !important;
+  color: #0878d1 !important;
+}
+
+/* Icon detail */
+.customer-page .actions .btn-detail i {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.customer-page .actions .btn-edit,
+.customer-page .actions .edit-btn,
+.customer-page .actions button[data-action="edit"] {
+  width: 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+
+  padding: 0 !important;
+
+  background: #fff !important;
+  color: #0878d1 !important;
+
+  border: 1px solid #d7e0eb !important;
+}
+
+.customer-page .actions .btn-edit:hover,
+.customer-page .actions .edit-btn:hover,
+.customer-page .actions button[data-action="edit"]:hover {
+  background: #eaf5fd !important;
+  border-color: #0878d1 !important;
+}
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.customer-page .actions .btn-delete,
+.customer-page .actions .delete-btn,
+.customer-page .actions button[data-action="delete"] {
+  width: 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+
+  padding: 0 !important;
+
+  background: #fff !important;
+  color: #ef334f !important;
+
+  border: 1px solid #d7e0eb !important;
+}
+
+.customer-page .actions .btn-delete:hover,
+.customer-page .actions .delete-btn:hover,
+.customer-page .actions button[data-action="delete"]:hover {
+  background: #fff1f3 !important;
+  border-color: #ef334f !important;
+}
+
+/* =========================================================
+   ICON ACTION
+   ========================================================= */
+
+.customer-page .actions button i,
+.customer-page .actions a i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* =========================================================
+   JIKA HTML MENGGUNAKAN .action-buttons
+   ========================================================= */
+
+.customer-page .action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  flex-wrap: nowrap;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.customer-page .action-buttons > button,
+.customer-page .action-buttons > a {
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   TABLE ACTION
+   ========================================================= */
+
+.customer-page .customer-table td:last-child {
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+.customer-page .customer-table th:last-child {
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+
+  text-align: center;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .customer-page .action-cell,
+  .customer-page td.actions,
+  .customer-page .actions {
+    width: 190px;
+    min-width: 190px;
+    max-width: 190px;
+  }
+
+  .customer-page .actions {
+    gap: 6px;
+  }
+
+  .customer-page .actions button,
+  .customer-page .actions a,
+  .customer-page .action-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+
+    font-size: 13px !important;
+  }
+
+  .customer-page .actions .btn-detail,
+  .customer-page .actions .btn-detail-action,
+  .customer-page .actions a.detail-btn {
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+  }
+
+  .customer-page .actions .btn-edit,
+  .customer-page .actions .edit-btn,
+  .customer-page .actions button[data-action="edit"],
+  .customer-page .actions .btn-delete,
+  .customer-page .actions .delete-btn,
+  .customer-page .actions button[data-action="delete"] {
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+  }
+}

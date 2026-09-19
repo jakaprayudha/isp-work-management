@@ -129,7 +129,7 @@ function isActive($pages)
 
     <!-- Pelanggan Approval -->
     <a
-      href="customer-approval"
+      href="../admin/customer-approval"
       class="menu-item <?= isActive('customer-approval.php') ?>">
       <span class="menu-icon">
         <i class="fa-solid fa-user-check"></i>
@@ -145,8 +145,8 @@ function isActive($pages)
 
     <!-- Pelanggan -->
     <a
-      href="pelanggan"
-      class="menu-item <?= isActive('pelanggan') ?>">
+      href="../admin/customer"
+      class="menu-item <?= isActive('customer.php') ?>">
       <span class="menu-icon">
         <i class="fa-solid fa-users"></i>
       </span>

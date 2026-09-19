@@ -1,0 +1,1409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta name="theme-color" content="#111827" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <title>Menu - NPN Work Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =====================================================
+       BASE
+    ===================================================== */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --primary: #111827;
+        --primary-light: #1f2937;
+
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+
+        --text: #111827;
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --background: #f8fafc;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        min-height: 100%;
+
+        margin: 0;
+
+        font-family: "Inter", sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        overflow: hidden;
+
+        overscroll-behavior: none;
+
+        -webkit-overflow-scrolling: auto;
+
+        touch-action: manipulation;
+      }
+
+      /* =====================================================
+       APP
+    ===================================================== */
+
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        display: flex;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--background);
+      }
+
+      .mobile-container {
+        width: 100%;
+        max-width: 480px;
+
+        height: 100dvh;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        position: relative;
+      }
+
+      /* =====================================================
+       HEADER
+    ===================================================== */
+
+      .app-header {
+        width: 100%;
+
+        padding: max(18px, env(safe-area-inset-top)) 20px 14px;
+
+        background: rgba(248, 250, 252, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        flex-shrink: 0;
+
+        z-index: 10;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .mini-logo {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 800;
+
+        letter-spacing: -0.5px;
+      }
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .header-title strong {
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+      }
+
+      .header-title span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .header-button {
+        width: 38px;
+        height: 38px;
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: white;
+
+        color: #4b5563;
+
+        cursor: pointer;
+      }
+
+      .header-button svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .notification-badge {
+        position: absolute;
+
+        top: 6px;
+        right: 6px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--danger);
+
+        border: 2px solid white;
+      }
+
+      /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+      .main-content {
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        padding: 4px 20px 90px;
+
+        overflow: hidden;
+      }
+
+      /* =====================================================
+       GREETING
+    ===================================================== */
+
+      .greeting {
+        margin-top: 8px;
+      }
+
+      .greeting-label {
+        font-size: 11px;
+        color: var(--muted);
+
+        margin-bottom: 4px;
+      }
+
+      .greeting h1 {
+        font-size: 23px;
+        line-height: 1.25;
+
+        letter-spacing: -0.6px;
+
+        font-weight: 800;
+      }
+
+      .greeting p {
+        margin-top: 5px;
+
+        font-size: 12px;
+        line-height: 1.45;
+
+        color: var(--muted);
+      }
+
+      /* =====================================================
+       NEW REQUEST CARD
+    ===================================================== */
+
+      .request-card {
+        margin-top: 18px;
+
+        padding: 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        border-radius: 18px;
+
+        background: linear-gradient(135deg, #111827, #1f2937);
+
+        color: white;
+
+        box-shadow: 0 12px 25px rgba(17, 24, 39, 0.14);
+      }
+
+      .request-content {
+        min-width: 0;
+      }
+
+      .request-content small {
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: #9ca3af;
+
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .request-content strong {
+        display: block;
+
+        font-size: 15px;
+        font-weight: 700;
+
+        letter-spacing: -0.2px;
+      }
+
+      .request-content p {
+        margin-top: 4px;
+
+        color: #d1d5db;
+
+        font-size: 10px;
+        line-height: 1.4;
+      }
+
+      .request-button {
+        width: 40px;
+        height: 40px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 0;
+        border-radius: 13px;
+
+        background: white;
+
+        color: var(--primary);
+
+        cursor: pointer;
+      }
+
+      .request-button svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      /* =====================================================
+       SECTION HEADER
+    ===================================================== */
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .section-header h2 {
+        font-size: 14px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.2px;
+      }
+
+      .section-link {
+        border: 0;
+
+        background: transparent;
+
+        color: var(--accent);
+
+        font-family: inherit;
+
+        font-size: 11px;
+        font-weight: 600;
+
+        cursor: pointer;
+      }
+
+      /* =====================================================
+       ORDER CARD
+    ===================================================== */
+
+      .order-card {
+        padding: 15px;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+
+        cursor: pointer;
+      }
+
+      .order-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 10px;
+      }
+
+      .order-info {
+        min-width: 0;
+      }
+
+      .order-number {
+        font-size: 10px;
+
+        color: #9ca3af;
+
+        font-weight: 600;
+
+        margin-bottom: 5px;
+      }
+
+      .order-title {
+        font-size: 14px;
+
+        font-weight: 700;
+
+        letter-spacing: -0.2px;
+      }
+
+      .order-provider {
+        margin-top: 4px;
+
+        font-size: 10px;
+
+        color: var(--muted);
+      }
+
+      .status {
+        padding: 5px 8px;
+
+        border-radius: 8px;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .status-progress {
+        background: var(--accent-light);
+
+        color: var(--accent);
+      }
+
+      .status-active {
+        background: var(--success-light);
+
+        color: var(--success);
+      }
+
+      /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+      .progress-wrapper {
+        margin-top: 16px;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 7px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .progress-header strong {
+        color: var(--text);
+
+        font-weight: 700;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: #eef0f3;
+      }
+
+      .progress-value {
+        height: 100%;
+
+        border-radius: inherit;
+
+        background: var(--accent);
+      }
+
+      /* =====================================================
+       WORKFLOW
+    ===================================================== */
+
+      .workflow {
+        margin-top: 17px;
+
+        display: flex;
+        align-items: flex-start;
+
+        overflow: hidden;
+      }
+
+      .workflow-item {
+        flex: 1;
+
+        position: relative;
+
+        text-align: center;
+      }
+
+      .workflow-item:not(:last-child)::after {
+        content: "";
+
+        position: absolute;
+
+        top: 7px;
+        left: calc(50% + 8px);
+
+        width: calc(100% - 16px);
+
+        height: 1px;
+
+        background: #d1d5db;
+      }
+
+      .workflow-item.completed:not(:last-child)::after {
+        background: var(--accent);
+      }
+
+      .workflow-dot {
+        width: 15px;
+        height: 15px;
+
+        margin: 0 auto;
+
+        position: relative;
+
+        z-index: 2;
+
+        border-radius: 50%;
+
+        background: #e5e7eb;
+
+        border: 3px solid white;
+
+        box-shadow: 0 0 0 1px #d1d5db;
+      }
+
+      .workflow-item.completed .workflow-dot {
+        background: var(--accent);
+
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+
+      .workflow-item.current .workflow-dot {
+        background: white;
+
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+
+      .workflow-label {
+        margin-top: 7px;
+
+        font-size: 8px;
+
+        line-height: 1.3;
+
+        color: #9ca3af;
+      }
+
+      .workflow-item.completed .workflow-label,
+      .workflow-item.current .workflow-label {
+        color: #374151;
+
+        font-weight: 600;
+      }
+
+      /* =====================================================
+       INFO GRID
+    ===================================================== */
+
+      .info-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-top: 12px;
+      }
+
+      .info-item {
+        padding: 12px;
+
+        border-radius: 14px;
+
+        background: #f9fafb;
+
+        border: 1px solid #f0f1f3;
+      }
+
+      .info-item span {
+        display: block;
+
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        margin-bottom: 4px;
+      }
+
+      .info-item strong {
+        display: block;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        color: #374151;
+      }
+
+      /* =====================================================
+       EMPTY / SECOND ORDER
+    ===================================================== */
+
+      .simple-order {
+        margin-top: 10px;
+
+        padding: 13px 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        background: white;
+      }
+
+      .simple-order-left {
+        min-width: 0;
+      }
+
+      .simple-order-number {
+        font-size: 9px;
+
+        color: #9ca3af;
+
+        margin-bottom: 3px;
+      }
+
+      .simple-order-title {
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .simple-order-date {
+        margin-top: 3px;
+
+        font-size: 9px;
+
+        color: var(--muted);
+      }
+
+      .simple-order-arrow {
+        width: 30px;
+        height: 30px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 10px;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+      }
+
+      .simple-order-arrow svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+
+      .bottom-nav {
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: 0;
+
+        height: calc(68px + env(safe-area-inset-bottom));
+
+        padding: 7px 12px env(safe-area-inset-bottom);
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        background: rgba(255, 255, 255, 0.96);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        border-top: 1px solid rgba(229, 231, 235, 0.9);
+
+        z-index: 20;
+      }
+
+      .nav-item {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        border: 0;
+
+        background: transparent;
+
+        color: #9ca3af;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+      .nav-item svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .nav-item.active {
+        color: var(--primary);
+
+        font-weight: 700;
+      }
+
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* =====================================================
+       TOAST
+    ===================================================== */
+
+      .toast {
+        position: fixed;
+
+        left: 50%;
+
+        bottom: calc(82px + env(safe-area-inset-bottom));
+
+        transform: translate(-50%, 20px);
+
+        width: calc(100% - 40px);
+
+        max-width: 420px;
+
+        padding: 13px 16px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+
+        transform: translate(-50%, 0);
+      }
+
+      /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding-top: max(13px, env(safe-area-inset-top));
+
+          padding-bottom: 9px;
+        }
+
+        .mini-logo {
+          width: 36px;
+          height: 36px;
+
+          border-radius: 11px;
+        }
+
+        .header-button {
+          width: 35px;
+          height: 35px;
+        }
+
+        .main-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .greeting h1 {
+          font-size: 21px;
+        }
+
+        .request-card {
+          margin-top: 13px;
+
+          padding: 14px;
+        }
+
+        .section-header {
+          margin-top: 15px;
+        }
+
+        .order-card {
+          padding: 13px;
+        }
+
+        .progress-wrapper {
+          margin-top: 12px;
+        }
+
+        .workflow {
+          margin-top: 13px;
+        }
+
+        .info-grid {
+          margin-top: 9px;
+        }
+      }
+
+      /* =====================================================
+       VERY SMALL HEIGHT
+    ===================================================== */
+
+      @media (max-height: 620px) {
+        .greeting {
+          margin-top: 2px;
+        }
+
+        .greeting p {
+          display: none;
+        }
+
+        .request-card {
+          margin-top: 10px;
+
+          padding: 11px 13px;
+        }
+
+        .request-content strong {
+          font-size: 13px;
+        }
+
+        .request-button {
+          width: 36px;
+          height: 36px;
+        }
+
+        .section-header {
+          margin-top: 11px;
+          margin-bottom: 7px;
+        }
+
+        .workflow-label {
+          font-size: 7px;
+        }
+
+        .info-item {
+          padding: 9px;
+        }
+      }
+
+      /* =====================================================
+       DESKTOP PREVIEW
+    ===================================================== */
+
+      @media (min-width: 600px) {
+        .app {
+          padding: 30px 0;
+        }
+
+        .mobile-container {
+          height: calc(100dvh - 60px);
+
+          min-height: 0;
+
+          border-radius: 30px;
+
+          background:
+            radial-gradient(
+              circle at 50% -10%,
+              rgba(37, 99, 235, 0.08),
+              transparent 40%
+            ),
+            var(--background);
+
+          box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+
+          overflow: hidden;
+        }
+      }
+
+      /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* MENU GRID */
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .menu-card {
+        min-width: 0;
+        min-height: 108px;
+        padding: 13px 8px 11px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 5px 16px rgba(15, 23, 42, 0.045);
+        font-family: inherit;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .menu-card:active {
+        transform: scale(0.96);
+      }
+
+      .menu-icon {
+        width: 43px;
+        height: 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+      }
+
+      .menu-icon svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .icon-admin {
+        background: #eef2ff;
+        color: #4f46e5;
+      }
+
+      .icon-customer {
+        background: #ecfeff;
+        color: #0891b2;
+      }
+
+      .icon-network {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .icon-qc {
+        background: #f0fdf4;
+        color: #16a34a;
+      }
+
+      .icon-supervisor {
+        background: #fff7ed;
+        color: #ea580c;
+      }
+
+      .icon-surveyor {
+        background: #fdf4ff;
+        color: #c026d3;
+      }
+
+      .icon-technician {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+
+      .menu-title {
+        font-size: 10px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: var(--text);
+        text-align: center;
+      }
+
+      .menu-subtitle {
+        font-size: 8px;
+        line-height: 1.2;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 350px) {
+        .menu-grid {
+          gap: 7px;
+        }
+
+        .menu-card {
+          min-height: 100px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+
+        .menu-icon {
+          width: 39px;
+          height: 39px;
+          border-radius: 12px;
+        }
+
+        .menu-icon svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <main class="mobile-container">
+        <!-- =================================================
+           HEADER
+      ================================================= -->
+
+        <header class="app-header">
+          <div class="header-row">
+            <div class="header-brand">
+              <div class="mini-logo">NPN</div>
+
+              <div class="header-title">
+                <strong> Work Management </strong>
+
+                <span> Customer Portal </span>
+              </div>
+            </div>
+
+            <div class="header-actions">
+              <button
+                type="button"
+                class="header-button"
+                id="notificationButton"
+                aria-label="Notifications"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+
+                <span class="notification-badge"></span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- =================================================
+           MAIN CONTENT
+      ================================================= -->
+
+        <section class="main-content">
+          <div class="greeting">
+            <div class="greeting-label">NPN WORK MANAGEMENT</div>
+            <h1>Choose your workspace 👋</h1>
+            <p>Access your workspace quickly from one place.</p>
+          </div>
+
+          <div class="section-header">
+            <h2>All Services</h2>
+          </div>
+
+          <div class="menu-grid">
+            <button class="menu-card" data-url="admin/dashboard.html">
+              <span class="menu-icon icon-admin">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 3l8 4v5c0 5-3.5 7.8-8 9-4.5-1.2-8-4-8-9V7l8-4z"
+                  />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </span>
+              <span class="menu-title">Admin</span>
+              <span class="menu-subtitle">Management</span>
+            </button>
+
+            <button class="menu-card" data-url="customer/dashboard.html">
+              <span class="menu-icon icon-customer">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 21a8 8 0 0 1 16 0" />
+                </svg>
+              </span>
+              <span class="menu-title">Customer</span>
+              <span class="menu-subtitle">Portal</span>
+            </button>
+
+            <button
+              class="menu-card"
+              data-url="network-engineer/dashboard.html"
+            >
+              <span class="menu-icon icon-network">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="5" r="2.5" />
+                  <circle cx="5" cy="19" r="2.5" />
+                  <circle cx="19" cy="19" r="2.5" />
+                  <path d="M12 7.5v5" />
+                  <path d="M12 12.5L5 17" />
+                  <path d="M12 12.5l7 4.5" />
+                </svg>
+              </span>
+              <span class="menu-title">Network</span>
+              <span class="menu-subtitle">Engineer</span>
+            </button>
+
+            <button class="menu-card" data-url="qc/dashboard.html">
+              <span class="menu-icon icon-qc">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M9 11l3 3L20 6" />
+                  <path
+                    d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"
+                  />
+                </svg>
+              </span>
+              <span class="menu-title">Quality</span>
+              <span class="menu-subtitle">Control</span>
+            </button>
+
+            <button class="menu-card" data-url="supervisor/dashboard.html">
+              <span class="menu-icon icon-supervisor">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 19V5" />
+                  <path d="M4 5h13l-2 4 2 4H4" />
+                  <path d="M8 19h12" />
+                </svg>
+              </span>
+              <span class="menu-title">Supervisor</span>
+              <span class="menu-subtitle">Operations</span>
+            </button>
+
+            <button class="menu-card" data-url="surveyor/dashboard.html">
+              <span class="menu-icon icon-surveyor">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 5h16v14H4z" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h5" />
+                  <circle cx="17" cy="16" r="2.5" />
+                </svg>
+              </span>
+              <span class="menu-title">Surveyor</span>
+              <span class="menu-subtitle">Feasibility</span>
+            </button>
+
+            <button class="menu-card" data-url="technician/dashboard.html">
+              <span class="menu-icon icon-technician">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M14.7 6.3a4 4 0 0 0-5.1 5.1L4 17v3h3l5.6-5.6a4 4 0 0 0 5.1-5.1l-2.2 2.2-2.1-2.1z"
+                  />
+                  <path d="M16 4l4 4" />
+                </svg>
+              </span>
+              <span class="menu-title">Technician</span>
+              <span class="menu-subtitle">Field Work</span>
+            </button>
+          </div>
+
+          <div class="section-header">
+            <h2>Quick Access</h2>
+          </div>
+
+          <div class="simple-order" id="selectedRole">
+            <div class="simple-order-left">
+              <div class="simple-order-number">WORKSPACE</div>
+              <div class="simple-order-title">Select a role above</div>
+              <div class="simple-order-date">
+                You will be redirected to its dashboard.
+              </div>
+            </div>
+            <div class="simple-order-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+           BOTTOM NAV
+      ================================================= -->
+      </main>
+    </div>
+
+    <!-- =====================================================
+       TOAST
+  ===================================================== -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const toast = document.getElementById("toast");
+      const selectedRole = document.getElementById("selectedRole");
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      document.querySelectorAll(".menu-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const url = card.dataset.url;
+          const title =
+            card.querySelector(".menu-title")?.textContent || "Workspace";
+
+          selectedRole.querySelector(".simple-order-title").textContent = title;
+          selectedRole.querySelector(".simple-order-date").textContent =
+            "Opening workspace...";
+
+          if (url) {
+            setTimeout(() => {
+              window.location.href = url;
+            }, 180);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
